@@ -17,6 +17,7 @@ final class OKRViewModel: ObservableObject {
     @Published var currentObjective: Objective = Objective(title: "", startDate: Date(), endDate: Date(), keyResults: [])
     @Published var newKeyResult: KeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [Task(title: "")])
     @Published var newTask: Task = Task(title: "")
+    @Published var isAddingKeyResult = false
     @Published var isAddingTask = false
     
     @Published var objectives: [Objective] = [
