@@ -32,6 +32,9 @@ struct MainView: View {
                     NavigationLink(destination: ObjectiveDetailView(objectiveID: objective.id)
                         .environmentObject(OKRViewModel.shared)) {
                             ObjectiveCardView(objectiveID: objective.id)
+                                .onDelete(isTask: false) {
+                                    viewModel.deleteObjectiveByID(of: objective.id)
+                                }
                     }
                     .foregroundColor(.black)
                 }
