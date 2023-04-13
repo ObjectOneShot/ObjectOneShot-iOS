@@ -18,9 +18,13 @@ struct KeyResult: Identifiable, Hashable {
         return lhs.id == rhs.id
     }
     
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
     static var dummy = KeyResult(title: "", completionState: .beforeStart, tasks: [])
     
-    let id = UUID()
+    let id = UUID().uuidString
     var title: String
     var completionState: KeyResultState
     var tasks: [Task]
