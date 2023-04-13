@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Objective: Identifiable, Hashable {
+struct Objective: Identifiable, Hashable, Codable {
     static func == (lhs: Objective, rhs: Objective) -> Bool {
         return lhs.id == rhs.id
     }
@@ -21,6 +21,37 @@ struct Objective: Identifiable, Hashable {
     var keyResults: [KeyResult]
     var progressPercentage: Int = 0
     var progressValue: Double = 0
+    
+    init(title: String, startDate: Date, endDate: Date, keyResults: [KeyResult]) {
+        self.title = title
+        self.startDate = startDate
+        self.endDate = endDate
+        self.keyResults = keyResults
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.title = try container.decode(String.self, forKey: .title)
+        self.startDate = try container.decode(Date.self, forKey: .startDate)
+        self.endDate = try container.decode(Date.self, forKey: .endDate)
+        self.keyResults = try container.decode([KeyResult].self, forKey: .keyResults)
+        setProgress()
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(title, forKey: .title)
+        try container.encode(startDate, forKey: .startDate)
+        try container.encode(endDate, forKey: .endDate)
+        try container.encode(keyResults, forKey: .keyResults)
+    }
+    
+    private enum CodingKeys: String, CodingKey {
+        case title
+        case startDate
+        case endDate
+        case keyResults
+    }
     
     mutating func setProgress() {
         setProgressValue()
