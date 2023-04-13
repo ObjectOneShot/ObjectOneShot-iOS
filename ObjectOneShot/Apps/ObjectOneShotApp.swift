@@ -10,14 +10,12 @@ import SwiftUI
 @main
 struct ObjectOneShotApp: App {
     @StateObject private var coordinator = Coordinator()
-    private var viewModel = OKRViewModel.shared
-    let persistenceController = PersistenceController.shared
+    private var viewModel = OKRViewModel()
     
     var body: some Scene {
         WindowGroup {
             NavigationStack(path: $coordinator.path) {
                 MainView(coordinator: coordinator)
-                    .environment(\.managedObjectContext, persistenceController.container.viewContext)
                     .environmentObject(viewModel)
             }
         }

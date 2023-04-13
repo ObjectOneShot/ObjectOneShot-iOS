@@ -33,13 +33,7 @@ struct ObjectiveDetailView: View {
             }
             Divider()
                 .padding(.horizontal)
-            ObjectiveDetailCard(title: $objectiveTitle, startDate: $objectiveStartDate, endDate: $objectiveEndDate, progressValue: $objectiveProgressValue, progressPercentage: $objectiveProgressPercentage)
-                .onChange(of: viewModel.currentObjective.progressValue) { newValue in
-                    self.objectiveProgressValue = newValue
-                }
-                .onChange(of: viewModel.currentObjective.progressPercentage) { newValue in
-                    self.objectiveProgressPercentage = newValue
-                }
+            ObjectiveDetailCard()
             KeyResultsHeaderView()
             ScrollView {
                 VStack {
@@ -94,6 +88,6 @@ struct ObjectiveDetailView: View {
 struct ObjectiveDetailView_Previews: PreviewProvider {
     static var previews: some View {
         ObjectiveDetailView(objectiveID: Objective.dummy.id)
-            .environmentObject(OKRViewModel.shared)
+            .environmentObject(OKRViewModel())
     }
 }

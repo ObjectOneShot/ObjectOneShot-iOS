@@ -16,11 +16,8 @@
 		606D898D29E4DEEB00FA4BFA /* Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D898C29E4DEEB00FA4BFA /* Delete.swift */; };
 		606D899029E53B9500FA4BFA /* KeyResultEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D898F29E53B9500FA4BFA /* KeyResultEditView.swift */; };
 		60C88D9029E041D300EB1BA6 /* ObjectOneShotApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C88D8F29E041D300EB1BA6 /* ObjectOneShotApp.swift */; };
-		60C88D9229E041D300EB1BA6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C88D9129E041D300EB1BA6 /* ContentView.swift */; };
 		60C88D9429E041D500EB1BA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60C88D9329E041D500EB1BA6 /* Assets.xcassets */; };
 		60C88D9729E041D500EB1BA6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60C88D9629E041D500EB1BA6 /* Preview Assets.xcassets */; };
-		60C88D9929E041D500EB1BA6 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C88D9829E041D500EB1BA6 /* Persistence.swift */; };
-		60C88D9C29E041D500EB1BA6 /* ObjectOneShot.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 60C88D9A29E041D500EB1BA6 /* ObjectOneShot.xcdatamodeld */; };
 		60C88DA829E0605D00EB1BA6 /* Objective.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C88DA729E0605D00EB1BA6 /* Objective.swift */; };
 		60C88DAA29E0607700EB1BA6 /* KeyResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C88DA929E0607700EB1BA6 /* KeyResult.swift */; };
 		60C88DAC29E060B400EB1BA6 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C88DAB29E060B400EB1BA6 /* Task.swift */; };
@@ -44,11 +41,8 @@
 		606D898F29E53B9500FA4BFA /* KeyResultEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyResultEditView.swift; sourceTree = "<group>"; };
 		60C88D8C29E041D300EB1BA6 /* ObjectOneShot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ObjectOneShot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60C88D8F29E041D300EB1BA6 /* ObjectOneShotApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectOneShotApp.swift; sourceTree = "<group>"; };
-		60C88D9129E041D300EB1BA6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		60C88D9329E041D500EB1BA6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		60C88D9629E041D500EB1BA6 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		60C88D9829E041D500EB1BA6 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		60C88D9B29E041D500EB1BA6 /* ObjectOneShot.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ObjectOneShot.xcdatamodel; sourceTree = "<group>"; };
 		60C88DA729E0605D00EB1BA6 /* Objective.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Objective.swift; sourceTree = "<group>"; };
 		60C88DA929E0607700EB1BA6 /* KeyResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyResult.swift; sourceTree = "<group>"; };
 		60C88DAB29E060B400EB1BA6 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
@@ -176,9 +170,6 @@
 		60C88DA529E05F7A00EB1BA6 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				606D898E29E4DEF200FA4BFA /* Modifiers */,
-				60C88D9A29E041D500EB1BA6 /* ObjectOneShot.xcdatamodeld */,
-				60C88D9829E041D500EB1BA6 /* Persistence.swift */,
 				60C88DC029E0C7AC00EB1BA6 /* Coordinator.swift */,
 			);
 			path = Utilities;
@@ -188,7 +179,6 @@
 			isa = PBXGroup;
 			children = (
 				60C88D8F29E041D300EB1BA6 /* ObjectOneShotApp.swift */,
-				60C88D9129E041D300EB1BA6 /* ContentView.swift */,
 			);
 			path = Apps;
 			sourceTree = "<group>";
@@ -211,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				60C88DC529E0FAC200EB1BA6 /* View+Extensions.swift */,
+				606D898E29E4DEF200FA4BFA /* Modifiers */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -293,10 +284,7 @@
 				60C88DBF29E0C42800EB1BA6 /* OKRViewModel.swift in Sources */,
 				606D898229E40BEE00FA4BFA /* WideAddButtonView.swift in Sources */,
 				606D898D29E4DEEB00FA4BFA /* Delete.swift in Sources */,
-				60C88D9929E041D500EB1BA6 /* Persistence.swift in Sources */,
 				606D899029E53B9500FA4BFA /* KeyResultEditView.swift in Sources */,
-				60C88D9C29E041D500EB1BA6 /* ObjectOneShot.xcdatamodeld in Sources */,
-				60C88D9229E041D300EB1BA6 /* ContentView.swift in Sources */,
 				606D898929E4AAC800FA4BFA /* AddObjectiveView.swift in Sources */,
 				60C88DAA29E0607700EB1BA6 /* KeyResult.swift in Sources */,
 				60C88DC629E0FAC200EB1BA6 /* View+Extensions.swift in Sources */,
@@ -517,19 +505,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		60C88D9A29E041D500EB1BA6 /* ObjectOneShot.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				60C88D9B29E041D500EB1BA6 /* ObjectOneShot.xcdatamodel */,
-			);
-			currentVersion = 60C88D9B29E041D500EB1BA6 /* ObjectOneShot.xcdatamodel */;
-			path = ObjectOneShot.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 60C88D8429E041D300EB1BA6 /* Project object */;
 }

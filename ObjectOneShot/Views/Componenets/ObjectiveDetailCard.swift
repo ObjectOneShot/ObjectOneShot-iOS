@@ -11,11 +11,11 @@ struct ObjectiveDetailCard: View {
     
     @EnvironmentObject var viewModel: OKRViewModel
     
-    @Binding var title: String
-    @Binding var startDate: Date
-    @Binding var endDate: Date
-    @Binding var progressValue: Double
-    @Binding var progressPercentage: Int
+    @State private var title: String = ""
+    @State private var startDate: Date = Date()
+    @State private var endDate: Date = Date()
+    @State private var progressValue: Double = 0.0
+    @State private var progressPercentage: Int = 0
     
     var body: some View {
         VStack {
@@ -64,7 +64,13 @@ struct ObjectiveDetailCard: View {
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                 HStack {
                     ProgressView(value: progressValue)
+                        .onChange(of: viewModel.currentObjective.progressValue) { newValue in
+                            progressValue = viewModel.currentObjective.progressValue
+                        }
                     Text("\(progressPercentage)%")
+                        .onChange(of: viewModel.currentObjective.progressPercentage) { newValue in
+                            progressPercentage = viewModel.currentObjective.progressPercentage
+                        }
                 }
                 .frame(height: 40)
                 .padding(.horizontal)
@@ -76,11 +82,18 @@ struct ObjectiveDetailCard: View {
         .background(.black)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .padding(10)
+        .onAppear {
+            self.title = viewModel.currentObjective.title
+            self.startDate = viewModel.currentObjective.startDate
+            self.endDate = viewModel.currentObjective.endDate
+            self.progressValue = viewModel.currentObjective.progressValue
+            self.progressPercentage = viewModel.currentObjective.progressPercentage
+        }
     }
 }
 
 struct ObjectiveDetailCard_Previews: PreviewProvider {
     static var previews: some View {
-        ObjectiveDetailCard(title: .constant(""), startDate: .constant(Date()), endDate: .constant(Date()), progressValue: .constant(0), progressPercentage: .constant(0))
+        ObjectiveDetailCard()
     }
 }

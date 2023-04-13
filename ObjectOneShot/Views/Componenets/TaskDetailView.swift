@@ -85,6 +85,6 @@ struct TaskDetailView: View {
 struct TaskDetailView_Previews: PreviewProvider {
     static var previews: some View {
         TaskDetailView(progressValue: .constant(0.0), progressPercentage: .constant(0), keyResultIndex: 0, task: Task(title: ""), isLast: true)
-            .environmentObject(OKRViewModel.shared)
+            .environmentObject(OKRViewModel())
     }
 }

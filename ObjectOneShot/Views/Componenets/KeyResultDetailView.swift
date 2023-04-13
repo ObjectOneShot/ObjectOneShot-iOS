@@ -114,6 +114,6 @@ struct KeyResultDetailView: View {
 struct KeyResultDetailView_Previews: PreviewProvider {
     static var previews: some View {
         KeyResultDetailView(keyResult: KeyResult(title: "", completionState: .beforeStart, tasks: [Task(title: "")]))
-            .environmentObject(OKRViewModel.shared)
+            .environmentObject(OKRViewModel())
     }
 }

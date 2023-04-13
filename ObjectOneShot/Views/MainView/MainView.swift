@@ -14,6 +14,7 @@ struct MainView: View {
     
     var body: some View {
         VStack(spacing: 0) {
+            // Header
             Text("목표 한방")
                 .font(.system(size: 25, weight: .bold))
                 .padding()
@@ -27,10 +28,12 @@ struct MainView: View {
                 Spacer()
             }
             Divider()
+            // Objectives 카드 뷰
             ScrollView {
                 ForEach(viewModel.objectives) { objective in
+                    // 클릭하면 ObjectiveDetailView로 전환
                     NavigationLink(destination: ObjectiveDetailView(objectiveID: objective.id)
-                        .environmentObject(OKRViewModel.shared)) {
+                        .environmentObject(self.viewModel)) {
                             ObjectiveCardView(objectiveID: objective.id)
                                 .onDelete(isTask: false) {
                                     viewModel.deleteObjectiveByID(of: objective.id)
@@ -40,16 +43,17 @@ struct MainView: View {
                 }
             }
             Spacer()
+            // Objective 추가 뷰
             Button {
-                coordinator.show(AddObjective.self)
+                coordinator.show(AddObjectiveView.self)
             } label: {
                 WideAddButtonView()
                     .tint(.black)
             }
             .navigationDestination(for: String.self) { id in
-                if id == String(describing: AddObjective.self) {
-                    AddObjective()
-                        .environmentObject(viewModel)
+                if id == String(describing: AddObjectiveView.self) {
+                    AddObjectiveView()
+                        .environmentObject(self.viewModel)
                 }
             }
         }
@@ -59,6 +63,6 @@ struct MainView: View {
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         MainView(coordinator: Coordinator())
-            .environmentObject(OKRViewModel.shared)
+            .environmentObject(OKRViewModel())
     }
 }

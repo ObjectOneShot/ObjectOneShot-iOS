@@ -11,8 +11,10 @@ struct KeyResultEditView: View {
     
     @EnvironmentObject var viewModel: OKRViewModel
     
+    @Binding var isAddingKeyResult: Bool
     @State var keyResultTitle: String = ""
     @State var taskTitle: String = ""
+    @State var isAddingTask: Bool = true
     
     var body: some View {
         VStack(spacing: 10) {
@@ -22,17 +24,18 @@ struct KeyResultEditView: View {
                     TextField("Key Results를 입력해 주세요", text: $keyResultTitle)
                         .padding(.leading, 5)
                     Button {
-                        viewModel.newKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [Task(title: "")])
-                        viewModel.isAddingKeyResult = false
+                        // keyResultEditing 종료
+                        viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [])
+                        self.isAddingKeyResult = false
                     } label: {
                         Image(systemName: "xmark")
                             .padding(.trailing, 5)
                             .tint(.black)
                     }
                     .onChange(of: keyResultTitle) { newValue in
-                        viewModel.newKeyResult.title = newValue
+                        viewModel.newEditingKeyResult.title = newValue
                     }
-                    .onChange(of: viewModel.newKeyResult.title) { newValue in
+                    .onChange(of: viewModel.newEditingKeyResult.title) { newValue in
                         keyResultTitle = newValue
                     }
                 }
@@ -40,8 +43,8 @@ struct KeyResultEditView: View {
                     .frame(height: 1)
                     .padding(5)
                 HStack {
-                    ProgressView(value: viewModel.newKeyResult.progressValue)
-                    Text("\(viewModel.newKeyResult.progressPercentage)%")
+                    ProgressView(value: viewModel.newEditingKeyResult.progressValue)
+                    Text("\(viewModel.newEditingKeyResult.progressPercentage)%")
                 }
             }
             .padding()
@@ -50,67 +53,71 @@ struct KeyResultEditView: View {
             .padding(.horizontal, 10)
             
             // 배열이 비어있지 않을 때만 showNewTasks
-            if !viewModel.newKeyResult.tasks.isEmpty {
+            if !viewModel.newEditingKeyResult.tasks.isEmpty {
                 showNewTasks()
             }
-            if viewModel.isAddingTask {
+            // 태스크 추가 중이고 태스크 갯수가 5개 미만이면 editNewTask 보이기
+            if isAddingTask && viewModel.newEditingKeyResult.tasks.count != 5 {
                 editNewTask()
             }
+        }
+        .onAppear {
+            viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [])
         }
         
     }
     
     @ViewBuilder
     func showNewTasks() -> some View {
-        ForEach(viewModel.newKeyResult.tasks, id: \.self) { task in
-            TaskEditView(task: task, isLast: true)
-                .onDelete(isTask: true) {
-                    viewModel.newKeyResult.tasks = viewModel.newKeyResult.tasks.filter { $0.id == task.id }
+        ForEach(viewModel.newEditingKeyResult.tasks, id: \.self) { task in
+            if let taskIndex = viewModel.newEditingKeyResult.tasks.firstIndex(where: { $0.id == task.id }) {
+                if taskIndex == viewModel.newEditingKeyResult.tasks.count - 1 {
+                    TaskEditView(isAddingTask: $isAddingTask, isLast: true, task: task)
+                        .onDelete(isTask: true) {
+                            viewModel.newEditingKeyResult.tasks = viewModel.newEditingKeyResult.tasks.filter { $0.id == task.id }
+                        }
+                } else {
+                    TaskEditView(isAddingTask: $isAddingTask, isLast: false, task: task)
+                        .onDelete(isTask: true) {
+                            viewModel.newEditingKeyResult.tasks = viewModel.newEditingKeyResult.tasks.filter { $0.id == task.id }
+                        }
                 }
+            }
         }
     }
     
     @ViewBuilder
     func editNewTask() -> some View {
-        if viewModel.newKeyResult.tasks.count != 5 {
-            VStack {
-                HStack {
-                    Image(systemName: "square")
-                    TextField("", text: $taskTitle)
-                        .textFieldStyle(.plain)
-                    Button {
-                        // 새로운 태스크의 텍스트필드 비어있지 않다면 new Key Result에 추가
-                        if !taskTitle.isEmpty {
-                            // 5개까지만 추가 가능
-                            if viewModel.newKeyResult.tasks.count < 5 {
-                                viewModel.addNewTaskToNewKeyResult()
-                                taskTitle = ""
-                            }
+        VStack {
+            HStack {
+                Image(systemName: "square")
+                TextField("", text: $taskTitle)
+                Button {
+                    // 새로운 태스크의 텍스트필드 비어있지 않다면 new Key Result에 추가
+                    if !taskTitle.isEmpty {
+                        // 5개까지만 추가 가능
+                        if viewModel.newEditingKeyResult.tasks.count < 5 {
+                            viewModel.newEditingKeyResult.tasks.append(Task(title: taskTitle))
+                            taskTitle = ""
                         }
-                    } label: {
-                        Image(systemName: "plus")
-                            .foregroundColor(.black)
                     }
+                } label: {
+                    Image(systemName: "plus")
+                        .foregroundColor(.black)
                 }
-                .padding(.horizontal)
-                .padding(.bottom, 3)
-                .onChange(of: taskTitle) { newValue in
-                    viewModel.newTask.title = taskTitle
-                }
-                .onChange(of: viewModel.newTask.title) { newValue in
-                    taskTitle = newValue
-                }
-                Rectangle()
-                    .frame(height:1)
-                    .padding(.horizontal)
             }
+            .padding(.horizontal)
+            .padding(.bottom, 3)
+            Rectangle()
+                .frame(height:1)
+                .padding(.horizontal)
         }
     }
 }
 
 struct KeyResultEditView_Previews: PreviewProvider {
     static var previews: some View {
-        KeyResultEditView()
-            .environmentObject(OKRViewModel.shared)
+        KeyResultEditView(isAddingKeyResult: .constant(true))
+            .environmentObject(OKRViewModel())
     }
 }

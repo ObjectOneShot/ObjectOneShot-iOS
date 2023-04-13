@@ -7,15 +7,10 @@
 
 import SwiftUI
 
-struct AddObjective: View {
+struct AddObjectiveView: View {
     @EnvironmentObject var viewModel: OKRViewModel
     
-    @State var objectiveTitle: String = ""
-    @State var objectiveStartDate = Date()
-    @State var objectiveEndDate = Date()
-    @State var objectiveProgressValue = 0.0
-    @State var objectiveProgressPercentage = 0
-    
+    @State private var isAddingKeyResult = true
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
@@ -31,13 +26,7 @@ struct AddObjective: View {
             Divider()
                 .padding(.horizontal)
             // objective detail 뷰
-            ObjectiveDetailCard(title: $objectiveTitle, startDate: $objectiveStartDate, endDate: $objectiveEndDate, progressValue: $objectiveProgressValue, progressPercentage: $objectiveProgressPercentage)
-                .onChange(of: viewModel.currentObjective.progressValue) { newValue in
-                    self.objectiveProgressValue = newValue
-                }
-                .onChange(of: viewModel.currentObjective.progressPercentage) { newValue in
-                    self.objectiveProgressPercentage = newValue
-                }
+            ObjectiveDetailCard()
             // KeyReulst 헤더 뷰
             KeyResultsHeaderView()
             // Key Result 추가 뷰
@@ -48,8 +37,9 @@ struct AddObjective: View {
                     }
                 }
                 Spacer()
-                if viewModel.isAddingKeyResult {
-                    KeyResultEditView()
+                // keyResult를 추가 중이면 KeyResultEditView 보이기 및 버튼 종류 변경
+                if self.isAddingKeyResult {
+                    KeyResultEditView(isAddingKeyResult: $isAddingKeyResult)
                         .padding(.horizontal, 5)
                         .padding(.top, 10)
                     
@@ -57,9 +47,9 @@ struct AddObjective: View {
                         // 작성된 key result를 newKeyResults에 저장
                         // 다만 텍스트필드가 모두 채워져 있어야 함
                         // task도 하나 이상 있어야 함
-                        if !viewModel.newKeyResult.title.isEmpty {
-                            viewModel.isAddingKeyResult = false
-                            viewModel.currentObjective.keyResults.append(viewModel.newKeyResult)
+                        if !viewModel.newEditingKeyResult.title.isEmpty {
+                            self.isAddingKeyResult = false
+                            viewModel.currentObjective.keyResults.append(viewModel.newEditingKeyResult)
                         }
                     } label: {
                         Text("Key Result 저장")
@@ -74,8 +64,8 @@ struct AddObjective: View {
                 } else {
                     Button {
                         // editing 시작
-                        viewModel.isAddingKeyResult = true
-                        viewModel.newKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [Task(title: "")])
+                        self.isAddingKeyResult = true
+                        viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [Task(title: "")])
                     } label: {
                         Text("Key Result 추가")
                             .tint(.black)
@@ -93,18 +83,13 @@ struct AddObjective: View {
             addObjectButton()   /* TODO : 키보드랑 같이 위로 올라오지 않도록 수정 */
         }
         .onAppear {
+            // objective 추가에 사용할 viewModel.currentObjective 초기화
             let currentObjective = Objective(title: "", startDate: Date(), endDate: Date(), keyResults: [])
             viewModel.currentObjective = currentObjective
-            
-            self.objectiveTitle = currentObjective.title
-            self.objectiveStartDate = currentObjective.startDate
-            self.objectiveEndDate = currentObjective.endDate
-            self.objectiveProgressValue = currentObjective.progressValue
-            self.objectiveProgressPercentage = currentObjective.progressPercentage
         }
         .onDisappear {
             viewModel.currentObjective = Objective(title: "", startDate: Date(), endDate: Date(), keyResults: [])
-            viewModel.newKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [])
+            viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [])
         }
         .onTapGesture {
             self.endTextEditing()
@@ -148,7 +133,7 @@ struct AddObjective: View {
 
 struct AddObjective_Previews: PreviewProvider {
     static var previews: some View {
-        AddObjective()
-            .environmentObject(OKRViewModel.shared)
+        AddObjectiveView()
+            .environmentObject(OKRViewModel())
     }
 }

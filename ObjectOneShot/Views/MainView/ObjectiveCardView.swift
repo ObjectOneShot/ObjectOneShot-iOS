@@ -95,6 +95,6 @@ struct ObjectiveCardView: View {
 struct ObjectiveCardView_Previews: PreviewProvider {
     static var previews: some View {
         ObjectiveCardView(objectiveID: Objective.dummy.id)
-            .environmentObject(OKRViewModel.shared)
+            .environmentObject(OKRViewModel())
     }
 }

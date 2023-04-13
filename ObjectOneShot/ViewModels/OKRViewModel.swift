@@ -8,17 +8,11 @@
 import Foundation
 
 final class OKRViewModel: ObservableObject {
-    static let shared = OKRViewModel()
-    
-    private init() {}
-    
     @Published var keyResultState: KeyResultState = .beforeStart
     
     @Published var currentObjective: Objective = Objective(title: "", startDate: Date(), endDate: Date(), keyResults: [])
-    @Published var newKeyResult: KeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [Task(title: "")])
-    @Published var newTask: Task = Task(title: "")
-    @Published var isAddingKeyResult = false
-    @Published var isAddingTask = false
+    @Published var newEditingKeyResult: KeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [Task(title: "")])
+    @Published var newEditingTask: Task = Task(title: "")
     
     @Published var objectives: [Objective] = [
         Objective(title: "감사 일기 쓰기", startDate: Date(), endDate: Date(), keyResults: [
@@ -76,7 +70,7 @@ final class OKRViewModel: ObservableObject {
     
     // 새로 작성중인 Key Result에 Task 추가하기
     func addNewTaskToNewKeyResult() {
-        self.newKeyResult.tasks.append(self.newTask)
+        self.newEditingKeyResult.tasks.append(self.newEditingTask)
     }
     
     func reInitiateNewObjective() {
@@ -84,17 +78,17 @@ final class OKRViewModel: ObservableObject {
     }
     
     func reInitiateNewKeyResult() {
-        self.newKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [])
+        self.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [])
     }
     
     // 새로운 태스크 새로운 객체로 재할당
     func reInitiateNewTask() {
-        self.newTask = Task(title: "")
+        self.newEditingTask = Task(title: "")
     }
     
     // Key Result 수정이 끝났는지
     func isEndedEditingKeyResult() -> Bool {
-        if !newKeyResult.title.isEmpty, !newTask.title.isEmpty {
+        if !newEditingKeyResult.title.isEmpty, !newEditingTask.title.isEmpty {
             return true
         } else {
             return false
@@ -110,7 +104,7 @@ final class OKRViewModel: ObservableObject {
     
     // 새로 작성하는 objective의 모든 텍스트필드들이 작성되어 있는지 확인하기
     func isReadyToAddNewObjective() -> Bool {
-        if currentObjective.title.isEmpty || newKeyResult.title.isEmpty {
+        if currentObjective.title.isEmpty || newEditingKeyResult.title.isEmpty {
             return false
         } else {
             return true
