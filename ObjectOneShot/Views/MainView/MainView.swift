@@ -15,12 +15,15 @@ struct MainView: View {
     var body: some View {
         VStack(spacing: 0) {
             // Header
-            Text("목표 한방")
-                .font(.system(size: 25, weight: .bold))
-                .padding()
-                .frame(maxWidth: .infinity)
-                .background(.gray)
-                .padding(1)
+            HStack {
+                Spacer()
+                Image("mainTitle")
+                    .padding(.vertical, 12)
+                Spacer()
+            }
+            .background(Color("titleBackground"))
+            .padding(.top, 1)
+            
             HStack {
                 Text("Objective를 설정해 주세요")
                     .font(.system(size:20, weight: .bold))
@@ -37,6 +40,7 @@ struct MainView: View {
                             ObjectiveCardView(objectiveID: objective.id)
                                 .onDelete(isTask: false) {
                                     viewModel.deleteObjectiveByID(of: objective.id)
+                                    viewModel.saveObjectivesToUserDefaults()
                                 }
                     }
                     .foregroundColor(.black)

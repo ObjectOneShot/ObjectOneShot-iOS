@@ -128,6 +128,7 @@ struct ObjectiveDetailView: View {
              */
             viewModel.objectives[viewModel.objectives.firstIndex(where: { $0.id == objectiveID })!] = viewModel.currentObjective
             self.presentationMode.wrappedValue.dismiss()
+            viewModel.saveObjectivesToUserDefaults()
         } label : {
             HStack{
                 Image(systemName: "chevron.left")

@@ -136,6 +136,7 @@ struct AddObjectiveView: View {
             if !viewModel.currentObjective.title.isEmpty {
                 viewModel.addNewObjective(viewModel.currentObjective)
                 self.presentationMode.wrappedValue.dismiss()
+                viewModel.saveObjectivesToUserDefaults()
             }
         } label: {
             Text("목표 등록하기")
