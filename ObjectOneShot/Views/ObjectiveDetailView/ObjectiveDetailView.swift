@@ -29,9 +29,24 @@ struct ObjectiveDetailView: View {
             ObjectiveDetailCard(objectiveID: objectiveID)
             KeyResultsHeaderView()
             ScrollView {
-                VStack {
-                    ForEach(viewModel.currentObjective.keyResults, id: \.self) { keyResult in
-                        KeyResultDetailView(keyResultID: keyResult.id)
+                switch viewModel.keyResultState {
+                case .beforeStart:
+                    VStack {
+                        ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .beforeStart }, id: \.self) { keyResult in
+                            KeyResultDetailView(keyResultID: keyResult.id)
+                        }
+                    }
+                case .inProgress:
+                    VStack {
+                        ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .inProgress }, id: \.self) { keyResult in
+                            KeyResultDetailView(keyResultID: keyResult.id)
+                        }
+                    }
+                case .completed:
+                    VStack {
+                        ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .completed }, id: \.self) { keyResult in
+                            KeyResultDetailView(keyResultID: keyResult.id)
+                        }
                     }
                 }
                 // keyResult를 추가 중이면 KeyResultEditView 보이기 및 버튼 종류 변경
@@ -46,8 +61,14 @@ struct ObjectiveDetailView: View {
                         // task도 하나 이상 있어야 함
                         if !viewModel.newEditingKeyResult.title.isEmpty {
                             self.isAddingKeyResult = false
-                            if let currentObjectiveIndex = viewModel.objectives.firstIndex(where: { $0.id == objectiveID }) {
-                                viewModel.currentObjective.keyResults.append(viewModel.newEditingKeyResult)
+                            
+                            viewModel.currentObjective.keyResults.append(viewModel.newEditingKeyResult)
+                            if viewModel.newEditingKeyResult.completionState == .beforeStart {
+                                viewModel.keyResultState = .beforeStart
+                            } else if viewModel.newEditingKeyResult.completionState == .inProgress {
+                                viewModel.keyResultState = .inProgress
+                            } else {
+                                viewModel.keyResultState = .completed
                             }
                         }
                     } label: {
@@ -83,6 +104,9 @@ struct ObjectiveDetailView: View {
             // 선택된 objective 가져오기
             if let currentObjective = viewModel.objectives.first(where: { $0.id == objectiveID }) {
                 viewModel.currentObjective = currentObjective
+                for index in viewModel.currentObjective.keyResults.indices {
+                    viewModel.currentObjective.keyResults[index].isExpanded = false
+                }
             } else {
                 print("ERROR : no objective found matching id : \(objectiveID) in ObjectiveDetailCard")
             }

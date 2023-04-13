@@ -12,6 +12,7 @@ struct TaskDetailView: View {
     @EnvironmentObject var viewModel: OKRViewModel
     
     @State var title = ""
+    @Binding var isEditingNewTask: Bool
     @Binding var progressValue: Double
     @Binding var progressPercentage: Int
     
@@ -30,6 +31,14 @@ struct TaskDetailView: View {
                         print("ERROR : no matching task found by taskID : TaskDetailView.swift")
                     }
                     viewModel.currentObjective.keyResults[keyResultIndex].setProgress()
+                    if viewModel.currentObjective.keyResults[keyResultIndex].completionState == .beforeStart {
+                        viewModel.keyResultState = .beforeStart
+                    } else if viewModel.currentObjective.keyResults[keyResultIndex].completionState == .inProgress {
+                        viewModel.keyResultState = .inProgress
+                    } else {
+                        viewModel.keyResultState = .completed
+                    }
+                    viewModel.currentObjective.keyResults[keyResultIndex].isExpanded = true
                     
                     progressValue = viewModel.currentObjective.keyResults[keyResultIndex].progressValue
                     progressPercentage = viewModel.currentObjective.keyResults[keyResultIndex].progressPercentage
@@ -56,10 +65,11 @@ struct TaskDetailView: View {
                     }
                 Spacer()
                 
-                // 만약 마지막 task라면 + 버튼 추가, task 추가 가능하도록 하기
-                if isLast {
+                // 만약 마지막 task이고 새로운 task 추가중이지 않다면 + 버튼 추가, task 추가 가능하도록 하기
+                if isLast && !isEditingNewTask {
                     Button {
                         // task 추가 및 task가 5개 이하라면 다음 task 추가 칸 보이기!
+                        isEditingNewTask = true
                     } label: {
                         Image(systemName: "plus")
                             .foregroundColor(.black)
@@ -84,7 +94,7 @@ struct TaskDetailView: View {
 
 struct TaskDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskDetailView(progressValue: .constant(0.0), progressPercentage: .constant(0), keyResultIndex: 0, task: Task(title: ""), isLast: true)
+        TaskDetailView(isEditingNewTask: .constant(false), progressValue: .constant(0.0), progressPercentage: .constant(0), keyResultIndex: 0, task: Task(title: ""), isLast: true)
             .environmentObject(OKRViewModel())
     }
 }

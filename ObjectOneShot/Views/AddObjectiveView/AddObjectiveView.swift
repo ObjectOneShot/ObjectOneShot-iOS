@@ -31,9 +31,24 @@ struct AddObjectiveView: View {
             KeyResultsHeaderView()
             // Key Result 추가 뷰
             ScrollView {
-                VStack {
-                    ForEach(viewModel.currentObjective.keyResults, id: \.self) { keyResult in
-                        KeyResultDetailView(keyResultID: keyResult.id)
+                switch viewModel.keyResultState {
+                case .beforeStart:
+                    VStack {
+                        ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .beforeStart }, id: \.self) { keyResult in
+                            KeyResultDetailView(keyResultID: keyResult.id)
+                        }
+                    }
+                case .inProgress:
+                    VStack {
+                        ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .inProgress }, id: \.self) { keyResult in
+                            KeyResultDetailView(keyResultID: keyResult.id)
+                        }
+                    }
+                case .completed:
+                    VStack {
+                        ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .completed }, id: \.self) { keyResult in
+                            KeyResultDetailView(keyResultID: keyResult.id)
+                        }
                     }
                 }
                 Spacer()
@@ -50,6 +65,7 @@ struct AddObjectiveView: View {
                         if !viewModel.newEditingKeyResult.title.isEmpty {
                             self.isAddingKeyResult = false
                             viewModel.currentObjective.keyResults.append(viewModel.newEditingKeyResult)
+                            viewModel.currentObjective.setProgress()
                         }
                     } label: {
                         Text("Key Result 저장")

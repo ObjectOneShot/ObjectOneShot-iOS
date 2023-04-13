@@ -93,12 +93,6 @@ struct ObjectiveDetailCard: View {
                 self.progressValue = currentObjective.progressValue
                 self.progressPercentage = currentObjective.progressPercentage
             }
-//            
-//            self.title = viewModel.currentObjective.title
-//            self.startDate = viewModel.currentObjective.startDate
-//            self.endDate = viewModel.currentObjective.endDate
-//            self.progressValue = viewModel.currentObjective.progressValue
-//            self.progressPercentage = viewModel.currentObjective.progressPercentage
         }
     }
 }

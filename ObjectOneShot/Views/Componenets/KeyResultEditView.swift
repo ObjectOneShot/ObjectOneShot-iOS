@@ -73,13 +73,21 @@ struct KeyResultEditView: View {
             if let taskIndex = viewModel.newEditingKeyResult.tasks.firstIndex(where: { $0.id == task.id }) {
                 if taskIndex == viewModel.newEditingKeyResult.tasks.count - 1 {
                     TaskEditView(isAddingTask: $isAddingTask, isLast: true, task: task)
-                        .onDelete(isTask: true) {
-                            viewModel.newEditingKeyResult.tasks = viewModel.newEditingKeyResult.tasks.filter { $0.id == task.id }
+                        .if(viewModel.newEditingKeyResult.tasks.count > 1) { view in
+                            view
+                                .onDelete(isTask: true) {
+                                    viewModel.newEditingKeyResult.tasks = viewModel.newEditingKeyResult.tasks.filter { $0.id != task.id }
+                                    viewModel.newEditingKeyResult.setProgress()
+                                }
                         }
                 } else {
                     TaskEditView(isAddingTask: $isAddingTask, isLast: false, task: task)
-                        .onDelete(isTask: true) {
-                            viewModel.newEditingKeyResult.tasks = viewModel.newEditingKeyResult.tasks.filter { $0.id == task.id }
+                        .if(viewModel.newEditingKeyResult.tasks.count > 1) { view in
+                            view
+                                .onDelete(isTask: true) {
+                                    viewModel.newEditingKeyResult.tasks = viewModel.newEditingKeyResult.tasks.filter { $0.id != task.id }
+                                    viewModel.newEditingKeyResult.setProgress()
+                                }
                         }
                 }
             }
@@ -113,11 +121,11 @@ struct KeyResultEditView: View {
                 .padding(.horizontal)
         }
     }
-}
-
-struct KeyResultEditView_Previews: PreviewProvider {
-    static var previews: some View {
-        KeyResultEditView(isAddingKeyResult: .constant(true))
-            .environmentObject(OKRViewModel())
+    
+    struct KeyResultEditView_Previews: PreviewProvider {
+        static var previews: some View {
+            KeyResultEditView(isAddingKeyResult: .constant(true))
+                .environmentObject(OKRViewModel())
+        }
     }
 }
