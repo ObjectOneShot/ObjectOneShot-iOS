@@ -10,12 +10,13 @@ import SwiftUI
 struct KeyResultDetailView: View {
     @EnvironmentObject var viewModel: OKRViewModel
     
-    @State var isExpanded = true
+    @State var isExpanded = false
+    
     @State var keyResultTitle = ""
     @State var progressValue: Double = 0.0
     @State var progressPercentage = 0
     
-    let keyResult: KeyResult
+    let keyResultID: String
     
     var body: some View {
         VStack(spacing: 10) {
@@ -25,7 +26,7 @@ struct KeyResultDetailView: View {
                     TextField("", text: $keyResultTitle)
                         .padding(.leading, 5)
                         .onChange(of: keyResultTitle) { _ in
-                            if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResult.id }) {
+                            if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResultID }) {
                                 viewModel.currentObjective.keyResults[index].title = keyResultTitle
                             } else {
                                 print("ERROR : no keyResult matching id : KeyResultDetailView")
@@ -61,7 +62,7 @@ struct KeyResultDetailView: View {
             .if(!isExpanded, transform: { view in
                 view
                     .onDelete(isTask: false) {
-                        viewModel.currentObjective.keyResults =  viewModel.currentObjective.keyResults.filter { $0.id != keyResult.id }
+                        viewModel.currentObjective.keyResults =  viewModel.currentObjective.keyResults.filter { $0.id != keyResultID }
                     }
             })
                 // 펼치면 Task들 보이기
@@ -70,7 +71,7 @@ struct KeyResultDetailView: View {
             }
         }
         .onAppear {
-            if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResult.id }) {
+            if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResultID }) {
                 self.keyResultTitle = viewModel.currentObjective.keyResults[index].title
                 self.progressValue = viewModel.currentObjective.keyResults[index].progressValue
                 self.progressPercentage = viewModel.currentObjective.keyResults[index].progressPercentage
@@ -79,7 +80,7 @@ struct KeyResultDetailView: View {
             }
         }
         .onChange(of: progressValue) { newValue in
-            if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResult.id }) {
+            if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResultID }) {
                 if newValue == 0 {
                     viewModel.currentObjective.keyResults[index].completionState = .beforeStart
                 } else if newValue == 1 {
@@ -97,7 +98,7 @@ struct KeyResultDetailView: View {
     @ViewBuilder
     func showTasks() -> some View {
         // currentKeyResult의 tasks 보여주기
-        if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResult.id }) {
+        if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResultID }) {
             ForEach(viewModel.currentObjective.keyResults[index].tasks, id: \.id) { task in
                 TaskDetailView(progressValue: $progressValue, progressPercentage: $progressPercentage, keyResultIndex: index, task: task, isLast: viewModel.currentObjective.keyResults[index].tasks.count - 1 == viewModel.currentObjective.keyResults[index].tasks.firstIndex(where: { $0.id == task.id }))
                 // Task가 두 개 이상일 때만 삭제 가능
@@ -113,7 +114,7 @@ struct KeyResultDetailView: View {
 
 struct KeyResultDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        KeyResultDetailView(keyResult: KeyResult(title: "", completionState: .beforeStart, tasks: [Task(title: "")]))
+        KeyResultDetailView(keyResultID: KeyResult.dummy.id)
             .environmentObject(OKRViewModel())
     }
 }

@@ -55,10 +55,15 @@ struct ObjectiveCardView: View {
                
                 if currentObjective.keyResults.count > 0 {
                     self.firstKeyReulstTitle = currentObjective.keyResults[0].title
+                } else {
+                    self.firstKeyReulstTitle = ""
+                    self.secondKeyReusltTitle = ""
                 }
                 
                 if currentObjective.keyResults.count > 1 {
                     self.secondKeyReusltTitle = currentObjective.keyResults[1].title
+                } else {
+                    self.secondKeyReusltTitle = ""
                 }
                 
             } else {

@@ -26,14 +26,14 @@ struct AddObjectiveView: View {
             Divider()
                 .padding(.horizontal)
             // objective detail 뷰
-            ObjectiveDetailCard()
+            ObjectiveDetailCard(objectiveID: "")
             // KeyReulst 헤더 뷰
             KeyResultsHeaderView()
             // Key Result 추가 뷰
             ScrollView {
                 VStack {
                     ForEach(viewModel.currentObjective.keyResults, id: \.self) { keyResult in
-                        KeyResultDetailView(keyResult: keyResult)
+                        KeyResultDetailView(keyResultID: keyResult.id)
                     }
                 }
                 Spacer()

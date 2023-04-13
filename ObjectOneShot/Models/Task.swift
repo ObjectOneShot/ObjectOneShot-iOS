@@ -10,7 +10,7 @@ import Foundation
 struct Task: Identifiable, Hashable {
     static var dummy = Task(title: "")
     
-    let id = UUID()
+    let id = UUID().uuidString
     var isCompleted = false
     var title: String
 }

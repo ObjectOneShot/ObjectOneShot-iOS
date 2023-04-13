@@ -11,6 +11,8 @@ struct ObjectiveDetailCard: View {
     
     @EnvironmentObject var viewModel: OKRViewModel
     
+    let objectiveID: String
+    
     @State private var title: String = ""
     @State private var startDate: Date = Date()
     @State private var endDate: Date = Date()
@@ -82,18 +84,27 @@ struct ObjectiveDetailCard: View {
         .background(.black)
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .padding(10)
+        
         .onAppear {
-            self.title = viewModel.currentObjective.title
-            self.startDate = viewModel.currentObjective.startDate
-            self.endDate = viewModel.currentObjective.endDate
-            self.progressValue = viewModel.currentObjective.progressValue
-            self.progressPercentage = viewModel.currentObjective.progressPercentage
+            if let currentObjective = viewModel.objectives.first(where: { $0.id == objectiveID }) {
+                self.title = currentObjective.title
+                self.startDate = currentObjective.startDate
+                self.endDate = currentObjective.endDate
+                self.progressValue = currentObjective.progressValue
+                self.progressPercentage = currentObjective.progressPercentage
+            }
+//            
+//            self.title = viewModel.currentObjective.title
+//            self.startDate = viewModel.currentObjective.startDate
+//            self.endDate = viewModel.currentObjective.endDate
+//            self.progressValue = viewModel.currentObjective.progressValue
+//            self.progressPercentage = viewModel.currentObjective.progressPercentage
         }
     }
 }
 
 struct ObjectiveDetailCard_Previews: PreviewProvider {
     static var previews: some View {
-        ObjectiveDetailCard()
+        ObjectiveDetailCard(objectiveID: Objective.dummy.id)
     }
 }

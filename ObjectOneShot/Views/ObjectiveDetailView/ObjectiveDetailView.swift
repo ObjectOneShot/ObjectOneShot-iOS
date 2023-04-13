@@ -12,14 +12,7 @@ struct ObjectiveDetailView: View {
     @EnvironmentObject var viewModel: OKRViewModel
     
     let objectiveID: String
-    
-    @State var objectiveTitle: String = ""
-    @State var objectiveStartDate = Date()
-    @State var objectiveEndDate = Date()
-    @State var objectiveProgressValue = 0.0
-    @State var objectiveProgressPercentage = 0
-    @State var currentKeyResults: [KeyResult] = []
-    
+    @State private var isAddingKeyResult = false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
@@ -33,27 +26,63 @@ struct ObjectiveDetailView: View {
             }
             Divider()
                 .padding(.horizontal)
-            ObjectiveDetailCard()
+            ObjectiveDetailCard(objectiveID: objectiveID)
             KeyResultsHeaderView()
             ScrollView {
                 VStack {
-                    ForEach(currentKeyResults, id: \.self) { keyResult in
-                        KeyResultDetailView(keyResult: keyResult)
-                            .sync($currentKeyResults, with: $viewModel.currentObjective.keyResults)
+                    ForEach(viewModel.currentObjective.keyResults, id: \.self) { keyResult in
+                        KeyResultDetailView(keyResultID: keyResult.id)
+                    }
+                }
+                // keyResult를 추가 중이면 KeyResultEditView 보이기 및 버튼 종류 변경
+                if self.isAddingKeyResult {
+                    KeyResultEditView(isAddingKeyResult: $isAddingKeyResult)
+                        .padding(.horizontal, 5)
+                        .padding(.top, 10)
+                    
+                    Button {
+                        // 작성된 key result를 newKeyResults에 저장
+                        // 다만 텍스트필드가 모두 채워져 있어야 함
+                        // task도 하나 이상 있어야 함
+                        if !viewModel.newEditingKeyResult.title.isEmpty {
+                            self.isAddingKeyResult = false
+                            if let currentObjectiveIndex = viewModel.objectives.firstIndex(where: { $0.id == objectiveID }) {
+                                viewModel.currentObjective.keyResults.append(viewModel.newEditingKeyResult)
+                            }
+                        }
+                    } label: {
+                        Text("Key Result 저장")
+                            .tint(.black)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 50)
+                            .background(.gray)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .padding(.horizontal)
+                            .padding(.vertical, 10)
+                    }
+                } else {
+                    Button {
+                        // editing 시작
+                        self.isAddingKeyResult = true
+                        viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [Task(title: "")])
+                    } label: {
+                        Text("Key Result 추가")
+                            .tint(.black)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 50)
+                            .background(.gray)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .padding(.horizontal)
+                            .padding(.vertical, 10)
                     }
                 }
                 Spacer()
             }
         }
         .onAppear {
+            // 선택된 objective 가져오기
             if let currentObjective = viewModel.objectives.first(where: { $0.id == objectiveID }) {
                 viewModel.currentObjective = currentObjective
-                
-                self.objectiveTitle = currentObjective.title
-                self.objectiveStartDate = currentObjective.startDate
-                self.objectiveEndDate = currentObjective.endDate
-                self.objectiveProgressValue = currentObjective.progressValue
-                self.objectiveProgressPercentage = currentObjective.progressPercentage
             } else {
                 print("ERROR : no objective found matching id : \(objectiveID) in ObjectiveDetailCard")
             }
