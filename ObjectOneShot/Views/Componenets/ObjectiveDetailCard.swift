@@ -20,71 +20,113 @@ struct ObjectiveDetailCard: View {
     @State private var progressPercentage: Int = 0
     
     var body: some View {
-        VStack {
+        VStack(spacing: 8){
             HStack(alignment: .center) {
                 Text("목표")
-                    .frame(width: 60, height: 40)
-                    .background(.gray)
+                    .font(.pretendard(.semiBold, size: 16))
+                    .frame(width: 64, height: 44)
+                    .background(Color("grey_50"))
                     .clipShape(RoundedRectangle(cornerRadius: 10))
-                TextField("", text: $title)
-                    .frame(height: 40)
-                    .padding(.horizontal)
-                    .background(.gray)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                    .onChange(of: title) { _ in
-                        viewModel.currentObjective.title = title
-                    }
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color("grey_300"))
+                    )
+                VStack(alignment: .center, spacing: 0) {
+                    TextField("목표를 입력해주세요", text: $title)
+                        .font(.pretendard(.regular, size: 14))
+                        .frame(height: 29)
+                        .padding(.top, 7)
+                        .padding(.horizontal, 12)
+                        .onChange(of: title) { _ in
+                            viewModel.currentObjective.title = title
+                        }
+                    Rectangle()
+                        .frame(height: 1)
+                        .foregroundColor(Color("grey_900"))
+                        .padding(.bottom, 8)
+                        .padding(.horizontal, 12)
+                }
+                .background(Color("grey_50"))
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color("grey_300"))
+                )
             }
             HStack(alignment: .center) {
-                Text("목표일")
-                    .frame(width: 60, height: 40)
-                    .background(.gray)
+                Text("기간")
+                    .font(.pretendard(.semiBold, size: 16))
+                    .frame(width: 64, height: 44)
+                    .background(Color("grey_50"))
                     .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color("grey_300"))
+                    )
                 HStack {
                     DatePicker("", selection: $startDate, displayedComponents: .date)
                         .labelsHidden()
+                        .scaleEffect(0.9)
                         .onChange(of: startDate) { _ in
                             viewModel.currentObjective.startDate = startDate
                         }
                     Text("~")
+                        .font(.pretendard(.regular, size: 14))
                     DatePicker("", selection: $endDate, displayedComponents: .date)
                         .labelsHidden()
+                        .scaleEffect(0.9)
                         .onChange(of: endDate) { newValue in
                             viewModel.currentObjective.endDate = endDate
                         }
-                    Spacer()
                 }
-                .frame(height: 40)
-                .background(.gray)
+                .frame(height: 44)
+                .frame(maxWidth: .infinity)
+                .background(Color("grey_50"))
                 .clipShape(RoundedRectangle(cornerRadius: 10))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color("grey_300"))
+                )
                 
             }
             HStack {
-                Text("진행률")
-                    .frame(width: 60, height: 40)
-                    .background(.gray)
+                Text("달성")
+                    .font(.pretendard(.semiBold, size: 16))
+                    .frame(width: 64, height: 44)
+                    .background(Color("grey_50"))
                     .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color("grey_300"))
+                    )
                 HStack {
-                    ProgressView(value: progressValue)
+                    CustomProgressBar(value: $progressValue, backgroundColor: Color("grey_300"))
+                        .padding(.vertical, 12)
                         .onChange(of: viewModel.currentObjective.progressValue) { newValue in
                             progressValue = viewModel.currentObjective.progressValue
                         }
                     Text("\(progressPercentage)%")
+                        .font(.pretendard(.medium, size: 14))
+                        .padding(.vertical, 12)
                         .onChange(of: viewModel.currentObjective.progressPercentage) { newValue in
                             progressPercentage = viewModel.currentObjective.progressPercentage
                         }
                 }
-                .frame(height: 40)
-                .padding(.horizontal)
-                .background(.gray)
+                .padding(.horizontal, 10)
+                .frame(height: 44)
+                .background(Color("grey_50"))
                 .clipShape(RoundedRectangle(cornerRadius: 10))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color("grey_300"))
+                )
             }
         }
-        .padding(10)
-        .background(.black)
+        .padding(.vertical, 8)
+        .padding(.horizontal, 8.5)
+        .background(Color("grey_100"))
         .clipShape(RoundedRectangle(cornerRadius: 10))
-        .padding(10)
-        
+        .padding(.horizontal, 16)
         .onAppear {
             if let currentObjective = viewModel.objectives.first(where: { $0.id == objectiveID }) {
                 self.title = currentObjective.title
@@ -100,5 +142,6 @@ struct ObjectiveDetailCard: View {
 struct ObjectiveDetailCard_Previews: PreviewProvider {
     static var previews: some View {
         ObjectiveDetailCard(objectiveID: Objective.dummy.id)
+            .environmentObject(OKRViewModel())
     }
 }

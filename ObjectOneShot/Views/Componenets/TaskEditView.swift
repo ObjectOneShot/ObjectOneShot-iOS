@@ -30,22 +30,38 @@ struct TaskEditView: View {
                 } label: {
                     if let index = viewModel.newEditingKeyResult.tasks.firstIndex(where: { $0.id == task.id }) {
                         if viewModel.newEditingKeyResult.tasks[index].isCompleted {
-                            Image(systemName: "checkmark.square")
+                            Image("checkMark.square")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 18, height: 18)
                                 .foregroundColor(.black)
                         } else {
-                            Image(systemName: "square")
+                            Image("square")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 18, height: 18)
                                 .foregroundColor(.black)
                         }
                     }
                 }
-                TextField("", text: $title)
-                    .onChange(of: title) { _ in
-                        if let index = viewModel.newEditingKeyResult.tasks.firstIndex(where: { $0.id == task.id }) {
-                            viewModel.newEditingKeyResult.tasks[index].title = title
-                        } else {
-                            print("ERROR : no task matching taskID : TaskEditView")
+                // task title
+                ZStack {
+                    TextField("", text: $title, prompt: Text("내용을 입력해주세요").font(.pretendard(.medium, size: 16)))
+                        .font(.pretendard(.medium, size: 16))
+                        .onChange(of: title) { _ in
+                            if let index = viewModel.newEditingKeyResult.tasks.firstIndex(where: { $0.id == task.id }) {
+                                viewModel.newEditingKeyResult.tasks[index].title = title
+                            } else {
+                                print("ERROR : no task matching taskID : TaskEditView")
+                            }
+                        }
+                    if let index = viewModel.newEditingKeyResult.tasks.firstIndex(where: { $0.id == task.id }) {
+                        if viewModel.newEditingKeyResult.tasks[index].isCompleted {
+                            Rectangle()
+                                .frame(height:1)
                         }
                     }
+                }
                 Spacer()
                 if isLast && !isAddingTask {
                     Button {
@@ -60,16 +76,22 @@ struct TaskEditView: View {
                             print("ERROR : no task matching taskID : TaskEditView")
                         }
                     } label : {
-                        Image(systemName: "plus")
-                            .foregroundColor(.black)
+                        Image("plus")
+                            .renderingMode(.template)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 14, height: 14)
+                            .foregroundColor(Color("grey_900"))
                     }
                 }
             }
-            .padding(.horizontal)
-            .padding(.bottom, 3)
+            .padding(.leading, 19)
+            
             Rectangle()
-                .frame(height:1)
-                .padding(.horizontal)
+                .frame(height: 1)
+                .foregroundColor(Color("grey_900"))
+                .padding(.horizontal, 8)
+                .padding(.bottom, 12)
         }
         .onAppear {
             if let index = viewModel.newEditingKeyResult.tasks.firstIndex(where: { $0.id == task.id }) {

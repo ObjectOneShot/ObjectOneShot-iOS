@@ -12,7 +12,7 @@ struct Objective: Identifiable, Hashable, Codable {
         return lhs.id == rhs.id
     }
     
-    static var dummy = Objective(title: "", startDate: Date(), endDate: Date(), keyResults: [])
+    static var dummy = Objective(title: "감사 일기 쓰기", startDate: Date(), endDate: Date(), keyResults: [KeyResult(title: "하이요", completionState: .beforeStart, tasks: []), KeyResult(title: "하이요", completionState: .beforeStart, tasks: [])])
     
     let id = UUID().uuidString
     var title: String

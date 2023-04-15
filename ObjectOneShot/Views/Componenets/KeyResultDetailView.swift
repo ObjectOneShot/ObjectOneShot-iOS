@@ -21,12 +21,12 @@ struct KeyResultDetailView: View {
     let keyResultID: String
     
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 0) {
             // KeyResult title
-            VStack {
-                HStack {
-                    TextField("", text: $keyResultTitle)
-                        .padding(.leading, 5)
+            VStack(spacing: 0) {
+                HStack(spacing: 0) {
+                    TextField("", text: $keyResultTitle, prompt: Text("Key Results를 입력해 주세요").font(.pretendard(.medium, size: 16)))
+                        .font(.pretendard(.semiBold, size: 16))
                         .onChange(of: keyResultTitle) { _ in
                             if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResultID }) {
                                 viewModel.currentObjective.keyResults[index].title = keyResultTitle
@@ -42,28 +42,35 @@ struct KeyResultDetailView: View {
                         }
                     } label: {
                         if isExpanded {
-                            Image(systemName: "chevron.up")
-                                .padding(.trailing, 5)
-                                .tint(.black)
+                            Image("chevron.down")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 12, height: 7.47)
+                                .rotationEffect(Angle(degrees: 180))
                         } else {
-                            Image(systemName: "chevron.down")
-                                .padding(.trailing, 5)
-                                .tint(.black)
+                            Image("chevron.down")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 12, height: 7.47)
                         }
                     }
                 }
+                .padding(EdgeInsets(top: 14, leading: 8, bottom: 7, trailing: 14))
                 Rectangle()
                     .frame(height: 1)
-                    .padding(5)
+                    .foregroundColor(Color("grey_900"))
+                    .padding(.horizontal, 8)
+                    .padding(.bottom, 12)
                 HStack {
-                    ProgressView(value: progressValue)
+                    CustomProgressBar(value: $progressValue, backgroundColor: Color("grey_300"))
                     Text("\(progressPercentage)%")
+                        .font(.pretendard(.medium, size: 14))
                 }
+                .frame(height: 19.85)
+                .padding(.horizontal, 8)
             }
-            .padding()
-            .background(.gray)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .padding(.horizontal, 10)
+            .padding(.bottom, 20)
+            
             .if(!isExpanded, transform: { view in
                 view
                     .onDelete(isTask: false) {
@@ -74,7 +81,6 @@ struct KeyResultDetailView: View {
                 // 펼치면 Task들 보이기
             if isExpanded {
                 showTasks()
-                
                 // task가 5개를 채우지 못했을 경우에만 editTask 보이기
                 if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResultID }) {
                     if viewModel.currentObjective.keyResults[index].tasks.count < 5 {
@@ -85,6 +91,11 @@ struct KeyResultDetailView: View {
                 }
             }
         }
+        .background(Color("grey_50"))
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(Color("grey_300"))
+        )
         .onAppear {
             if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResultID }) {
                 self.keyResultTitle = viewModel.currentObjective.keyResults[index].title
@@ -120,10 +131,14 @@ struct KeyResultDetailView: View {
     
     @ViewBuilder
     func editNewTask() -> some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack {
-                Image(systemName: "square")
-                TextField("", text: $taskTitle)
+                Image("square")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 18, height: 18)
+                TextField("", text: $taskTitle, prompt: Text("내용을 입력해주세요").font(.pretendard(.medium, size: 16)))
+                    .font(.pretendard(.medium, size: 16))
                 Button {
                     // 새로운 태스크의 텍스트필드 비어있지 않다면 new Key Result에 추가
                     if !taskTitle.isEmpty {
@@ -136,15 +151,31 @@ struct KeyResultDetailView: View {
                         }
                     }
                 } label: {
-                    Image(systemName: "plus")
-                        .foregroundColor(.black)
+                    if taskTitle.isEmpty {
+                        Image("plus")
+                            .renderingMode(.template)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 14, height: 14)
+                            .foregroundColor(Color("grey_500"))
+                    } else {
+                        Image("plus")
+                            .renderingMode(.template)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 14, height: 14)
+                            .foregroundColor(Color("grey_900"))
+                    }
                 }
             }
-            .padding(.horizontal)
-            .padding(.bottom, 3)
+            .padding(.leading, 19)
+            .padding(.trailing, 13)
+            .padding(.bottom, 11)
             Rectangle()
-                .frame(height:1)
-                .padding(.horizontal)
+                .frame(height: 1)
+                .foregroundColor(Color("grey_900"))
+                .padding(.horizontal, 8)
+                .padding(.bottom, 12)
         }
     }
 }

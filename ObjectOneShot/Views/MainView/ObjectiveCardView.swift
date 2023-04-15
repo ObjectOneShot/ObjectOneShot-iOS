@@ -22,29 +22,45 @@ struct ObjectiveCardView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            HStack(alignment: .center) {
-                Text("목표 : \(objectiveTitle)")
-                    .padding(.horizontal)
+            // Header
+            HStack(alignment: .center, spacing: 0) {
+                Text(objectiveTitle)
+                    .font(.pretendard(.medium, size: 16))
+                    .foregroundColor(Color("grey_900"))
                 Spacer()
-                Text("마감일 : \(viewModel.getStringDate(of: objectiveEndDate))")
-                    .font(.system(size:12))
-                    .padding(.horizontal)
+                Text("D-\(viewModel.getDday(endDate: objectiveEndDate))")
+                    .font(.pretendard(.semiBold, size: 10))
+                    .foregroundColor(Color("red_error"))
+                Text(" / \(viewModel.getStringDate(of: objectiveEndDate))")
+                    .font(.pretendard(.semiBold, size: 10))
+                    .foregroundColor(Color("grey_600"))
             }
+            .padding(EdgeInsets(top: 8, leading: 10, bottom: 0, trailing: 16))
+            // keyResult 보여주기
             if !firstKeyReulstTitle.isEmpty {
                 showRecentKeyResults()
             }
-            Rectangle()
-                .frame(height: 1)
-                .padding(.horizontal)
+            
+            Divider()
+                .foregroundColor(Color("grey_200"))
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
+            
             HStack {
-                ProgressView(value: progressValue)
+                CustomProgressBar(value: $progressValue, backgroundColor: Color("grey_200"))
+                    .frame(height: 16)
                 Text("\(progressPercentage)%")
+                    .font(.pretendard(.medium, size: 14))
+                    .foregroundColor(Color("progress_percentage"))
             }
+            .padding(.horizontal, 16)
+            .padding(.bottom, 8)
         }
-        .padding(EdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0))
-        .background(.gray)
+        .background(Color("grey_50"))
+        .border(Color("grey_200"))
         .clipShape(RoundedRectangle(cornerRadius: 10))
-        .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
+        .padding(.horizontal, 16)
+        .shadow(radius: 1)
         .onAppear {
             if let currentObjective = viewModel.objectives.first(where: { $0.id == objectiveID }) {
                 
@@ -74,26 +90,29 @@ struct ObjectiveCardView: View {
     
     @ViewBuilder
     func showRecentKeyResults() -> some View {
-        VStack {
+        VStack(spacing: 6) {
             HStack {
-                Text("|")
-                    .foregroundColor(.gray)
+                Rectangle()
+                    .frame(width: 1.2, height: 14)
                 Text(firstKeyReulstTitle)
                 Spacer()
             }
             if !secondKeyReusltTitle.isEmpty {
                 HStack {
-                    Text("|")
-                        .foregroundColor(.gray)
+                    Rectangle()
+                        .frame(width: 1.2, height: 14)
                     Text(secondKeyReusltTitle)
                     Spacer()
                 }
             }
         }
-        .padding()
-        .background(.pink)
+        .font(.pretendard(.thin, size: 12))
+        .foregroundColor(Color("grey_900"))
+        .padding(8)
+        .background(Color("taskBackground"))
         .clipShape(RoundedRectangle(cornerRadius: 10))
-        .padding(EdgeInsets(top: 10, leading: 20, bottom: 10, trailing: 20))
+        .padding(.horizontal, 16)
+        .padding(.top, 8)
     }
 }
 

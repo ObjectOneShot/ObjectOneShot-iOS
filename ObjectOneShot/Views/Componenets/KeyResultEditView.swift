@@ -17,20 +17,22 @@ struct KeyResultEditView: View {
     @State var isAddingTask: Bool = true
     
     var body: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 0) {
             // KeyResult 헤더
-            VStack {
+            VStack(spacing: 0) {
                 HStack {
-                    TextField("Key Results를 입력해 주세요", text: $keyResultTitle)
-                        .padding(.leading, 5)
+                    TextField("", text: $keyResultTitle, prompt: Text("Key Results를 입력해 주세요").font(.pretendard(.medium, size: 16)))
+                        .font(.pretendard(.semiBold, size: 16))
+                        
                     Button {
                         // keyResultEditing 종료
                         viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [])
                         self.isAddingKeyResult = false
                     } label: {
-                        Image(systemName: "xmark")
-                            .padding(.trailing, 5)
-                            .tint(.black)
+                        Image("xMark")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 12, height: 12)
                     }
                     .onChange(of: keyResultTitle) { newValue in
                         viewModel.newEditingKeyResult.title = newValue
@@ -39,19 +41,21 @@ struct KeyResultEditView: View {
                         keyResultTitle = newValue
                     }
                 }
+                .padding(EdgeInsets(top: 14, leading: 8, bottom: 7, trailing: 14))
                 Rectangle()
                     .frame(height: 1)
-                    .padding(5)
-                HStack {
-                    ProgressView(value: viewModel.newEditingKeyResult.progressValue)
+                    .foregroundColor(Color("grey_900"))
+                    .padding(.horizontal, 8)
+                    .padding(.bottom, 12)
+                HStack(spacing: 9) {
+                    CustomProgressBar(value: $viewModel.newEditingKeyResult.progressValue, backgroundColor: Color("grey_300"))
                     Text("\(viewModel.newEditingKeyResult.progressPercentage)%")
+                        .font(.pretendard(.medium, size: 14))
                 }
+                .frame(height: 19.85)
+                .padding(.horizontal, 8)
             }
-            .padding()
-            .background(.gray)
-            .clipShape(RoundedRectangle(cornerRadius: 10))
-            .padding(.horizontal, 10)
-            
+            .padding(.bottom, 20)
             // 배열이 비어있지 않을 때만 showNewTasks
             if !viewModel.newEditingKeyResult.tasks.isEmpty {
                 showNewTasks()
@@ -61,10 +65,14 @@ struct KeyResultEditView: View {
                 editNewTask()
             }
         }
+        .background(Color("grey_50"))
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(Color("grey_300"))
+        )
         .onAppear {
             viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [])
         }
-        
     }
     
     @ViewBuilder
@@ -96,10 +104,14 @@ struct KeyResultEditView: View {
     
     @ViewBuilder
     func editNewTask() -> some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack {
-                Image(systemName: "square")
-                TextField("", text: $taskTitle)
+                Image("square")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 18, height: 18)
+                TextField("", text: $taskTitle, prompt: Text("내용을 입력해주세요").font(.pretendard(.medium, size: 16)))
+                    .font(.pretendard(.medium, size: 16))
                 Button {
                     // 새로운 태스크의 텍스트필드 비어있지 않다면 new Key Result에 추가
                     if !taskTitle.isEmpty {
@@ -110,15 +122,31 @@ struct KeyResultEditView: View {
                         }
                     }
                 } label: {
-                    Image(systemName: "plus")
-                        .foregroundColor(.black)
+                    if taskTitle.isEmpty {
+                        Image("plus")
+                            .renderingMode(.template)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 14, height: 14)
+                            .foregroundColor(Color("grey_500"))
+                    } else {
+                        Image("plus")
+                            .renderingMode(.template)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 14, height: 14)
+                            .foregroundColor(Color("grey_900"))
+                    }
                 }
             }
-            .padding(.horizontal)
-            .padding(.bottom, 3)
+            .padding(.leading, 19)
+            .padding(.trailing, 13)
+            .padding(.bottom, 11)
             Rectangle()
-                .frame(height:1)
-                .padding(.horizontal)
+                .frame(height: 1)
+                .foregroundColor(Color("grey_900"))
+                .padding(.horizontal, 8)
+                .padding(.bottom, 12)
         }
     }
     

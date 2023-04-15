@@ -12,49 +12,94 @@ struct KeyResultsHeaderView: View {
     @EnvironmentObject var viewModel: OKRViewModel
     
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack {
-                Text("Key Results 설정하기")
-                    .font(.system(size:20, weight: .bold))
-                    .padding(EdgeInsets(top: 0, leading: 20, bottom: 0, trailing: 0))
+                Text("Key Results 설정해 주세요")
+                    .font(.pretendard(.semiBold, size: 18))
+                    .padding(EdgeInsets(top: 8, leading: 24, bottom: 9, trailing: 0))
                 Spacer()
             }
-            Divider()
-                .padding(.horizontal)
+            Rectangle()
+                .frame(height: 1)
+                .foregroundColor(Color("grey_300"))
+                .padding(.horizontal, 16)
             HStack {
+                Spacer()
                 Button {
                     viewModel.keyResultState = .beforeStart
                 } label : {
-                    Text("진행전")
-                        .frame(height: 35)
-                        .frame(maxWidth: .infinity)
-                        .background(.yellow)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .tint(.black)
+                    HStack(spacing: 6) {
+                        Circle()
+                            .frame(width: 8, height: 8)
+                            .if(viewModel.keyResultState == .beforeStart) { view in
+                                view
+                                    .foregroundColor(Color("point_1"))
+                            }
+                            .if(viewModel.keyResultState != .beforeStart) { view in
+                                view
+                                    .foregroundColor(.white)
+                            }
+                        Text("예정")
+                            .font(.pretendard(.semiBold, size: 14))
+                            .foregroundColor(Color("grey_900"))
+                    }
+                    .padding(.vertical, 5)
+                    .padding(.horizontal, 19)
+                    .background(Color("grey_200"))
+                    .clipShape(RoundedRectangle(cornerRadius: 30))
+                    
                 }
+                Spacer()
                 Button {
                     viewModel.keyResultState = .inProgress
                 } label: {
-                    Text("진행중")
-                        .frame(height: 35)
-                        .frame(maxWidth: .infinity)
-                        .background(.black)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .tint(.white)
+                    HStack(spacing: 6) {
+                        Circle()
+                            .frame(width: 8, height: 8)
+                            .if(viewModel.keyResultState == .inProgress) { view in
+                                view
+                                    .foregroundColor(Color("point_2"))
+                            }
+                            .if(viewModel.keyResultState != .inProgress) { view in
+                                view
+                                    .foregroundColor(.white)
+                            }
+                        Text("진행")
+                            .font(.pretendard(.semiBold, size: 14))
+                            .foregroundColor(Color("grey_900"))
+                    }
+                    .padding(.vertical, 5)
+                    .padding(.horizontal, 19)
+                    .background(Color("grey_200"))
+                    .clipShape(RoundedRectangle(cornerRadius: 30))
                 }
+                Spacer()
                 Button {
                     viewModel.keyResultState = .completed
                 } label: {
-                    Text("완료")
-                        .frame(height: 35)
-                        .frame(maxWidth: .infinity)
-                        .background(.red)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .tint(.black)
+                    HStack(spacing: 6) {
+                        Circle()
+                            .frame(width: 8, height: 8)
+                            .if(viewModel.keyResultState == .completed) { view in
+                                view
+                                    .foregroundColor(Color("point_3"))
+                            }
+                            .if(viewModel.keyResultState != .completed) { view in
+                                view
+                                    .foregroundColor(.white)
+                            }
+                        Text("완료")
+                            .font(.pretendard(.semiBold, size: 14))
+                            .foregroundColor(Color("grey_900"))
+                    }
+                    .padding(.vertical, 5)
+                    .padding(.horizontal, 19)
+                    .background(Color("grey_200"))
+                    .clipShape(RoundedRectangle(cornerRadius: 30))
                 }
+                Spacer()
             }
-            .padding(EdgeInsets(top: 5, leading: 20, bottom: 5, trailing: 20))
-            .background(.gray)
+            .padding(.vertical, 9)
         }
     }
 }
@@ -62,5 +107,6 @@ struct KeyResultsHeaderView: View {
 struct KeyResultsHeaderView_Previews: PreviewProvider {
     static var previews: some View {
         KeyResultsHeaderView()
+            .environmentObject(OKRViewModel())
     }
 }

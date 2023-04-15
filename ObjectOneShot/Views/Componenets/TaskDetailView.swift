@@ -45,42 +45,62 @@ struct TaskDetailView: View {
                 } label: {
                     if let task = viewModel.currentObjective.keyResults[keyResultIndex].tasks.first(where: { $0.id == task.id }) {
                         if task.isCompleted {
-                            Image(systemName: "checkmark.square")
+                            Image("checkMark.square")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 18, height: 18)
                                 .foregroundColor(.black)
                         } else {
-                            Image(systemName: "square")
+                            Image("square")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 18, height: 18)
                                 .foregroundColor(.black)
                         }
                     }
                 }
                 
                 // task title
-                TextField("", text: $title)
-                    .onChange(of: title) { _ in
-                        if let index = viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id }) {
-                            viewModel.currentObjective.keyResults[keyResultIndex].tasks[index].title = self.title
-                        } else {
-                            print("ERROR : no matching task found by taskID: TaskDetailView.swift")
+                ZStack {
+                    TextField("", text: $title, prompt: Text("내용을 입력해주세요").font(.pretendard(.medium, size: 16)))
+                        .font(.pretendard(.medium, size: 16))
+                        .onChange(of: title) { _ in
+                            if let index = viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id }) {
+                                viewModel.currentObjective.keyResults[keyResultIndex].tasks[index].title = self.title
+                            } else {
+                                print("ERROR : no matching task found by taskID: TaskDetailView.swift")
+                            }
+                        }
+                    if let index = viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id }) {
+                        if viewModel.currentObjective.keyResults[keyResultIndex].tasks[index].isCompleted {
+                            Rectangle()
+                                .frame(height:1)
                         }
                     }
+                }
                 Spacer()
-                
                 // 만약 마지막 task이고 새로운 task 추가중이지 않다면 + 버튼 추가, task 추가 가능하도록 하기
                 if isLast && !isEditingNewTask {
                     Button {
                         // task 추가 및 task가 5개 이하라면 다음 task 추가 칸 보이기!
                         isEditingNewTask = true
                     } label: {
-                        Image(systemName: "plus")
-                            .foregroundColor(.black)
+                        Image("plus")
+                            .renderingMode(.template)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 14, height: 14)
+                            .foregroundColor(Color("grey_900"))
                     }
                 }
             }
-            .padding(.horizontal)
-            .padding(.bottom, 3)
+            .padding(.leading, 19)
+            
             Rectangle()
-                .frame(height:1)
-                .padding(.horizontal)
+                .frame(height: 1)
+                .foregroundColor(Color("grey_900"))
+                .padding(.horizontal, 8)
+                .padding(.bottom, 12)
         }
         .onAppear {
             if let taskTitle = viewModel.currentObjective.keyResults[keyResultIndex].tasks.first(where: {$0.id == task.id})?.title {
