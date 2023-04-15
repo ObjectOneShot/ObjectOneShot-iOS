@@ -25,8 +25,9 @@ struct KeyResultDetailView: View {
             // KeyResult title
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
-                    TextField("", text: $keyResultTitle, prompt: Text("Key Results를 입력해 주세요").font(.pretendard(.medium, size: 16)))
+                    TextField("", text: $keyResultTitle, prompt: Text("Key Results를 입력해 주세요").font(.pretendard(.medium, size: 16)).foregroundColor(Color("grey_500")))
                         .font(.pretendard(.semiBold, size: 16))
+                        .foregroundColor(Color("grey_900"))
                         .onChange(of: keyResultTitle) { _ in
                             if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResultID }) {
                                 viewModel.currentObjective.keyResults[index].title = keyResultTitle
@@ -37,9 +38,6 @@ struct KeyResultDetailView: View {
                     Spacer()
                     Button {
                         isExpanded.toggle()
-                        if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResultID }) {
-                            viewModel.currentObjective.keyResults[index].isExpanded.toggle()
-                        }
                     } label: {
                         if isExpanded {
                             Image("chevron.down")
@@ -65,6 +63,7 @@ struct KeyResultDetailView: View {
                     CustomProgressBar(value: $progressValue, backgroundColor: Color("grey_300"))
                     Text("\(progressPercentage)%")
                         .font(.pretendard(.medium, size: 14))
+                        .foregroundColor(Color("title_black"))
                 }
                 .frame(height: 19.85)
                 .padding(.horizontal, 8)
@@ -137,8 +136,9 @@ struct KeyResultDetailView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 18, height: 18)
-                TextField("", text: $taskTitle, prompt: Text("내용을 입력해주세요").font(.pretendard(.medium, size: 16)))
+                TextField("", text: $taskTitle, prompt: Text("내용을 입력해주세요").font(.pretendard(.medium, size: 16)).foregroundColor(Color("grey_500")))
                     .font(.pretendard(.medium, size: 16))
+                    .foregroundColor(Color("grey_900"))
                 Button {
                     // 새로운 태스크의 텍스트필드 비어있지 않다면 new Key Result에 추가
                     if !taskTitle.isEmpty {

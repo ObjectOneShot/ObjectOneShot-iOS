@@ -16,6 +16,7 @@ struct KeyResultsHeaderView: View {
             HStack {
                 Text("Key Results 설정해 주세요")
                     .font(.pretendard(.semiBold, size: 18))
+                    .foregroundColor(Color("title_black"))
                     .padding(EdgeInsets(top: 8, leading: 24, bottom: 9, trailing: 0))
                 Spacer()
             }

@@ -51,10 +51,13 @@ struct ObjectiveDetailView: View {
                     case .inProgress:
                             ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .inProgress }, id: \.self) { keyResult in
                                 KeyResultDetailView(keyResultID: keyResult.id)
+                                    .padding(.bottom, 10)
+
                             }
                     case .completed:
                             ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .completed }, id: \.self) { keyResult in
                                 KeyResultDetailView(keyResultID: keyResult.id)
+                                    .padding(.bottom, 10)
                             }
                     }
                     // keyResult를 추가 중이면 KeyResultEditView 보이기 및 버튼 종류 변경
@@ -136,6 +139,7 @@ struct ObjectiveDetailView: View {
         .onTapGesture {
             self.endTextEditing()
         }
+        .background(Color("background"))
         .navigationBarHidden(true)
     }
     

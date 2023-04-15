@@ -62,8 +62,9 @@ struct TaskDetailView: View {
                 
                 // task title
                 ZStack {
-                    TextField("", text: $title, prompt: Text("내용을 입력해주세요").font(.pretendard(.medium, size: 16)))
+                    TextField("", text: $title, prompt: Text("내용을 입력해주세요").font(.pretendard(.medium, size: 16)).foregroundColor(Color("grey_500")))
                         .font(.pretendard(.medium, size: 16))
+                        .foregroundColor(Color("grey_900"))
                         .onChange(of: title) { _ in
                             if let index = viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id }) {
                                 viewModel.currentObjective.keyResults[keyResultIndex].tasks[index].title = self.title
@@ -75,6 +76,8 @@ struct TaskDetailView: View {
                         if viewModel.currentObjective.keyResults[keyResultIndex].tasks[index].isCompleted {
                             Rectangle()
                                 .frame(height:1)
+                                .foregroundColor(Color("grey_900"))
+                                .padding(.trailing, 24)
                         }
                     }
                 }
@@ -92,6 +95,7 @@ struct TaskDetailView: View {
                             .frame(width: 14, height: 14)
                             .foregroundColor(Color("grey_900"))
                     }
+                    .padding(.trailing, 22)
                 }
             }
             .padding(.leading, 19)

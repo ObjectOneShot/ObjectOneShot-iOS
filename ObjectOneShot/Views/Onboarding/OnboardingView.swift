@@ -96,6 +96,7 @@ struct OnboardingView: View {
                 }
             }
         }
+        .background(Color("background"))
     }
     
     @ViewBuilder

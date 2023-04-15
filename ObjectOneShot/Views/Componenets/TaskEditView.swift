@@ -46,8 +46,9 @@ struct TaskEditView: View {
                 }
                 // task title
                 ZStack {
-                    TextField("", text: $title, prompt: Text("내용을 입력해주세요").font(.pretendard(.medium, size: 16)))
+                    TextField("", text: $title, prompt: Text("내용을 입력해주세요").font(.pretendard(.medium, size: 16)).foregroundColor(Color("grey_500")))
                         .font(.pretendard(.medium, size: 16))
+                        .foregroundColor(Color("grey_900"))
                         .onChange(of: title) { _ in
                             if let index = viewModel.newEditingKeyResult.tasks.firstIndex(where: { $0.id == task.id }) {
                                 viewModel.newEditingKeyResult.tasks[index].title = title
@@ -59,6 +60,8 @@ struct TaskEditView: View {
                         if viewModel.newEditingKeyResult.tasks[index].isCompleted {
                             Rectangle()
                                 .frame(height:1)
+                                .foregroundColor(Color("grey_900"))
+                                .padding(.trailing, 24)
                         }
                     }
                 }

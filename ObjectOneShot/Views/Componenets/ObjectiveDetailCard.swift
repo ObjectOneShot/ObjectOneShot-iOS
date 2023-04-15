@@ -24,6 +24,7 @@ struct ObjectiveDetailCard: View {
             HStack(alignment: .center) {
                 Text("목표")
                     .font(.pretendard(.semiBold, size: 16))
+                    .foregroundColor(Color("grey_900"))
                     .frame(width: 64, height: 44)
                     .background(Color("grey_50"))
                     .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -32,8 +33,9 @@ struct ObjectiveDetailCard: View {
                             .stroke(Color("grey_300"))
                     )
                 VStack(alignment: .center, spacing: 0) {
-                    TextField("목표를 입력해주세요", text: $title)
+                    TextField("", text: $title, prompt: Text("목표를 입력해주세요").font(.pretendard(.regular, size: 14)).foregroundColor(Color("grey_500")))
                         .font(.pretendard(.regular, size: 14))
+                        .foregroundColor(Color("grey_900"))
                         .frame(height: 29)
                         .padding(.top, 7)
                         .padding(.horizontal, 12)
@@ -56,6 +58,7 @@ struct ObjectiveDetailCard: View {
             HStack(alignment: .center) {
                 Text("기간")
                     .font(.pretendard(.semiBold, size: 16))
+                    .foregroundColor(Color("grey_900"))
                     .frame(width: 64, height: 44)
                     .background(Color("grey_50"))
                     .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -66,6 +69,7 @@ struct ObjectiveDetailCard: View {
                 HStack {
                     DatePicker("", selection: $startDate, displayedComponents: .date)
                         .labelsHidden()
+                        .environment(\.locale, Locale(identifier: "ko-KR"))
                         .scaleEffect(0.9)
                         .onChange(of: startDate) { _ in
                             viewModel.currentObjective.startDate = startDate
@@ -74,6 +78,7 @@ struct ObjectiveDetailCard: View {
                         .font(.pretendard(.regular, size: 14))
                     DatePicker("", selection: $endDate, displayedComponents: .date)
                         .labelsHidden()
+                        .environment(\.locale, Locale(identifier: "ko-KR"))
                         .scaleEffect(0.9)
                         .onChange(of: endDate) { newValue in
                             viewModel.currentObjective.endDate = endDate
@@ -92,6 +97,7 @@ struct ObjectiveDetailCard: View {
             HStack {
                 Text("달성")
                     .font(.pretendard(.semiBold, size: 16))
+                    .foregroundColor(Color("grey_900"))
                     .frame(width: 64, height: 44)
                     .background(Color("grey_50"))
                     .clipShape(RoundedRectangle(cornerRadius: 10))
@@ -107,6 +113,7 @@ struct ObjectiveDetailCard: View {
                         }
                     Text("\(progressPercentage)%")
                         .font(.pretendard(.medium, size: 14))
+                        .foregroundColor(Color("title_black"))
                         .padding(.vertical, 12)
                         .onChange(of: viewModel.currentObjective.progressPercentage) { newValue in
                             progressPercentage = viewModel.currentObjective.progressPercentage

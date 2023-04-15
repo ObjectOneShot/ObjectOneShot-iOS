@@ -76,6 +76,7 @@ struct UseTipsView: View {
                 }
             }
         }
+        .background(Color("background"))
     }
     
     @ViewBuilder

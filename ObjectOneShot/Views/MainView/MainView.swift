@@ -40,6 +40,7 @@ struct MainView: View {
             HStack {
                 Text("Objective를 설정해 주세요")
                     .font(.pretendard(.semiBold, size: 18))
+                    .foregroundColor(Color("grey_900"))
                     .padding(.horizontal, 24)
                     .padding(.vertical, 12)
                 Spacer()
@@ -89,6 +90,7 @@ struct MainView: View {
                 }
             }
         }
+        .background(Color("background"))
         .fullScreenCover(isPresented: $isFirstLaunching) {
             OnboardingView(isFirstLaunching: $isFirstLaunching)
         }

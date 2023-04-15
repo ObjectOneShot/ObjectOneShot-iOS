@@ -46,25 +46,21 @@ struct AddObjectiveView: View {
                 VStack(spacing: 0) {
                     switch viewModel.keyResultState {
                     case .beforeStart:
-                        VStack {
-                            ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .beforeStart }, id: \.self) { keyResult in
-                                KeyResultDetailView(keyResultID: keyResult.id)
-                            }
+                        ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .beforeStart }, id: \.self) { keyResult in
+                            KeyResultDetailView(keyResultID: keyResult.id)
+                                .padding(.bottom, 10)
                         }
                     case .inProgress:
-                        VStack {
-                            ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .inProgress }, id: \.self) { keyResult in
-                                KeyResultDetailView(keyResultID: keyResult.id)
-                            }
+                        ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .inProgress }, id: \.self) { keyResult in
+                            KeyResultDetailView(keyResultID: keyResult.id)
+                                .padding(.bottom, 10)
                         }
                     case .completed:
-                        VStack {
-                            ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .completed }, id: \.self) { keyResult in
-                                KeyResultDetailView(keyResultID: keyResult.id)
-                            }
+                        ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .completed }, id: \.self) { keyResult in
+                            KeyResultDetailView(keyResultID: keyResult.id)
+                                .padding(.bottom, 10)
                         }
                     }
-                    Spacer()
                     // keyResult를 추가 중이면 KeyResultEditView 보이기 및 버튼 종류 변경
                     if self.isAddingKeyResult {
                         KeyResultEditView(isAddingKeyResult: $isAddingKeyResult)
@@ -106,18 +102,20 @@ struct AddObjectiveView: View {
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 12)
                                 .background(Color("primaryColor"))
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
                         }
                         .padding(.vertical, 10)
                     }
                 }
                 .padding(.horizontal, 16)
+                .padding(.top, 10)
                 .background(Color("primary_10"))
             }
             
             Spacer()
             addObjectButton()   /* TODO : 키보드랑 같이 위로 올라오지 않도록 수정 */
         }
+        .background(Color("background"))
         .onAppear {
             // objective 추가에 사용할 viewModel.currentObjective 초기화
             let currentObjective = Objective(title: "", startDate: Date(), endDate: Date(), keyResults: [])
