@@ -39,6 +39,7 @@
 		60F0C13D29E8EA1B00C37E4E /* Pretendard-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 60F0C13429E8EA1B00C37E4E /* Pretendard-ExtraBold.ttf */; };
 		60F0C13E29E8EA1B00C37E4E /* Pretendard-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 60F0C13529E8EA1B00C37E4E /* Pretendard-Medium.ttf */; };
 		60F0C13F29E8EA1B00C37E4E /* Pretendard-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 60F0C13629E8EA1B00C37E4E /* Pretendard-ExtraLight.ttf */; };
+		60F0C14129EAB6A900C37E4E /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60F0C14029EAB6A900C37E4E /* Launch Screen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +77,7 @@
 		60F0C13429E8EA1B00C37E4E /* Pretendard-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraBold.ttf"; sourceTree = "<group>"; };
 		60F0C13529E8EA1B00C37E4E /* Pretendard-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.ttf"; sourceTree = "<group>"; };
 		60F0C13629E8EA1B00C37E4E /* Pretendard-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.ttf"; sourceTree = "<group>"; };
+		60F0C14029EAB6A900C37E4E /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				60C88D8F29E041D300EB1BA6 /* ObjectOneShotApp.swift */,
+				60F0C14029EAB6A900C37E4E /* Launch Screen.storyboard */,
 			);
 			path = Apps;
 			sourceTree = "<group>";
@@ -329,6 +332,7 @@
 				60F0C13929E8EA1B00C37E4E /* Pretendard-SemiBold.ttf in Resources */,
 				60F0C13829E8EA1B00C37E4E /* Pretendard-Regular.ttf in Resources */,
 				60C88D9429E041D500EB1BA6 /* Assets.xcassets in Resources */,
+				60F0C14129EAB6A900C37E4E /* Launch Screen.storyboard in Resources */,
 				60F0C13E29E8EA1B00C37E4E /* Pretendard-Medium.ttf in Resources */,
 				60F0C13A29E8EA1B00C37E4E /* Pretendard-Black.ttf in Resources */,
 				60F0C13C29E8EA1B00C37E4E /* Pretendard-Bold.ttf in Resources */,
@@ -498,9 +502,11 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ObjectOneShot/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "목표한방";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
@@ -533,9 +539,11 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = ObjectOneShot/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "목표한방";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
