@@ -15,6 +15,7 @@
 		606D898B29E4BFE700FA4BFA /* TaskEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D898A29E4BFE700FA4BFA /* TaskEditView.swift */; };
 		606D898D29E4DEEB00FA4BFA /* Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D898C29E4DEEB00FA4BFA /* Delete.swift */; };
 		606D899029E53B9500FA4BFA /* KeyResultEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D898F29E53B9500FA4BFA /* KeyResultEditView.swift */; };
+		607E1AC229EAC57C005D36D1 /* UseTipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607E1AC129EAC57C005D36D1 /* UseTipsView.swift */; };
 		60C88D9029E041D300EB1BA6 /* ObjectOneShotApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C88D8F29E041D300EB1BA6 /* ObjectOneShotApp.swift */; };
 		60C88D9429E041D500EB1BA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60C88D9329E041D500EB1BA6 /* Assets.xcassets */; };
 		60C88D9729E041D500EB1BA6 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60C88D9629E041D500EB1BA6 /* Preview Assets.xcassets */; };
@@ -52,6 +53,7 @@
 		606D898A29E4BFE700FA4BFA /* TaskEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskEditView.swift; sourceTree = "<group>"; };
 		606D898C29E4DEEB00FA4BFA /* Delete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delete.swift; sourceTree = "<group>"; };
 		606D898F29E53B9500FA4BFA /* KeyResultEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyResultEditView.swift; sourceTree = "<group>"; };
+		607E1AC129EAC57C005D36D1 /* UseTipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseTipsView.swift; sourceTree = "<group>"; };
 		60C88D8C29E041D300EB1BA6 /* ObjectOneShot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ObjectOneShot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60C88D8F29E041D300EB1BA6 /* ObjectOneShotApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectOneShotApp.swift; sourceTree = "<group>"; };
 		60C88D9329E041D500EB1BA6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -126,6 +128,14 @@
 			path = Modifiers;
 			sourceTree = "<group>";
 		};
+		607E1AC029EAC55F005D36D1 /* UseTipsView */ = {
+			isa = PBXGroup;
+			children = (
+				607E1AC129EAC57C005D36D1 /* UseTipsView.swift */,
+			);
+			path = UseTipsView;
+			sourceTree = "<group>";
+		};
 		60C88D8329E041D300EB1BA6 = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +179,7 @@
 		60C88DA229E05F5D00EB1BA6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				607E1AC029EAC55F005D36D1 /* UseTipsView */,
 				60F0C14229EAB81D00C37E4E /* Onboarding */,
 				606D898529E468FA00FA4BFA /* MainView */,
 				606D898729E4694900FA4BFA /* AddObjectiveView */,
@@ -379,6 +390,7 @@
 				60C88DAC29E060B400EB1BA6 /* Task.swift in Sources */,
 				606D897E29E29E6E00FA4BFA /* ObjectiveDetailCard.swift in Sources */,
 				606BC78929E25B5A00192666 /* KeyResultDetailView.swift in Sources */,
+				607E1AC229EAC57C005D36D1 /* UseTipsView.swift in Sources */,
 				60C88D9029E041D300EB1BA6 /* ObjectOneShotApp.swift in Sources */,
 				60F0C14429EAB82F00C37E4E /* OnboardingView.swift in Sources */,
 			);

@@ -12,6 +12,7 @@ struct MainView: View {
     @ObservedObject var coordinator: Coordinator
     @EnvironmentObject var viewModel: OKRViewModel
     @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
+    @State private var isPresentingTips: Bool = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -28,7 +29,7 @@ struct MainView: View {
                 HStack {
                     Spacer()
                     Button {
-                        
+                        isPresentingTips = true
                     } label: {
                         Image("questionMark_white")
                     }
@@ -90,6 +91,9 @@ struct MainView: View {
         }
         .fullScreenCover(isPresented: $isFirstLaunching) {
             OnboardingView(isFirstLaunching: $isFirstLaunching)
+        }
+        .fullScreenCover(isPresented: $isPresentingTips) {
+            UseTipsView(isPresenting: $isPresentingTips)
         }
     }
 }
