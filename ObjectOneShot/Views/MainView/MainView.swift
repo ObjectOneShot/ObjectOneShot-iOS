@@ -11,6 +11,7 @@ struct MainView: View {
     
     @ObservedObject var coordinator: Coordinator
     @EnvironmentObject var viewModel: OKRViewModel
+    @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
     
     var body: some View {
         VStack(spacing: 0) {
@@ -86,6 +87,9 @@ struct MainView: View {
                         .environmentObject(self.viewModel)
                 }
             }
+        }
+        .fullScreenCover(isPresented: $isFirstLaunching) {
+            OnboardingView(isFirstLaunching: $isFirstLaunching)
         }
     }
 }

@@ -40,6 +40,7 @@
 		60F0C13E29E8EA1B00C37E4E /* Pretendard-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 60F0C13529E8EA1B00C37E4E /* Pretendard-Medium.ttf */; };
 		60F0C13F29E8EA1B00C37E4E /* Pretendard-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 60F0C13629E8EA1B00C37E4E /* Pretendard-ExtraLight.ttf */; };
 		60F0C14129EAB6A900C37E4E /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60F0C14029EAB6A900C37E4E /* Launch Screen.storyboard */; };
+		60F0C14429EAB82F00C37E4E /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F0C14329EAB82F00C37E4E /* OnboardingView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +79,7 @@
 		60F0C13529E8EA1B00C37E4E /* Pretendard-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Medium.ttf"; sourceTree = "<group>"; };
 		60F0C13629E8EA1B00C37E4E /* Pretendard-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.ttf"; sourceTree = "<group>"; };
 		60F0C14029EAB6A900C37E4E /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		60F0C14329EAB82F00C37E4E /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +169,7 @@
 		60C88DA229E05F5D00EB1BA6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				60F0C14229EAB81D00C37E4E /* Onboarding */,
 				606D898529E468FA00FA4BFA /* MainView */,
 				606D898729E4694900FA4BFA /* AddObjectiveView */,
 				606D898629E4690B00FA4BFA /* ObjectiveDetailView */,
@@ -266,6 +269,14 @@
 				60F0C13229E8EA1A00C37E4E /* Pretendard-Thin.ttf */,
 			);
 			path = Pretendard;
+			sourceTree = "<group>";
+		};
+		60F0C14229EAB81D00C37E4E /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				60F0C14329EAB82F00C37E4E /* OnboardingView.swift */,
+			);
+			path = Onboarding;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -369,6 +380,7 @@
 				606D897E29E29E6E00FA4BFA /* ObjectiveDetailCard.swift in Sources */,
 				606BC78929E25B5A00192666 /* KeyResultDetailView.swift in Sources */,
 				60C88D9029E041D300EB1BA6 /* ObjectOneShotApp.swift in Sources */,
+				60F0C14429EAB82F00C37E4E /* OnboardingView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
