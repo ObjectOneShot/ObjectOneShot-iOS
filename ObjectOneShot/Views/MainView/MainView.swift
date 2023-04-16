@@ -13,81 +13,123 @@ struct MainView: View {
     @EnvironmentObject var viewModel: OKRViewModel
     @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
     @State private var isPresentingTips: Bool = false
+    @State private var isShowingCompletedObjectives = false
     
     var body: some View {
         VStack(spacing: 0) {
             // Header
+            mainTitle()
+            showObjectives()
+        }
+    }
+    
+    @ViewBuilder
+    func mainTitle() -> some View {
+        HStack {
+            Spacer()
+            Image("mainTitle")
+                .padding(.vertical, 12)
+            Spacer()
+        }
+        .background(Color("titleBackground"))
+        .padding(.top, 1)
+        .overlay {
             HStack {
-                Spacer()
-                Image("mainTitle")
-                    .padding(.vertical, 12)
-                Spacer()
-            }
-            .background(Color("titleBackground"))
-            .padding(.top, 1)
-            .overlay {
-                HStack {
-                    Spacer()
+                if isShowingCompletedObjectives {
                     Button {
-                        isPresentingTips = true
+                      isShowingCompletedObjectives = false
                     } label: {
-                        Image("questionMark_white")
+                        Image("chevron.left.white")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 12)
                     }
-                    .padding(.trailing, 25)
+                    .padding(.leading, 25)
                 }
+                Spacer()
+                Button {
+                    isPresentingTips = true
+                } label: {
+                    Image("questionMark_white")
+                }
+                .padding(.trailing, 25)
             }
-            
-            HStack {
+        }
+    }
+    
+    @ViewBuilder
+    func showObjectives() -> some View {
+        HStack {
+            if isShowingCompletedObjectives {
+                Text("보관된 목표를 확인해주세요")
+                    .font(.pretendard(.semiBold, size: 18))
+                    .foregroundColor(Color("grey_900"))
+                    .padding(.horizontal, 24)
+                    .padding(.vertical, 12)
+            } else {
                 Text("Objective를 설정해 주세요")
                     .font(.pretendard(.semiBold, size: 18))
                     .foregroundColor(Color("grey_900"))
                     .padding(.horizontal, 24)
                     .padding(.vertical, 12)
-                Spacer()
+            }
+            Spacer()
+            if !isShowingCompletedObjectives {
                 Button {
-                    
+                    isShowingCompletedObjectives = true
                 } label: {
                     Image("cloud_download")
                         .frame(width: 24, height: 16)
                         .padding(.horizontal, 24)
                 }
             }
-            Divider()
-                .foregroundColor(Color("grey_300"))
-                .padding(.horizontal, 24)
-                .padding(.bottom, 8)
-            // Objectives 카드 뷰
-            ScrollView {
-                VStack(spacing: 0) {
-                    ForEach(viewModel.objectives) { objective in
+        }
+        Divider()
+            .foregroundColor(Color("grey_300"))
+            .padding(.horizontal, 24)
+            .padding(.bottom, 8)
+        // Objectives 카드 뷰
+        ScrollView {
+            VStack(spacing: 0) {
+                // 완료된 objectives 보여주기
+                if isShowingCompletedObjectives {
+                    ForEach(viewModel.objectives.filter{ $0.progressValue == 1}) { objective in
                         // 클릭하면 ObjectiveDetailView로 전환
                         NavigationLink(destination: ObjectiveDetailView(objectiveID: objective.id)
                             .environmentObject(self.viewModel)) {
                                 ObjectiveCardView(objectiveID: objective.id)
                                     .padding(.bottom, 10)
-                                    .onDelete(isTask: false) {
-                                        viewModel.deleteObjectiveByID(of: objective.id)
-                                        viewModel.saveObjectivesToUserDefaults()
-                                    }
                             }
+                            .buttonStyle(PlainButtonStyle())
+                    }
+                } else {
+                    // 완료하지 않은 objectives 보여주기
+                    ForEach(viewModel.objectives.filter{ $0.progressValue != 1 }) { objective in
+                        // 클릭하면 ObjectiveDetailView로 전환
+                        NavigationLink(destination: ObjectiveDetailView(objectiveID: objective.id)
+                            .environmentObject(self.viewModel)) {
+                                ObjectiveCardView(objectiveID: objective.id)
+                                    .padding(.bottom, 10)
+                            }
+                            .buttonStyle(PlainButtonStyle())
                     }
                 }
             }
-            Spacer()
-            // Objective 추가 뷰
-            Button {
-                coordinator.show(AddObjectiveView.self)
-            } label: {
-                Image("mainButton_add")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-            }
-            .padding(.horizontal, 16)
-            .navigationDestination(for: String.self) { id in
-                if id == String(describing: AddObjectiveView.self) {
-                    AddObjectiveView()
-                        .environmentObject(self.viewModel)
-                }
+        }
+        Spacer()
+        // Objective 추가 뷰
+        Button {
+            coordinator.show(AddObjectiveView.self)
+        } label: {
+            Image("mainButton_add")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        }
+        .padding(.horizontal, 16)
+        .navigationDestination(for: String.self) { id in
+            if id == String(describing: AddObjectiveView.self) {
+                AddObjectiveView()
+                    .environmentObject(self.viewModel)
             }
         }
         .background(Color("background"))
