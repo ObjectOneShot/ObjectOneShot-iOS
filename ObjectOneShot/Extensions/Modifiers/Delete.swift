@@ -12,84 +12,62 @@ struct Delete: ViewModifier {
     let isTask: Bool
     let action: () -> Void
     
-    @State var offset: CGSize = .zero
-    @State var initialOffset: CGSize = .zero
-    @State var contentWidth: CGFloat = 0.0
-    @State var willDeleteIfReleased = false
-    
+    @State private var offset: CGSize = .zero
+    @State private var startPos: CGPoint = .zero
+    @State var isSwipping = true
+    @State var contentWidth: CGFloat = UIScreen.main.bounds.width
+
     func body(content: Content) -> some View {
-        content
-            .background(
-                GeometryReader { geometry in
-                    ZStack {
-                        Rectangle()
-                            .foregroundColor(.red)
-                        Image(systemName: "trash")
-                            .foregroundColor(.white)
-                            .font(.title2.bold())
-                            .layoutPriority(-1)
-                    }.frame(width: -offset.width)
-                        .offset(x: geometry.size.width)
-                        .onAppear {
-                            contentWidth = geometry.size.width
+        if !isTask {
+            ZStack {
+                RoundedRectangle(cornerRadius: 10)
+                    .foregroundColor(Color("red_error"))
+                    .padding(.leading, 50)
+                    .overlay {
+                        HStack {
+                            Spacer()
+                            Button {
+                                delete()
+                            } label: {
+                                Image("deleteButton")
+                            }
+                            Spacer()
+                                .frame(width: 16)
                         }
-                        .gesture(
-                            TapGesture()
-                                .onEnded {
-                                    delete()
-                                }
-                        )
-                }
-            )
-            .offset(x: offset.width, y: 0)
-            .if(isTask, transform: { view in
-                view
-                    .gesture (
-                        DragGesture()
-                            .onChanged { gesture in
-                                if gesture.translation.width + initialOffset.width <= 0 {
-                                    self.offset.width = gesture.translation.width + initialOffset.width
-                                }
-                                if self.offset.width < -deletionDistance && !willDeleteIfReleased {
-                                    hapticFeedback()
-                                    willDeleteIfReleased.toggle()
-                                } else if offset.width > -deletionDistance && willDeleteIfReleased {
-                                    hapticFeedback()
-                                    willDeleteIfReleased.toggle()
-                                }
+                    }
+                content
+                    .offset(x: offset.width)
+                    .gesture(DragGesture()
+                        .onChanged { gesture in
+                            if self.isSwipping {
+                                self.startPos = gesture.location
+                                self.isSwipping.toggle()
                             }
-                            .onEnded { _ in
-                                if offset.width < -deletionDistance {
-                                    delete()
-                                } else if offset.width < -halfDeletionDistance {
-                                    offset.width = -tappableDeletionWidth
-                                    initialOffset.width = -tappableDeletionWidth
-                                } else {
-                                    offset = .zero
-                                    initialOffset = .zero
-                                }
+                        }
+                        .onEnded { gesture in
+                            let xDist =  abs(gesture.location.x - self.startPos.x)
+                            let yDist =  abs(gesture.location.y - self.startPos.y)
+                            // left swipe
+                            if self.startPos.x > gesture.location.x && yDist < xDist {
+                                self.offset.width = -52
                             }
+                            // right swipe
+                            else if self.startPos.x < gesture.location.x && yDist < xDist {
+                                self.offset = .zero
+                            }
+                        }
                     )
-            })
-                .if(!isTask, transform: { view in
-                    view
-                        .gesture(
-                            DragGesture()
-                                .onChanged({ gesture in
-                                    let translation = gesture.translation.width
-                                    let limitedTranslation = min(translation, tappableDeletionWidth)
-                                    offset.width = limitedTranslation + initialOffset.width
-                                    if offset.width < -deletionDistance && !willDeleteIfReleased {
-                                        hapticFeedback()
-                                        willDeleteIfReleased.toggle()
-                                    } else if offset.width > -deletionDistance && willDeleteIfReleased {
-                                        hapticFeedback()
-                                        willDeleteIfReleased.toggle()
-                                    }
-                                })
-                        )
-                })
-                    .animation(.interactiveSpring())
+                    .animation(.spring(), value: offset)
+            }
+        } else {
+            content
+                .gesture(DragGesture()
+                    .onChanged { gesture in
+                        if gesture.translation.width < 0 {
+                            offset.width = gesture.translation.width
+                        }
+                    })
+        }
     }
     
     private func delete() {
@@ -101,10 +79,5 @@ struct Delete: ViewModifier {
         let generator = UIImpactFeedbackGenerator(style: .medium)
         generator.impactOccurred()
     }
-    
-    //MARK: Constants
-    
-    let deletionDistance = CGFloat(200)
-    let halfDeletionDistance = CGFloat(50)
-    let tappableDeletionWidth = CGFloat(100)
+
 }

@@ -40,12 +40,10 @@ struct ObjectiveCardView: View {
             if !firstKeyReulstTitle.isEmpty {
                 showRecentKeyResults()
             }
-            
             Divider()
                 .foregroundColor(Color("grey_200"))
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
-            
             HStack {
                 CustomProgressBar(value: $progressValue, backgroundColor: Color("grey_200"))
                     .frame(height: 16)
@@ -59,6 +57,9 @@ struct ObjectiveCardView: View {
         .background(Color("grey_50"))
         .border(Color("grey_200"))
         .clipShape(RoundedRectangle(cornerRadius: 10))
+        .onDelete(isTask: false) {
+            viewModel.deleteObjectiveByID(of: objectiveID)
+        }
         .padding(.horizontal, 16)
         .shadow(radius: 1)
         .onAppear {

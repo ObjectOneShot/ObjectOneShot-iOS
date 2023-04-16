@@ -70,13 +70,7 @@ struct KeyResultDetailView: View {
             }
             .padding(.bottom, 20)
             
-            .if(!isExpanded, transform: { view in
-                view
-                    .onDelete(isTask: false) {
-                        viewModel.currentObjective.keyResults =  viewModel.currentObjective.keyResults.filter { $0.id != keyResultID }
-                        viewModel.currentObjective.setProgress()
-                    }
-            })
+            
                 // 펼치면 Task들 보이기
             if isExpanded {
                 showTasks()
@@ -90,11 +84,20 @@ struct KeyResultDetailView: View {
                 }
             }
         }
+        
         .background(Color("grey_50"))
+        .clipShape(RoundedRectangle(cornerRadius: 10))
         .overlay(
             RoundedRectangle(cornerRadius: 10)
                 .stroke(Color("grey_300"))
         )
+        .if(!isExpanded, transform: { view in
+            view
+                .onDelete(isTask: false) {
+                    viewModel.currentObjective.keyResults =  viewModel.currentObjective.keyResults.filter { $0.id != keyResultID }
+                    viewModel.currentObjective.setProgress()
+                }
+        })
         .onAppear {
             if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResultID }) {
                 self.keyResultTitle = viewModel.currentObjective.keyResults[index].title

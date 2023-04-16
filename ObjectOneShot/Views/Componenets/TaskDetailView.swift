@@ -98,6 +98,10 @@ struct TaskDetailView: View {
                     .padding(.trailing, 22)
                 }
             }
+            .onDelete(isTask: true) {
+                                                viewModel.newEditingKeyResult.tasks = viewModel.newEditingKeyResult.tasks.filter { $0.id != task.id }
+                                                viewModel.newEditingKeyResult.setProgress()
+                                            }
             .padding(.leading, 19)
             
             Rectangle()
@@ -106,6 +110,8 @@ struct TaskDetailView: View {
                 .padding(.horizontal, 8)
                 .padding(.bottom, 12)
         }
+        
+        .background(Color("grey_50"))
         .onAppear {
             if let taskTitle = viewModel.currentObjective.keyResults[keyResultIndex].tasks.first(where: {$0.id == task.id})?.title {
                 self.title = taskTitle

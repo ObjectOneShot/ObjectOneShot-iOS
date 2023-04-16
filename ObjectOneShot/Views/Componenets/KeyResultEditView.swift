@@ -83,22 +83,22 @@ struct KeyResultEditView: View {
             if let taskIndex = viewModel.newEditingKeyResult.tasks.firstIndex(where: { $0.id == task.id }) {
                 if taskIndex == viewModel.newEditingKeyResult.tasks.count - 1 {
                     TaskEditView(isAddingTask: $isAddingTask, isLast: true, task: task)
-                        .if(viewModel.newEditingKeyResult.tasks.count > 1) { view in
-                            view
-                                .onDelete(isTask: true) {
-                                    viewModel.newEditingKeyResult.tasks = viewModel.newEditingKeyResult.tasks.filter { $0.id != task.id }
-                                    viewModel.newEditingKeyResult.setProgress()
-                                }
-                        }
+//                        .if(viewModel.newEditingKeyResult.tasks.count > 1) { view in
+//                            view
+//                                .onDelete(isTask: true) {
+//                                    viewModel.newEditingKeyResult.tasks = viewModel.newEditingKeyResult.tasks.filter { $0.id != task.id }
+//                                    viewModel.newEditingKeyResult.setProgress()
+//                                }
+//                        }
                 } else {
                     TaskEditView(isAddingTask: $isAddingTask, isLast: false, task: task)
-                        .if(viewModel.newEditingKeyResult.tasks.count > 1) { view in
-                            view
-                                .onDelete(isTask: true) {
-                                    viewModel.newEditingKeyResult.tasks = viewModel.newEditingKeyResult.tasks.filter { $0.id != task.id }
-                                    viewModel.newEditingKeyResult.setProgress()
-                                }
-                        }
+//                        .if(viewModel.newEditingKeyResult.tasks.count > 1) { view in
+//                            view
+//                                .onDelete(isTask: true) {
+//                                    viewModel.newEditingKeyResult.tasks = viewModel.newEditingKeyResult.tasks.filter { $0.id != task.id }
+//                                    viewModel.newEditingKeyResult.setProgress()
+//                                }
+//                        }
                 }
             }
         }
