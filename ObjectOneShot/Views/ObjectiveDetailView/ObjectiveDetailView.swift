@@ -13,6 +13,7 @@ struct ObjectiveDetailView: View {
     
     let objectiveID: String
     @State private var isAddingKeyResult = false
+    @State private var isPresentingTips = false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
@@ -26,7 +27,7 @@ struct ObjectiveDetailView: View {
                     .padding(.vertical, 12)
                 Spacer()
                 Button {
-                    /* TODO : 사용법 화면 링크 */
+                    isPresentingTips = true
                 } label: {
                     Image("questionMark.black")
                 }
@@ -140,6 +141,9 @@ struct ObjectiveDetailView: View {
             self.endTextEditing()
         }
         .background(Color("background"))
+        .fullScreenCover(isPresented: $isPresentingTips) {
+            UseTipsView(isPresenting: $isPresentingTips)
+        }
         .navigationBarHidden(true)
     }
     

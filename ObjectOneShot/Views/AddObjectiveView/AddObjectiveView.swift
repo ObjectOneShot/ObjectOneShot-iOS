@@ -11,6 +11,7 @@ struct AddObjectiveView: View {
     @EnvironmentObject var viewModel: OKRViewModel
     
     @State private var isAddingKeyResult = true
+    @State private var isPresentingTips: Bool = false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
@@ -26,6 +27,7 @@ struct AddObjectiveView: View {
                 Spacer()
                 Button {
                     /* TODO : 사용법 화면 링크 */
+                    isPresentingTips = true
                 } label: {
                     Image("questionMark.black")
                 }
@@ -127,6 +129,9 @@ struct AddObjectiveView: View {
         }
         .onTapGesture {
             self.endTextEditing()
+        }
+        .fullScreenCover(isPresented: $isPresentingTips) {
+            UseTipsView(isPresenting: $isPresentingTips)
         }
         .navigationBarHidden(true)
     }
