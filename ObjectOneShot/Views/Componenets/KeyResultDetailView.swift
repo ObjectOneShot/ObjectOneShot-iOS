@@ -70,7 +70,6 @@ struct KeyResultDetailView: View {
             }
             .padding(.bottom, 20)
             
-            
                 // 펼치면 Task들 보이기
             if isExpanded {
                 showTasks()
@@ -104,6 +103,10 @@ struct KeyResultDetailView: View {
                 self.progressValue = viewModel.currentObjective.keyResults[index].progressValue
                 self.progressPercentage = viewModel.currentObjective.keyResults[index].progressPercentage
                 self.isExpanded = viewModel.currentObjective.keyResults[index].isExpanded
+                
+                if viewModel.currentObjective.keyResults[index].tasks.isEmpty {
+                    self.isEditingNewTask = true
+                }
             } else {
                 print("ERROR : no keyResult matching id : KeyResultDetailView")
             }

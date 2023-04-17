@@ -28,6 +28,7 @@ struct KeyResultsHeaderView: View {
                 Spacer()
                 Button {
                     viewModel.keyResultState = .beforeStart
+                    setIsExpandedToFalse()
                 } label : {
                     HStack(spacing: 6) {
                         Circle()
@@ -53,6 +54,7 @@ struct KeyResultsHeaderView: View {
                 Spacer()
                 Button {
                     viewModel.keyResultState = .inProgress
+                    setIsExpandedToFalse()
                 } label: {
                     HStack(spacing: 6) {
                         Circle()
@@ -77,6 +79,7 @@ struct KeyResultsHeaderView: View {
                 Spacer()
                 Button {
                     viewModel.keyResultState = .completed
+                    setIsExpandedToFalse()
                 } label: {
                     HStack(spacing: 6) {
                         Circle()
@@ -101,6 +104,12 @@ struct KeyResultsHeaderView: View {
                 Spacer()
             }
             .padding(.vertical, 9)
+        }
+    }
+    
+    func setIsExpandedToFalse() {
+        for i in 0..<viewModel.currentObjective.keyResults.count {
+            viewModel.currentObjective.keyResults[i].isExpanded = false
         }
     }
 }
