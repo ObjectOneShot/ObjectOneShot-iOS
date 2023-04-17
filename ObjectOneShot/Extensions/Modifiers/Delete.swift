@@ -75,7 +75,6 @@ struct Delete: ViewModifier {
     }
     
     private func delete() {
-//        offset.width = -contentWidth
         action()
     }
     

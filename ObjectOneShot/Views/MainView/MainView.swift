@@ -25,7 +25,7 @@ struct MainView: View {
             }
             
             if isShowingObjectiveDeleteAlert {
-                CustomAlert(alertState: .deletingObjective, objectiveID: viewModel.deletingObjectiveID, isShowingObjectiveDeleteAlert: $isShowingObjectiveDeleteAlert)
+                CustomAlert(alertState: .deletingObjective, objectiveID: viewModel.deletingObjectiveID, isShowingAlert: $isShowingObjectiveDeleteAlert, isSaveButtonTapped: .constant(false))
             }
         }
     }
