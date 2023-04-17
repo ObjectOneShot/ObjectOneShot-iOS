@@ -29,10 +29,14 @@ struct Delete: ViewModifier {
                             Button {
                                 delete()
                             } label: {
-                                Image("deleteButton")
+                                VStack {
+                                    Spacer()
+                                    Image("deleteButton")
+                                    Spacer()
+                                }
                             }
                             Spacer()
-                                .frame(width: 16)
+                                .frame(width: 11)
                         }
                     }
                 content
@@ -71,7 +75,7 @@ struct Delete: ViewModifier {
     }
     
     private func delete() {
-        offset.width = -contentWidth
+//        offset.width = -contentWidth
         action()
     }
     

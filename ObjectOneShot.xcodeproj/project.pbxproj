@@ -16,6 +16,7 @@
 		606D898D29E4DEEB00FA4BFA /* Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D898C29E4DEEB00FA4BFA /* Delete.swift */; };
 		606D899029E53B9500FA4BFA /* KeyResultEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D898F29E53B9500FA4BFA /* KeyResultEditView.swift */; };
 		60739F6F29EB547100F82C8A /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60739F6E29EB547100F82C8A /* RoundedCorner.swift */; };
+		60739F7729ECF14A00F82C8A /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60739F7629ECF14A00F82C8A /* CustomAlert.swift */; };
 		607E1AC229EAC57C005D36D1 /* UseTipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607E1AC129EAC57C005D36D1 /* UseTipsView.swift */; };
 		60C88D9029E041D300EB1BA6 /* ObjectOneShotApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C88D8F29E041D300EB1BA6 /* ObjectOneShotApp.swift */; };
 		60C88D9429E041D500EB1BA6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 60C88D9329E041D500EB1BA6 /* Assets.xcassets */; };
@@ -55,6 +56,7 @@
 		606D898C29E4DEEB00FA4BFA /* Delete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delete.swift; sourceTree = "<group>"; };
 		606D898F29E53B9500FA4BFA /* KeyResultEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyResultEditView.swift; sourceTree = "<group>"; };
 		60739F6E29EB547100F82C8A /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
+		60739F7629ECF14A00F82C8A /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		607E1AC129EAC57C005D36D1 /* UseTipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseTipsView.swift; sourceTree = "<group>"; };
 		60C88D8C29E041D300EB1BA6 /* ObjectOneShot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ObjectOneShot.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		60C88D8F29E041D300EB1BA6 /* ObjectOneShotApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectOneShotApp.swift; sourceTree = "<group>"; };
@@ -128,6 +130,14 @@
 				606D898C29E4DEEB00FA4BFA /* Delete.swift */,
 			);
 			path = Modifiers;
+			sourceTree = "<group>";
+		};
+		60739F7529ECF13D00F82C8A /* CustomAlert */ = {
+			isa = PBXGroup;
+			children = (
+				60739F7629ECF14A00F82C8A /* CustomAlert.swift */,
+			);
+			path = CustomAlert;
 			sourceTree = "<group>";
 		};
 		607E1AC029EAC55F005D36D1 /* UseTipsView */ = {
@@ -230,6 +240,7 @@
 		60C88DAF29E06A4300EB1BA6 /* Componenets */ = {
 			isa = PBXGroup;
 			children = (
+				60739F7529ECF13D00F82C8A /* CustomAlert */,
 				606D897D29E29E6E00FA4BFA /* ObjectiveDetailCard.swift */,
 				60C88DBA29E0B3DB00EB1BA6 /* KeyResultsHeaderView.swift */,
 				606BC78829E25B5A00192666 /* KeyResultDetailView.swift */,
@@ -382,6 +393,7 @@
 				60D0CF2029E8D8EA00EFE0A6 /* CustomProgressBar.swift in Sources */,
 				60C88DBF29E0C42800EB1BA6 /* OKRViewModel.swift in Sources */,
 				606D898229E40BEE00FA4BFA /* WideAddButtonView.swift in Sources */,
+				60739F7729ECF14A00F82C8A /* CustomAlert.swift in Sources */,
 				606D898D29E4DEEB00FA4BFA /* Delete.swift in Sources */,
 				606D899029E53B9500FA4BFA /* KeyResultEditView.swift in Sources */,
 				606D898929E4AAC800FA4BFA /* AddObjectiveView.swift in Sources */,

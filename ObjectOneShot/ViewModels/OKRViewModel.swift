@@ -8,13 +8,13 @@
 import Foundation
 
 final class OKRViewModel: ObservableObject {
-    @Published var keyResultState: KeyResultState = .beforeStart
     
+    @Published var keyResultState: KeyResultState = .beforeStart
     @Published var currentObjective: Objective = Objective(title: "", startDate: Date(), endDate: Date(), keyResults: [])
     @Published var newEditingKeyResult: KeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [Task(title: "")])
     @Published var newEditingTask: Task = Task(title: "")
-    
     @Published var objectives: [Objective] = [Objective.dummy, Objective.dummy]
+    @Published var deletingObjectiveID: String = ""
     
     init() {
         loadObjectivesFromUserDefaults()

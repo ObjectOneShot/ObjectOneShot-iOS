@@ -14,12 +14,19 @@ struct MainView: View {
     @AppStorage("_isFirstLaunching") var isFirstLaunching: Bool = true
     @State private var isPresentingTips: Bool = false
     @State private var isShowingCompletedObjectives = false
+    @State private var isShowingObjectiveDeleteAlert = false
     
     var body: some View {
-        VStack(spacing: 0) {
-            // Header
-            mainTitle()
-            showObjectives()
+        ZStack {
+            VStack(spacing: 0) {
+                // Header
+                mainTitle()
+                showObjectives()
+            }
+            
+            if isShowingObjectiveDeleteAlert {
+                CustomAlert(alertState: .deletingObjective, objectiveID: viewModel.deletingObjectiveID, isShowingObjectiveDeleteAlert: $isShowingObjectiveDeleteAlert)
+            }
         }
     }
     
@@ -97,7 +104,7 @@ struct MainView: View {
                         // 클릭하면 ObjectiveDetailView로 전환
                         NavigationLink(destination: ObjectiveDetailView(objectiveID: objective.id)
                             .environmentObject(self.viewModel)) {
-                                ObjectiveCardView(objectiveID: objective.id)
+                                ObjectiveCardView(objectiveID: objective.id, isShowingObjectiveDeleteAlert: $isShowingObjectiveDeleteAlert)
                                     .padding(.bottom, 10)
                             }
                             .buttonStyle(PlainButtonStyle())
@@ -108,7 +115,7 @@ struct MainView: View {
                         // 클릭하면 ObjectiveDetailView로 전환
                         NavigationLink(destination: ObjectiveDetailView(objectiveID: objective.id)
                             .environmentObject(self.viewModel)) {
-                                ObjectiveCardView(objectiveID: objective.id)
+                                ObjectiveCardView(objectiveID: objective.id, isShowingObjectiveDeleteAlert: $isShowingObjectiveDeleteAlert)
                                     .padding(.bottom, 10)
                             }
                             .buttonStyle(PlainButtonStyle())

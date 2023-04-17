@@ -13,6 +13,7 @@ struct ObjectiveCardView: View {
     
     let objectiveID: String
     
+    @Binding var isShowingObjectiveDeleteAlert: Bool
     @State var objectiveTitle = ""
     @State var objectiveEndDate = Date()
     @State var firstKeyReulstTitle = ""
@@ -58,7 +59,8 @@ struct ObjectiveCardView: View {
         .border(Color("grey_200"))
         .clipShape(RoundedRectangle(cornerRadius: 10))
         .onDelete(isTask: false) {
-            viewModel.deleteObjectiveByID(of: objectiveID)
+            isShowingObjectiveDeleteAlert = true
+            viewModel.deletingObjectiveID = objectiveID
         }
         .padding(.horizontal, 16)
         .shadow(radius: 1)
@@ -119,7 +121,7 @@ struct ObjectiveCardView: View {
 
 struct ObjectiveCardView_Previews: PreviewProvider {
     static var previews: some View {
-        ObjectiveCardView(objectiveID: Objective.dummy.id)
+        ObjectiveCardView(objectiveID: Objective.dummy.id, isShowingObjectiveDeleteAlert: .constant(false))
             .environmentObject(OKRViewModel())
     }
 }
