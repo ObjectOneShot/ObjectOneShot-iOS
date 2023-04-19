@@ -15,6 +15,8 @@ struct KeyResultEditView: View {
     @State var keyResultTitle: String = ""
     @State var taskTitle: String = ""
     @State var isAddingTask: Bool = true
+    @State var isEditingNewTask = true
+    @State var isEditingTaskFocused = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -83,22 +85,8 @@ struct KeyResultEditView: View {
             if let taskIndex = viewModel.newEditingKeyResult.tasks.firstIndex(where: { $0.id == task.id }) {
                 if taskIndex == viewModel.newEditingKeyResult.tasks.count - 1 {
                     TaskEditView(isAddingTask: $isAddingTask, isLast: true, task: task)
-//                        .if(viewModel.newEditingKeyResult.tasks.count > 1) { view in
-//                            view
-//                                .onDelete(isTask: true) {
-//                                    viewModel.newEditingKeyResult.tasks = viewModel.newEditingKeyResult.tasks.filter { $0.id != task.id }
-//                                    viewModel.newEditingKeyResult.setProgress()
-//                                }
-//                        }
                 } else {
                     TaskEditView(isAddingTask: $isAddingTask, isLast: false, task: task)
-//                        .if(viewModel.newEditingKeyResult.tasks.count > 1) { view in
-//                            view
-//                                .onDelete(isTask: true) {
-//                                    viewModel.newEditingKeyResult.tasks = viewModel.newEditingKeyResult.tasks.filter { $0.id != task.id }
-//                                    viewModel.newEditingKeyResult.setProgress()
-//                                }
-//                        }
                 }
             }
         }
@@ -112,9 +100,30 @@ struct KeyResultEditView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 18, height: 18)
-                TextField("", text: $taskTitle, prompt: Text("내용을 입력해주세요").font(.pretendard(.medium, size: 16)).foregroundColor(Color("grey_500")))
+                ZStack {
+                    // 태스크 내용
+                    TextField("", text: $taskTitle, onEditingChanged: { editing in
+                        // 수정 중인지 아닌지
+                        if editing {
+                            self.isEditingTaskFocused = true
+                        } else {
+                            self.isEditingTaskFocused = false
+                        }
+                    })
                     .font(.pretendard(.medium, size: 16))
                     .foregroundColor(Color("grey_900"))
+                    .background {
+                        // 플레이스홀더
+                        if taskTitle.isEmpty {
+                            HStack {
+                                Text("내용을 입력해주세요")
+                                    .font(.pretendard(.medium, size: 16))
+                                    .foregroundColor(Color("grey_500"))
+                                Spacer()
+                            }
+                        }
+                    }
+                }
                 Button {
                     // 새로운 태스크의 텍스트필드 비어있지 않다면 new Key Result에 추가
                     if !taskTitle.isEmpty {

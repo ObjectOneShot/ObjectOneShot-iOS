@@ -176,6 +176,7 @@ struct AddObjectiveView: View {
                 .background(Color("titleBackground"))
         }
         .padding(.bottom, 1)
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }
 

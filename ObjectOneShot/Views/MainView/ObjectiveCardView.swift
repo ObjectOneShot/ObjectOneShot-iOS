@@ -58,7 +58,7 @@ struct ObjectiveCardView: View {
         .background(Color("grey_50"))
         .border(Color("grey_200"))
         .clipShape(RoundedRectangle(cornerRadius: 10))
-        .onDelete(isTask: false) {
+        .onDelete(){
             isShowingObjectiveDeleteAlert = true
             viewModel.deletingObjectiveID = objectiveID
         }

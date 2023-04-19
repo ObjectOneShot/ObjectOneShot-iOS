@@ -12,6 +12,7 @@ struct KeyResultDetailView: View {
     
     @State private var isExpanded = false
     @State private var isEditingNewTask = false
+    @State private var isEditingTaskFocused = false
     
     @State private var keyResultTitle = ""
     @State private var progressValue: Double = 0.0
@@ -73,9 +74,10 @@ struct KeyResultDetailView: View {
                 // 펼치면 Task들 보이기
             if isExpanded {
                 showTasks()
-                // task가 5개를 채우지 못했을 경우에만 editTask 보이기
+                // task가 5개를 채우지 못했고
                 if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResultID }) {
                     if viewModel.currentObjective.keyResults[index].tasks.count < 5 {
+                        // + 버튼 눌러 새로운 task 추가중일 때 editNewTask 보이기
                         if isEditingNewTask {
                             editNewTask()
                         }
@@ -92,7 +94,7 @@ struct KeyResultDetailView: View {
         )
         .if(!isExpanded, transform: { view in
             view
-                .onDelete(isTask: false) {
+                .onDelete() {
                     viewModel.currentObjective.keyResults =  viewModel.currentObjective.keyResults.filter { $0.id != keyResultID }
                     viewModel.currentObjective.setProgress()
                 }
@@ -122,14 +124,6 @@ struct KeyResultDetailView: View {
         if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResultID }) {
             ForEach(viewModel.currentObjective.keyResults[index].tasks, id: \.id) { task in
                 TaskDetailView(isEditingNewTask: $isEditingNewTask, progressValue: $progressValue, progressPercentage: $progressPercentage, keyResultIndex: index, task: task, isLast: viewModel.currentObjective.keyResults[index].tasks.count - 1 == viewModel.currentObjective.keyResults[index].tasks.firstIndex(where: { $0.id == task.id }))
-                // Task가 두 개 이상일 때만 삭제 가능
-                    .if(viewModel.currentObjective.keyResults[index].tasks.count > 1) { view in
-                        view
-                            .onDelete(isTask: true) {
-                                viewModel.currentObjective.keyResults[index].tasks = viewModel.currentObjective.keyResults[index].tasks.filter { $0.id != viewModel.currentObjective.keyResults[index].tasks[viewModel.currentObjective.keyResults[index].tasks.firstIndex(where: { $0.id == task.id })!].id }
-                                viewModel.currentObjective.keyResults[index].setProgress()
-                            }
-                    }
             }
         }
     }
@@ -142,9 +136,40 @@ struct KeyResultDetailView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 18, height: 18)
-                TextField("", text: $taskTitle, prompt: Text("내용을 입력해주세요").font(.pretendard(.medium, size: 16)).foregroundColor(Color("grey_500")))
+                ZStack {
+                    // 태스크 내용
+                    TextField("", text: $taskTitle, onEditingChanged: { editing in
+                        // 수정 중인지 아닌지
+                        if editing {
+                            self.isEditingTaskFocused = true
+                        } else {
+                            self.isEditingTaskFocused = false
+                            if taskTitle.isEmpty {
+                                isEditingNewTask = false
+                            } else {
+                                if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResultID }) {
+                                    if viewModel.currentObjective.keyResults[index].tasks.count < 5 {
+                                        viewModel.currentObjective.keyResults[index].tasks.append(Task(title: taskTitle))
+                                        taskTitle = ""
+                                    }
+                                }
+                            }
+                        }
+                    })
                     .font(.pretendard(.medium, size: 16))
                     .foregroundColor(Color("grey_900"))
+                    .background {
+                        // 플레이스홀더
+                        if taskTitle.isEmpty {
+                            HStack {
+                                Text("내용을 입력해주세요")
+                                    .font(.pretendard(.medium, size: 16))
+                                    .foregroundColor(Color("grey_500"))
+                                Spacer()
+                            }
+                        }
+                    }
+                }
                 Button {
                     // 새로운 태스크의 텍스트필드 비어있지 않다면 new Key Result에 추가
                     if !taskTitle.isEmpty {

@@ -14,8 +14,8 @@ extension View {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
     
-    func onDelete(isTask: Bool, perform action: @escaping () -> Void) -> some View {
-        self.modifier(Delete(isTask: isTask, action: action))
+    func onDelete(perform action: @escaping () -> Void) -> some View {
+        self.modifier(Delete(action: action))
     }
     
     func sync(_ published: Binding<[KeyResult]>, with binding: Binding<[KeyResult]>) -> some View {

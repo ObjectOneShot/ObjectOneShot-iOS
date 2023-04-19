@@ -12,6 +12,7 @@ struct TaskDetailView: View {
     @EnvironmentObject var viewModel: OKRViewModel
     
     @State var title = ""
+    @State private var isFocused = false
     @Binding var isEditingNewTask: Bool
     @Binding var progressValue: Double
     @Binding var progressPercentage: Int
@@ -23,67 +24,31 @@ struct TaskDetailView: View {
     var body: some View {
         VStack {
             HStack {
-                // isCompleted 체크박스
-                Button {
-                    if let index = viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id }) {
-                        viewModel.currentObjective.keyResults[keyResultIndex].tasks[index].isCompleted.toggle()
-                    } else {
-                        print("ERROR : no matching task found by taskID : TaskDetailView.swift")
-                    }
-                    viewModel.currentObjective.keyResults[keyResultIndex].setProgress()
-                    if viewModel.currentObjective.keyResults[keyResultIndex].completionState == .beforeStart {
-                        viewModel.keyResultState = .beforeStart
-                    } else if viewModel.currentObjective.keyResults[keyResultIndex].completionState == .inProgress {
-                        viewModel.keyResultState = .inProgress
-                    } else {
-                        viewModel.keyResultState = .completed
-                    }
-                    viewModel.currentObjective.keyResults[keyResultIndex].isExpanded = true
-                    
-                    progressValue = viewModel.currentObjective.keyResults[keyResultIndex].progressValue
-                    progressPercentage = viewModel.currentObjective.keyResults[keyResultIndex].progressPercentage
-                } label: {
-                    if let task = viewModel.currentObjective.keyResults[keyResultIndex].tasks.first(where: { $0.id == task.id }) {
-                        if task.isCompleted {
-                            Image("checkMark.square")
+                checkBox()
+                taskTitle()
+                Spacer()
+                // 만약 focus 되었고 표시할 task가 2개 이상이면 x 표시하기
+                if isFocused {
+                    if viewModel.currentObjective.keyResults[keyResultIndex].tasks.count > 1 {
+                        Button {
+                            // 버튼 터치하면 task 삭제
+                            viewModel.currentObjective.keyResults[keyResultIndex].tasks = viewModel.currentObjective.keyResults[keyResultIndex].tasks.filter { $0.id != viewModel.currentObjective.keyResults[keyResultIndex].tasks[viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id })!].id }
+                            viewModel.currentObjective.keyResults[keyResultIndex].setProgress()
+                        } label: {
+                            Image("xMark")
+                                .renderingMode(.template)
                                 .resizable()
                                 .scaledToFit()
-                                .frame(width: 18, height: 18)
-                                .foregroundColor(.black)
-                        } else {
-                            Image("square")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 18, height: 18)
-                                .foregroundColor(.black)
+                                .frame(width: 14, height: 14)
+                                .foregroundColor(Color("grey_900"))
                         }
+                        .padding(.trailing, 22)
                     }
                 }
                 
-                // task title
-                ZStack {
-                    TextField("", text: $title, prompt: Text("내용을 입력해주세요").font(.pretendard(.medium, size: 16)).foregroundColor(Color("grey_500")))
-                        .font(.pretendard(.medium, size: 16))
-                        .foregroundColor(Color("grey_900"))
-                        .onChange(of: title) { _ in
-                            if let index = viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id }) {
-                                viewModel.currentObjective.keyResults[keyResultIndex].tasks[index].title = self.title
-                            } else {
-                                print("ERROR : no matching task found by taskID: TaskDetailView.swift")
-                            }
-                        }
-                    if let index = viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id }) {
-                        if viewModel.currentObjective.keyResults[keyResultIndex].tasks[index].isCompleted {
-                            Rectangle()
-                                .frame(height:1)
-                                .foregroundColor(Color("grey_900"))
-                                .padding(.trailing, 24)
-                        }
-                    }
-                }
-                Spacer()
                 // 만약 마지막 task이고 새로운 task 추가중이지 않다면 + 버튼 추가, task 추가 가능하도록 하기
-                if isLast && !isEditingNewTask {
+                // + focus중이 아닐 때만 추가!
+                if isLast && !isEditingNewTask && !isFocused {
                     Button {
                         // task 추가 및 task가 5개 이하라면 다음 task 추가 칸 보이기!
                         isEditingNewTask = true
@@ -98,10 +63,6 @@ struct TaskDetailView: View {
                     .padding(.trailing, 22)
                 }
             }
-            .onDelete(isTask: true) {
-                                                viewModel.newEditingKeyResult.tasks = viewModel.newEditingKeyResult.tasks.filter { $0.id != task.id }
-                                                viewModel.newEditingKeyResult.setProgress()
-                                            }
             .padding(.leading, 19)
             
             Rectangle()
@@ -117,6 +78,89 @@ struct TaskDetailView: View {
                 self.title = taskTitle
             } else {
                 print("ERROR : no matching tasks found by taskID : TaskDetailView.swift")
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func checkBox() -> some View {
+        Button {
+            if let index = viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id }) {
+                viewModel.currentObjective.keyResults[keyResultIndex].tasks[index].isCompleted.toggle()
+            } else {
+                print("ERROR : no matching task found by taskID : TaskDetailView.swift")
+            }
+            viewModel.currentObjective.keyResults[keyResultIndex].setProgress()
+            if viewModel.currentObjective.keyResults[keyResultIndex].completionState == .beforeStart {
+                viewModel.keyResultState = .beforeStart
+            } else if viewModel.currentObjective.keyResults[keyResultIndex].completionState == .inProgress {
+                viewModel.keyResultState = .inProgress
+            } else {
+                viewModel.keyResultState = .completed
+            }
+            viewModel.currentObjective.keyResults[keyResultIndex].isExpanded = true
+            
+            progressValue = viewModel.currentObjective.keyResults[keyResultIndex].progressValue
+            progressPercentage = viewModel.currentObjective.keyResults[keyResultIndex].progressPercentage
+        } label: {
+            if let task = viewModel.currentObjective.keyResults[keyResultIndex].tasks.first(where: { $0.id == task.id }) {
+                if task.isCompleted {
+                    Image("checkMark.square")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 18, height: 18)
+                        .foregroundColor(.black)
+                } else {
+                    Image("square")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 18, height: 18)
+                        .foregroundColor(.black)
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func taskTitle() -> some View {
+        ZStack {
+            // 태스크 내용
+            TextField("", text: $title, onEditingChanged: { editing in
+                // 수정 중인지 아닌지
+                if editing {
+                    self.isFocused = true
+                } else {
+                    self.isFocused = false
+                }
+            })
+            .font(.pretendard(.medium, size: 16))
+            .foregroundColor(Color("grey_900"))
+            .background {
+                // 플레이스홀더
+                if title.isEmpty {
+                    HStack {
+                        Text("내용을 입력해주세요")
+                            .font(.pretendard(.medium, size: 16))
+                            .foregroundColor(Color("grey_500"))
+                        Spacer()
+                    }
+                }
+            }
+            .onChange(of: title) { _ in
+                if let index = viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id }) {
+                    viewModel.currentObjective.keyResults[keyResultIndex].tasks[index].title = self.title
+                } else {
+                    print("ERROR : no matching task found by taskID: TaskDetailView.swift")
+                }
+            }
+            if let index = viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id }) {
+                // task 완료 시 취소선 긋기
+                if viewModel.currentObjective.keyResults[keyResultIndex].tasks[index].isCompleted {
+                    Rectangle()
+                        .frame(height:1)
+                        .foregroundColor(Color("grey_900"))
+                        .padding(.trailing, 24)
+                }
             }
         }
     }

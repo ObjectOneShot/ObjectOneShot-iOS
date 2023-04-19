@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// NavigationStack Coordinator
 class Coordinator: ObservableObject {
     @Published var path = NavigationPath()
 

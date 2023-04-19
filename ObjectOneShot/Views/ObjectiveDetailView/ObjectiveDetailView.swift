@@ -177,13 +177,9 @@ struct ObjectiveDetailView: View {
     func backButton() -> some View {
         Button {
             /*
-             TODO : 사용자의 내용작성 정도에 따라 값을 저장하지 않고 나가겠냐는 팝업창 띄워주기
+             TODO : 값을 변경했을 때만 값을 저장하지 않고 나가겠냐는 팝업창 띄워주기
              */
             isPresentingSaveAlert = true
-            
-//            viewModel.objectives[viewModel.objectives.firstIndex(where: { $0.id == objectiveID })!] = viewModel.currentObjective
-//            self.presentationMode.wrappedValue.dismiss()
-//            viewModel.saveObjectivesToUserDefaults()
         } label : {
             HStack{
                 Image("chevron.left.black")
