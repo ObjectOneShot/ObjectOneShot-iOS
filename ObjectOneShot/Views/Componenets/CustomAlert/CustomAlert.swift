@@ -61,6 +61,7 @@ struct CustomAlert: View {
                     }
             }
             
+            // objective 저장의 경우
             if alertState == .savingChanges {
                 Image("alert.saveObjective")
                     .resizable()
@@ -71,8 +72,9 @@ struct CustomAlert: View {
                             Spacer()
                             HStack(spacing: 16) {
                                 Button {
-                                    // 취소하기
+                                    // 나가기
                                     isShowingAlert = false
+                                    isSaveButtonTapped = true
                                 } label: {
                                     RoundedRectangle(cornerRadius: 10)
                                         .frame(width: 102, height: 36)
@@ -99,9 +101,3 @@ struct CustomAlert: View {
         }
     }
 }
-
-//struct CustomAlert_Previews: PreviewProvider {
-////    static var previews: some View {
-////        CustomAlert(alertState: .deletingObjective, objectiveID: Objective.dummy.id, isShowingAlert: .constant(true), presentationdMode: .constant(false))
-////    }
-//}
