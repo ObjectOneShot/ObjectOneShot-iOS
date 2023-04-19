@@ -145,7 +145,14 @@ struct KeyResultDetailView: View {
                         } else {
                             self.isEditingTaskFocused = false
                             if taskTitle.isEmpty {
-                                isEditingNewTask = false
+                                if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResultID }) {
+                                    // 만약 taskTitle 비어있고 task가 하나도 없다면 isEditingNewTask true로 유지
+                                    if viewModel.currentObjective.keyResults[index].tasks.isEmpty {
+                                        isEditingNewTask = true
+                                    } else {
+                                        isEditingNewTask = false
+                                    }
+                                }
                             } else {
                                 if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResultID }) {
                                     if viewModel.currentObjective.keyResults[index].tasks.count < 5 {

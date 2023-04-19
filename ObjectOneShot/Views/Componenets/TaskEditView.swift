@@ -14,6 +14,7 @@ struct TaskEditView: View {
     @Binding var isAddingTask: Bool
     @State private var title = ""
     @State private var isFocused = false
+    @State private var isCompleted = false
     
     let isLast: Bool
     let task : Task
@@ -76,6 +77,7 @@ struct TaskEditView: View {
         .onAppear {
             if let index = viewModel.newEditingKeyResult.tasks.firstIndex(where: { $0.id == task.id }) {
                 title = viewModel.newEditingKeyResult.tasks[index].title
+                isCompleted = viewModel.newEditingKeyResult.tasks[index].isCompleted
             } else {
                 print("ERROR : no task matching taskID : TaskEditView")
             }
@@ -85,12 +87,8 @@ struct TaskEditView: View {
     @ViewBuilder
     func checkBox() -> some View {
         Button {
-            if let index = viewModel.newEditingKeyResult.tasks.firstIndex(where: { $0.id == task.id }) {
-                viewModel.newEditingKeyResult.tasks[index].isCompleted.toggle()
-            } else {
-                print("ERROR : no task matching taskID : TaskEditView")
-            }
-            viewModel.newEditingKeyResult.setProgress()
+            self.isCompleted.toggle()
+           
         } label: {
             if let index = viewModel.newEditingKeyResult.tasks.firstIndex(where: { $0.id == task.id }) {
                 if viewModel.newEditingKeyResult.tasks[index].isCompleted {
@@ -108,6 +106,14 @@ struct TaskEditView: View {
                 }
             }
         }
+        .onChange(of: isCompleted) { newValue in
+            if let index = viewModel.newEditingKeyResult.tasks.firstIndex(where: { $0.id == task.id }) {
+                viewModel.newEditingKeyResult.tasks[index].isCompleted = self.isCompleted
+            } else {
+                print("ERROR : no task matching taskID : TaskEditView")
+            }
+            viewModel.newEditingKeyResult.setProgress()
+        }
     }
     
     @ViewBuilder
@@ -119,9 +125,15 @@ struct TaskEditView: View {
                 if editing {
                     self.isFocused = true
                 } else {
+                    if let index = viewModel.newEditingKeyResult.tasks.firstIndex(where: { $0.id == task.id }) {
+                        viewModel.newEditingKeyResult.tasks[index].title = self.title
+                    } else {
+                        print("ERROR : no task matching taskID : TaskEditView")
+                    }
                     self.isFocused = false
                 }
             })
+            .disabled(isCompleted)
             .font(.pretendard(.medium, size: 16))
             .foregroundColor(Color("grey_900"))
             .background {
@@ -133,13 +145,6 @@ struct TaskEditView: View {
                             .foregroundColor(Color("grey_500"))
                         Spacer()
                     }
-                }
-            }
-            .onChange(of: title) { _ in
-                if let index = viewModel.newEditingKeyResult.tasks.firstIndex(where: { $0.id == task.id }) {
-                    viewModel.newEditingKeyResult.tasks[index].title = title
-                } else {
-                    print("ERROR : no task matching taskID : TaskEditView")
                 }
             }
             if let index = viewModel.newEditingKeyResult.tasks.firstIndex(where: { $0.id == task.id }) {

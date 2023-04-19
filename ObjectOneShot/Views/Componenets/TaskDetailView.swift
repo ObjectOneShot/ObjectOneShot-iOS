@@ -13,6 +13,7 @@ struct TaskDetailView: View {
     
     @State var title = ""
     @State private var isFocused = false
+    @State private var isCompleted = false
     @Binding var isEditingNewTask: Bool
     @Binding var progressValue: Double
     @Binding var progressPercentage: Int
@@ -79,29 +80,17 @@ struct TaskDetailView: View {
             } else {
                 print("ERROR : no matching tasks found by taskID : TaskDetailView.swift")
             }
+            
+            if let index = viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id }) {
+                self.isCompleted = viewModel.currentObjective.keyResults[keyResultIndex].tasks[index].isCompleted
+            }
         }
     }
     
     @ViewBuilder
     func checkBox() -> some View {
         Button {
-            if let index = viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id }) {
-                viewModel.currentObjective.keyResults[keyResultIndex].tasks[index].isCompleted.toggle()
-            } else {
-                print("ERROR : no matching task found by taskID : TaskDetailView.swift")
-            }
-            viewModel.currentObjective.keyResults[keyResultIndex].setProgress()
-            if viewModel.currentObjective.keyResults[keyResultIndex].completionState == .beforeStart {
-                viewModel.keyResultState = .beforeStart
-            } else if viewModel.currentObjective.keyResults[keyResultIndex].completionState == .inProgress {
-                viewModel.keyResultState = .inProgress
-            } else {
-                viewModel.keyResultState = .completed
-            }
-            viewModel.currentObjective.keyResults[keyResultIndex].isExpanded = true
-            
-            progressValue = viewModel.currentObjective.keyResults[keyResultIndex].progressValue
-            progressPercentage = viewModel.currentObjective.keyResults[keyResultIndex].progressPercentage
+            self.isCompleted.toggle()
         } label: {
             if let task = viewModel.currentObjective.keyResults[keyResultIndex].tasks.first(where: { $0.id == task.id }) {
                 if task.isCompleted {
@@ -119,6 +108,26 @@ struct TaskDetailView: View {
                 }
             }
         }
+        .onChange(of: isCompleted) { newValue in
+            if let index = viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id }) {
+                viewModel.currentObjective.keyResults[keyResultIndex].tasks[index].isCompleted = isCompleted
+            } else {
+                print("ERROR : no matching task found by taskID : TaskDetailView.swift")
+            }
+            
+            viewModel.currentObjective.keyResults[keyResultIndex].setProgress()
+            if viewModel.currentObjective.keyResults[keyResultIndex].completionState == .beforeStart {
+                viewModel.keyResultState = .beforeStart
+            } else if viewModel.currentObjective.keyResults[keyResultIndex].completionState == .inProgress {
+                viewModel.keyResultState = .inProgress
+            } else {
+                viewModel.keyResultState = .completed
+            }
+            viewModel.currentObjective.keyResults[keyResultIndex].isExpanded = true
+            
+            progressValue = viewModel.currentObjective.keyResults[keyResultIndex].progressValue
+            progressPercentage = viewModel.currentObjective.keyResults[keyResultIndex].progressPercentage
+        }
     }
     
     @ViewBuilder
@@ -130,9 +139,15 @@ struct TaskDetailView: View {
                 if editing {
                     self.isFocused = true
                 } else {
+                    if let index = viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id }) {
+                        viewModel.currentObjective.keyResults[keyResultIndex].tasks[index].title = self.title
+                    } else {
+                        print("ERROR : no matching task found by taskID: TaskDetailView.swift")
+                    }
                     self.isFocused = false
                 }
             })
+            .disabled(isCompleted)
             .font(.pretendard(.medium, size: 16))
             .foregroundColor(Color("grey_900"))
             .background {
@@ -144,13 +159,6 @@ struct TaskDetailView: View {
                             .foregroundColor(Color("grey_500"))
                         Spacer()
                     }
-                }
-            }
-            .onChange(of: title) { _ in
-                if let index = viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id }) {
-                    viewModel.currentObjective.keyResults[keyResultIndex].tasks[index].title = self.title
-                } else {
-                    print("ERROR : no matching task found by taskID: TaskDetailView.swift")
                 }
             }
             if let index = viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id }) {
