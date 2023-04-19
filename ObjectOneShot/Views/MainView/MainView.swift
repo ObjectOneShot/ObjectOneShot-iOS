@@ -109,6 +109,8 @@ struct MainView: View {
                             }
                             .buttonStyle(PlainButtonStyle())
                     }
+                    // 보관된 objectives는 수정 불가
+                    .disabled(true)
                 } else {
                     // 완료하지 않은 objectives 보여주기
                     ForEach(viewModel.objectives.filter{ $0.progressValue != 1 }) { objective in
