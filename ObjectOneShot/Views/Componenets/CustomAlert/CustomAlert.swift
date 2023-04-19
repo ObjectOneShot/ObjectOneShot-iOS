@@ -25,6 +25,9 @@ struct CustomAlert: View {
         ZStack {
             Color.black.opacity(0.75)
                 .edgesIgnoringSafeArea(.all)
+                .onTapGesture {
+                    isShowingAlert = false
+                }
             
             // objective 삭제의 경우
             if alertState == .deletingObjective {
