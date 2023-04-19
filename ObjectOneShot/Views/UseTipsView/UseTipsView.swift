@@ -20,6 +20,8 @@ struct UseTipsView: View {
                     .tag(1)
                 thirdTip()
                     .tag(2)
+                fourthTip()
+                    .tag(3)
             }
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
             VStack {
@@ -46,6 +48,14 @@ struct UseTipsView: View {
                             $0.foregroundColor(Color("primaryColor"))
                         }
                         .if(currentIndex != 2) {
+                            $0.foregroundColor(Color("grey_200"))
+                        }
+                    Circle()
+                        .frame(width: 10, height: 10)
+                        .if(currentIndex == 3) {
+                            $0.foregroundColor(Color("primaryColor"))
+                        }
+                        .if(currentIndex != 3) {
                             $0.foregroundColor(Color("grey_200"))
                         }
                 }
@@ -136,6 +146,44 @@ struct UseTipsView: View {
                     .resizable()
                     .scaledToFit()
                     .padding(.top, 41)
+            }
+            VStack {
+                HStack {
+                    Image("tips.logo")
+                        .padding(.leading, 27)
+                        .padding(.top, 45)
+                    Spacer()
+                }
+                Spacer()
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func fourthTip() -> some View {
+        ZStack {
+            VStack(spacing: 0) {
+                Image("tips.fourth.description")
+                    .padding(.top, 85)
+                Image("tips.fourth.caution")
+                    .padding(.top, 16)
+                Image("tips.fourth")
+                    .resizable()
+                    .scaledToFit()
+                    .padding(.top, 11)
+                    .overlay {
+                        VStack {
+                            HStack {
+                                Spacer()
+                                Image("tips.archive")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 107, height: 107)
+                            }
+                            .padding(.top, 25)
+                            Spacer()
+                        }
+                    }
             }
             VStack {
                 HStack {
