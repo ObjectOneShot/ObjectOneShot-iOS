@@ -13,7 +13,7 @@ final class OKRViewModel: ObservableObject {
     @Published var currentObjective: Objective = Objective(title: "", startDate: Date(), endDate: Date(), keyResults: [])
     @Published var newEditingKeyResult: KeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [Task(title: "")])
     @Published var newEditingTask: Task = Task(title: "")
-    @Published var objectives: [Objective] = [Objective.dummy, Objective.dummy]
+    @Published var objectives: [Objective] = []
     @Published var deletingObjectiveID: String = ""
     
     init() {
@@ -37,11 +37,24 @@ final class OKRViewModel: ObservableObject {
         return dateFormatter.string(from: date)
     }
     
-    func getDday(endDate: Date) -> String {
+    func isOutDated(endDate: Date) -> Bool {
+        if endDate.compare(Date()) == .orderedAscending {
+            let isSameDay = Calendar.current.isDate(Date(), equalTo: endDate, toGranularity: .day)
+            if isSameDay {
+                return false
+            } else {
+                return true
+            }
+        } else {
+            return false
+        }
+    }
+    
+    func getDday(endDate: Date) -> Int {
         let today = Date()
         let calendar = Calendar.current
         let dDay = calendar.dateComponents([.day], from: today, to: endDate)
-        return String(dDay.day!)
+        return dDay.day!
     }
     
     // 새로 작성중인 Key Result에 Task 추가하기

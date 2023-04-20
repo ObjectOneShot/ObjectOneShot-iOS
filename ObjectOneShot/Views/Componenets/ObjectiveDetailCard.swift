@@ -106,7 +106,7 @@ struct ObjectiveDetailCard: View {
                             .stroke(Color("grey_300"))
                     )
                 HStack {
-                    CustomProgressBar(value: $progressValue, backgroundColor: Color("grey_300"))
+                    CustomProgressBar(value: $progressValue, backgroundColor: Color("grey_300"), isOutdated: .constant(false))
                         .padding(.vertical, 12)
                         .onChange(of: viewModel.currentObjective.progressValue) { newValue in
                             progressValue = viewModel.currentObjective.progressValue

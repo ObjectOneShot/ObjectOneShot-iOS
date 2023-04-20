@@ -21,6 +21,8 @@ struct Objective: Identifiable, Hashable, Codable {
     var keyResults: [KeyResult]
     var progressPercentage: Int = 0
     var progressValue: Double = 0
+    var isOutdated: Bool = false
+    var isCompleted: Bool = false
     
     init(title: String, startDate: Date, endDate: Date, keyResults: [KeyResult]) {
         self.title = title
@@ -35,6 +37,8 @@ struct Objective: Identifiable, Hashable, Codable {
         self.startDate = try container.decode(Date.self, forKey: .startDate)
         self.endDate = try container.decode(Date.self, forKey: .endDate)
         self.keyResults = try container.decode([KeyResult].self, forKey: .keyResults)
+        self.isOutdated = try container.decode(Bool.self, forKey: .isOutdated)
+        self.isCompleted = try container.decode(Bool.self, forKey: .isCompleted)
         setProgress()
     }
     
@@ -44,6 +48,8 @@ struct Objective: Identifiable, Hashable, Codable {
         try container.encode(startDate, forKey: .startDate)
         try container.encode(endDate, forKey: .endDate)
         try container.encode(keyResults, forKey: .keyResults)
+        try container.encode(isOutdated, forKey: .isOutdated)
+        try container.encode(isCompleted, forKey: .isCompleted)
     }
     
     private enum CodingKeys: String, CodingKey {
@@ -51,11 +57,18 @@ struct Objective: Identifiable, Hashable, Codable {
         case startDate
         case endDate
         case keyResults
+        case isOutdated
+        case isCompleted
     }
     
     mutating func setProgress() {
         setProgressValue()
         setProgressPercentage()
+        if self.progressValue == 1 {
+            isCompleted = true
+        } else {
+            isCompleted = false
+        }
     }
     
     mutating func setProgressValue() {

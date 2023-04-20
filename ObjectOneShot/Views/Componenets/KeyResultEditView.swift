@@ -51,7 +51,7 @@ struct KeyResultEditView: View {
                     .padding(.horizontal, 8)
                     .padding(.bottom, 12)
                 HStack(spacing: 9) {
-                    CustomProgressBar(value: $viewModel.newEditingKeyResult.progressValue, backgroundColor: Color("grey_300"))
+                    CustomProgressBar(value: $viewModel.newEditingKeyResult.progressValue, backgroundColor: Color("grey_300"), isOutdated: .constant(false))
                     Text("\(viewModel.newEditingKeyResult.progressPercentage)%")
                         .font(.pretendard(.medium, size: 14))
                         .foregroundColor(Color("title_black"))

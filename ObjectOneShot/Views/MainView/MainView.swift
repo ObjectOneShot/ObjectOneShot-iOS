@@ -16,6 +16,7 @@ struct MainView: View {
     @State private var isShowingCompletedObjectives = false
     @State private var isShowingObjectiveDeleteAlert = false
     @State private var isObjectiveCompleted = false
+    @State private var isObjectiveOutdated = false
     
     var body: some View {
         ZStack {
@@ -25,11 +26,18 @@ struct MainView: View {
                 showObjectives()
             }
             
-            if isShowingObjectiveDeleteAlert {
+            if isObjectiveOutdated {
+                CustomAlert(alertState: .outdatedObjective, objectiveID: "", isShowingAlert: $isObjectiveOutdated, isSaveButtonTapped: .constant(false), isObjectiveCompleted: .constant(false))
+            }
+            else if isShowingObjectiveDeleteAlert {
                 CustomAlert(alertState: .deletingObjective, objectiveID: viewModel.deletingObjectiveID, isShowingAlert: $isShowingObjectiveDeleteAlert, isSaveButtonTapped: .constant(false), isObjectiveCompleted: .constant(false))
             } else if isObjectiveCompleted {
                 CustomAlert(alertState: .completedObjective, objectiveID: "", isShowingAlert: $isObjectiveCompleted, isSaveButtonTapped: .constant(false), isObjectiveCompleted: .constant(false))
             }
+        }
+        .onAppear {
+            isShowingCompletedObjectives = false
+            viewModel.keyResultState = .beforeStart
         }
     }
     
@@ -101,9 +109,9 @@ struct MainView: View {
         // Objectives 카드 뷰
         ScrollView {
             VStack(spacing: 0) {
-                // 완료된 objectives 보여주기
+                // 완료되었거나 기한이 지난 objectives 보여주기
                 if isShowingCompletedObjectives {
-                    ForEach(viewModel.objectives.filter{ $0.progressValue == 1}) { objective in
+                    ForEach(viewModel.objectives.filter{ $0.isCompleted == true || $0.isOutdated == true }) { objective in
                         // 클릭하면 ObjectiveDetailView로 전환
                         NavigationLink(destination: ObjectiveDetailView(objectiveID: objective.id, isObjectiveCompleted: $isObjectiveCompleted)
                             .environmentObject(self.viewModel)) {
@@ -113,10 +121,11 @@ struct MainView: View {
                             .buttonStyle(PlainButtonStyle())
                             // 보관된 objectives는 인터랙션 불가
                             .allowsHitTesting(false)
+                            
                     }
                 } else {
-                    // 완료하지 않은 objectives 보여주기
-                    ForEach(viewModel.objectives.filter{ $0.progressValue != 1 }) { objective in
+                    // 완료하지 않았고 D-day가 지나지 않은 objectives 보여주기
+                    ForEach(viewModel.objectives.filter{ $0.isCompleted == false && $0.isOutdated == false }) { objective in
                         // 클릭하면 ObjectiveDetailView로 전환
                         NavigationLink(destination: ObjectiveDetailView(objectiveID: objective.id, isObjectiveCompleted: $isObjectiveCompleted)
                             .environmentObject(self.viewModel)) {
@@ -124,6 +133,17 @@ struct MainView: View {
                                     .padding(.bottom, 10)
                             }
                             .buttonStyle(PlainButtonStyle())
+                            .onAppear {
+                                if viewModel.isOutDated(endDate: objective.endDate) {
+                                    // 카드 보여질 때 마다 outdated 검사
+                                    if let objectiveIndex = viewModel.objectives.firstIndex(where: { $0.id == objective.id }) {
+                                        viewModel.objectives[objectiveIndex].isOutdated = true
+                                        viewModel.saveObjectivesToUserDefaults()
+                                    }
+                                    isObjectiveOutdated = true
+                                    dump(objective)
+                                }
+                            }
                     }
                 }
             }

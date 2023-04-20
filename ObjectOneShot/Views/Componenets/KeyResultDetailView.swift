@@ -61,7 +61,7 @@ struct KeyResultDetailView: View {
                     .padding(.horizontal, 8)
                     .padding(.bottom, 12)
                 HStack {
-                    CustomProgressBar(value: $progressValue, backgroundColor: Color("grey_300"))
+                    CustomProgressBar(value: $progressValue, backgroundColor: Color("grey_300"), isOutdated: .constant(false))
                     Text("\(progressPercentage)%")
                         .font(.pretendard(.medium, size: 14))
                         .foregroundColor(Color("title_black"))

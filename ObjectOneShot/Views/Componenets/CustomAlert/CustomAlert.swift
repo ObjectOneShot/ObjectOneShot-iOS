@@ -11,6 +11,7 @@ enum AlertState {
     case deletingObjective
     case savingChanges
     case completedObjective
+    case outdatedObjective
 }
 
 struct CustomAlert: View {
@@ -108,6 +109,11 @@ struct CustomAlert: View {
             // objective 저장의 경우
             if alertState == .completedObjective {
                 Image("alert.objectiveCompleted")
+            }
+            
+            // objective 날짜가 지난 경우
+            if alertState == .outdatedObjective {
+                Image("alert.objectiveOutdated")
             }
         }
     }
