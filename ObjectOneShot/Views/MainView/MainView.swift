@@ -17,6 +17,7 @@ struct MainView: View {
     @State private var isShowingObjectiveDeleteAlert = false
     @State private var isObjectiveCompleted = false
     @State private var isObjectiveOutdated = false
+    @State private var isProgressingObjectivesEmpty = false
     
     var body: some View {
         ZStack {
@@ -26,6 +27,17 @@ struct MainView: View {
                 // Header
                 mainTitle()
                 showObjectives()
+            }
+            
+            // 표시할 objectives가 없으면 아이콘 표시
+            if isProgressingObjectivesEmpty {
+                VStack {
+                    Image("description.noObjective")
+                    Image("icon.objective")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 168, height: 166)
+                }
             }
             
             if isObjectiveOutdated {
@@ -40,6 +52,11 @@ struct MainView: View {
         .onAppear {
             isShowingCompletedObjectives = false
             viewModel.keyResultState = .beforeStart
+            if viewModel.objectives.filter({ $0.isCompleted == false && $0.isOutdated == false }).isEmpty {
+                isProgressingObjectivesEmpty = true
+            } else {
+                isProgressingObjectivesEmpty = false
+            }
         }
     }
     
@@ -108,6 +125,7 @@ struct MainView: View {
             .foregroundColor(Color("grey_300"))
             .padding(.horizontal, 24)
             .padding(.bottom, 8)
+        
         // Objectives 카드 뷰
         ScrollView {
             VStack(spacing: 0) {
