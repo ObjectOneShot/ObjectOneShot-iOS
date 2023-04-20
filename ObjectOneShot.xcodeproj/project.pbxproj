@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6021300529F16620008A4567 /* EmptyButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6021300429F16620008A4567 /* EmptyButtonStyle.swift */; };
 		606BC78929E25B5A00192666 /* KeyResultDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606BC78829E25B5A00192666 /* KeyResultDetailView.swift */; };
 		606D897E29E29E6E00FA4BFA /* ObjectiveDetailCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D897D29E29E6E00FA4BFA /* ObjectiveDetailCard.swift */; };
 		606D898229E40BEE00FA4BFA /* WideAddButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D898129E40BEE00FA4BFA /* WideAddButtonView.swift */; };
@@ -47,6 +48,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6021300429F16620008A4567 /* EmptyButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyButtonStyle.swift; sourceTree = "<group>"; };
 		606BC78829E25B5A00192666 /* KeyResultDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyResultDetailView.swift; sourceTree = "<group>"; };
 		606D897D29E29E6E00FA4BFA /* ObjectiveDetailCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectiveDetailCard.swift; sourceTree = "<group>"; };
 		606D898129E40BEE00FA4BFA /* WideAddButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WideAddButtonView.swift; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 			children = (
 				60C88DC029E0C7AC00EB1BA6 /* Coordinator.swift */,
 				60739F6E29EB547100F82C8A /* RoundedCorner.swift */,
+				6021300429F16620008A4567 /* EmptyButtonStyle.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -401,6 +404,7 @@
 				60C88DAA29E0607700EB1BA6 /* KeyResult.swift in Sources */,
 				60C88DC629E0FAC200EB1BA6 /* View+Extensions.swift in Sources */,
 				60C88DC129E0C7AC00EB1BA6 /* Coordinator.swift in Sources */,
+				6021300529F16620008A4567 /* EmptyButtonStyle.swift in Sources */,
 				606D898429E4688300FA4BFA /* TaskDetailView.swift in Sources */,
 				606D898B29E4BFE700FA4BFA /* TaskEditView.swift in Sources */,
 				60C88DAC29E060B400EB1BA6 /* Task.swift in Sources */,

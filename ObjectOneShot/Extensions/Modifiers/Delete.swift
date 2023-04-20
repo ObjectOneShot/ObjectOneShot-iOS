@@ -21,6 +21,7 @@ struct Delete: ViewModifier {
             RoundedRectangle(cornerRadius: 10)
                 .foregroundColor(Color("red_error"))
                 .padding(.leading, 50)
+                .padding(.vertical, 1)
                 .overlay {
                     HStack {
                         Spacer()

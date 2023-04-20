@@ -120,7 +120,7 @@ struct MainView: View {
                                 ObjectiveCardView(objectiveID: objective.id, isShowingObjectiveDeleteAlert: $isShowingObjectiveDeleteAlert, isShowingCompletedObjective: true)
                                     .padding(.bottom, 10)
                             }
-                            .buttonStyle(PlainButtonStyle())
+                            .buttonStyle(EmptyButtonStyle())
                     }
                 } else {
                     // 완료하지 않았고 D-day가 지나지 않은 objectives 보여주기
@@ -131,7 +131,7 @@ struct MainView: View {
                                 ObjectiveCardView(objectiveID: objective.id, isShowingObjectiveDeleteAlert: $isShowingObjectiveDeleteAlert)
                                     .padding(.bottom, 10)
                             }
-                            .buttonStyle(PlainButtonStyle())
+                            .buttonStyle(EmptyButtonStyle())
                             .onAppear {
                                 if viewModel.isOutDated(endDate: objective.endDate) {
                                     // 카드 보여질 때 마다 outdated 검사
@@ -140,7 +140,6 @@ struct MainView: View {
                                         viewModel.saveObjectivesToUserDefaults()
                                     }
                                     isObjectiveOutdated = true
-                                    dump(objective)
                                 }
                             }
                     }

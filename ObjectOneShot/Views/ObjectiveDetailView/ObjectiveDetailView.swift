@@ -17,7 +17,7 @@ struct ObjectiveDetailView: View {
     @State private var isPresentingTips = false
     @State private var isPresentingSaveAlert = false
     @State private var isSaveButtonTapped = false
-    var isShowingCompletedObjectives: Bool = true
+    var isShowingCompletedObjectives: Bool = false
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
