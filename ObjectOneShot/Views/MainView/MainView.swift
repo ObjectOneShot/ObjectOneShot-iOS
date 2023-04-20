@@ -15,6 +15,7 @@ struct MainView: View {
     @State private var isPresentingTips: Bool = false
     @State private var isShowingCompletedObjectives = false
     @State private var isShowingObjectiveDeleteAlert = false
+    @State private var isObjectiveCompleted = false
     
     var body: some View {
         ZStack {
@@ -25,7 +26,9 @@ struct MainView: View {
             }
             
             if isShowingObjectiveDeleteAlert {
-                CustomAlert(alertState: .deletingObjective, objectiveID: viewModel.deletingObjectiveID, isShowingAlert: $isShowingObjectiveDeleteAlert, isSaveButtonTapped: .constant(false))
+                CustomAlert(alertState: .deletingObjective, objectiveID: viewModel.deletingObjectiveID, isShowingAlert: $isShowingObjectiveDeleteAlert, isSaveButtonTapped: .constant(false), isObjectiveCompleted: .constant(false))
+            } else if isObjectiveCompleted {
+                CustomAlert(alertState: .completedObjective, objectiveID: "", isShowingAlert: $isObjectiveCompleted, isSaveButtonTapped: .constant(false), isObjectiveCompleted: .constant(false))
             }
         }
     }
@@ -102,20 +105,20 @@ struct MainView: View {
                 if isShowingCompletedObjectives {
                     ForEach(viewModel.objectives.filter{ $0.progressValue == 1}) { objective in
                         // 클릭하면 ObjectiveDetailView로 전환
-                        NavigationLink(destination: ObjectiveDetailView(objectiveID: objective.id)
+                        NavigationLink(destination: ObjectiveDetailView(objectiveID: objective.id, isObjectiveCompleted: $isObjectiveCompleted)
                             .environmentObject(self.viewModel)) {
                                 ObjectiveCardView(objectiveID: objective.id, isShowingObjectiveDeleteAlert: $isShowingObjectiveDeleteAlert)
                                     .padding(.bottom, 10)
                             }
                             .buttonStyle(PlainButtonStyle())
+                            // 보관된 objectives는 인터랙션 불가
+                            .allowsHitTesting(false)
                     }
-                    // 보관된 objectives는 수정 불가
-                    .disabled(true)
                 } else {
                     // 완료하지 않은 objectives 보여주기
                     ForEach(viewModel.objectives.filter{ $0.progressValue != 1 }) { objective in
                         // 클릭하면 ObjectiveDetailView로 전환
-                        NavigationLink(destination: ObjectiveDetailView(objectiveID: objective.id)
+                        NavigationLink(destination: ObjectiveDetailView(objectiveID: objective.id, isObjectiveCompleted: $isObjectiveCompleted)
                             .environmentObject(self.viewModel)) {
                                 ObjectiveCardView(objectiveID: objective.id, isShowingObjectiveDeleteAlert: $isShowingObjectiveDeleteAlert)
                                     .padding(.bottom, 10)

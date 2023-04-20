@@ -12,6 +12,7 @@ struct ObjectiveDetailView: View {
     @EnvironmentObject var viewModel: OKRViewModel
     
     let objectiveID: String
+    @Binding var isObjectiveCompleted: Bool
     @State private var isAddingKeyResult = false
     @State private var isPresentingTips = false
     @State private var isPresentingSaveAlert = false
@@ -44,7 +45,7 @@ struct ObjectiveDetailView: View {
             }
             
             if isPresentingSaveAlert {
-                CustomAlert(alertState: .savingChanges, objectiveID: objectiveID, isShowingAlert: $isPresentingSaveAlert, isSaveButtonTapped: $isSaveButtonTapped)
+                CustomAlert(alertState: .savingChanges, objectiveID: objectiveID, isShowingAlert: $isPresentingSaveAlert, isSaveButtonTapped: $isSaveButtonTapped, isObjectiveCompleted: $isObjectiveCompleted)
             }
         }
         .onAppear {
@@ -65,6 +66,13 @@ struct ObjectiveDetailView: View {
         .onTapGesture {
             self.endTextEditing()
         }
+        .onChange(of: viewModel.currentObjective.progressValue, perform: { newValue in
+            if viewModel.currentObjective.progressValue == 1 {
+                isObjectiveCompleted = true
+            } else {
+                isObjectiveCompleted = false
+            }
+        })
         .background(Color("background"))
         .fullScreenCover(isPresented: $isPresentingTips) {
             UseTipsView(isPresenting: $isPresentingTips)
@@ -199,7 +207,7 @@ struct ObjectiveDetailView: View {
 
 struct ObjectiveDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        ObjectiveDetailView(objectiveID: Objective.dummy.id)
+        ObjectiveDetailView(objectiveID: Objective.dummy.id, isObjectiveCompleted: .constant(false))
             .environmentObject(OKRViewModel())
     }
 }

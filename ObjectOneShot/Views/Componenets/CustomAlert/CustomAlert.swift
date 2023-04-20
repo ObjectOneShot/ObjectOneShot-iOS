@@ -10,6 +10,7 @@ import SwiftUI
 enum AlertState {
     case deletingObjective
     case savingChanges
+    case completedObjective
 }
 
 struct CustomAlert: View {
@@ -20,6 +21,7 @@ struct CustomAlert: View {
     
     @Binding var isShowingAlert: Bool
     @Binding var isSaveButtonTapped: Bool
+    @Binding var isObjectiveCompleted: Bool
 
     var body: some View {
         ZStack {
@@ -78,6 +80,7 @@ struct CustomAlert: View {
                                     // 나가기
                                     isShowingAlert = false
                                     isSaveButtonTapped = true
+                                    isObjectiveCompleted = false
                                 } label: {
                                     RoundedRectangle(cornerRadius: 10)
                                         .frame(width: 102, height: 36)
@@ -100,6 +103,11 @@ struct CustomAlert: View {
                                 .frame(height: 24)
                         }
                     }
+            }
+            
+            // objective 저장의 경우
+            if alertState == .completedObjective {
+                Image("alert.objectiveCompleted")
             }
         }
     }
