@@ -30,7 +30,7 @@ struct MainView: View {
             }
             
             // 표시할 objectives가 없으면 아이콘 표시
-            if isProgressingObjectivesEmpty {
+            if isProgressingObjectivesEmpty && !isShowingCompletedObjectives {
                 VStack {
                     Image("description.noObjective")
                     Image("icon.objective")
@@ -148,6 +148,11 @@ struct MainView: View {
                             .environmentObject(self.viewModel)) {
                                 ObjectiveCardView(objectiveID: objective.id, isShowingObjectiveDeleteAlert: $isShowingObjectiveDeleteAlert)
                                     .padding(.bottom, 10)
+                                    .onDisappear {
+                                        if viewModel.objectives.filter({ $0.isCompleted == false && $0.isOutdated == false }).isEmpty {
+                                            isProgressingObjectivesEmpty = true
+                                        }
+                                    }
                             }
                             .buttonStyle(EmptyButtonStyle())
                             .onAppear {
