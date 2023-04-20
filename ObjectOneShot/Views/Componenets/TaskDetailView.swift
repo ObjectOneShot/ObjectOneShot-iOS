@@ -17,10 +17,11 @@ struct TaskDetailView: View {
     @Binding var isEditingNewTask: Bool
     @Binding var progressValue: Double
     @Binding var progressPercentage: Int
-    
+   
     let keyResultIndex: Int
     let task: Task
     var isLast: Bool
+    var isShowingCompletedObjective: Bool = false
     
     var body: some View {
         VStack {
@@ -61,6 +62,7 @@ struct TaskDetailView: View {
                             .frame(width: 14, height: 14)
                             .foregroundColor(Color("grey_900"))
                     }
+                    .disabled(isShowingCompletedObjective)
                     .padding(.trailing, 22)
                 }
             }
@@ -108,6 +110,7 @@ struct TaskDetailView: View {
                 }
             }
         }
+        .disabled(isShowingCompletedObjective)
         .onChange(of: isCompleted) { newValue in
             if let index = viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id }) {
                 viewModel.currentObjective.keyResults[keyResultIndex].tasks[index].isCompleted = isCompleted
@@ -147,7 +150,7 @@ struct TaskDetailView: View {
                     self.isFocused = false
                 }
             })
-            .disabled(isCompleted)
+            .disabled(isCompleted || isShowingCompletedObjective)
             .font(.pretendard(.medium, size: 16))
             .foregroundColor(Color("grey_900"))
             .background {

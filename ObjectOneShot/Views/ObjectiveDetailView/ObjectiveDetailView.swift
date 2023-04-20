@@ -17,6 +17,7 @@ struct ObjectiveDetailView: View {
     @State private var isPresentingTips = false
     @State private var isPresentingSaveAlert = false
     @State private var isSaveButtonTapped = false
+    var isShowingCompletedObjectives: Bool = true
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
@@ -24,17 +25,20 @@ struct ObjectiveDetailView: View {
             VStack(spacing: 0) {
                 // objective Detail Header
                 objectiveDetailHeader()
-                ObjectiveDetailCard(objectiveID: objectiveID)
+                ObjectiveDetailCard(objectiveID: objectiveID, isShowingCompletedObjective: isShowingCompletedObjectives)
                 KeyResultsHeaderView()
                 ScrollView {
                     VStack(spacing: 0) {
                         showKeyResultDetails()
+                        // 완료된 objective detail을 보이는 것이 아니고
                         // keyResult를 추가 중이면 KeyResultEditView 보이기 및 버튼 종류 변경
-                        if self.isAddingKeyResult {
-                            KeyResultEditView(isAddingKeyResult: $isAddingKeyResult)
-                            keyResultSaveButton()
-                        } else {
-                            keyResultAddButton()
+                        if !isShowingCompletedObjectives {
+                            if self.isAddingKeyResult {
+                                KeyResultEditView(isAddingKeyResult: $isAddingKeyResult)
+                                keyResultSaveButton()
+                            } else {
+                                keyResultAddButton()
+                            }
                         }
                         Spacer()
                     }
@@ -67,10 +71,12 @@ struct ObjectiveDetailView: View {
             self.endTextEditing()
         }
         .onChange(of: viewModel.currentObjective.progressValue, perform: { newValue in
-            if viewModel.currentObjective.progressValue == 1 {
-                isObjectiveCompleted = true
-            } else {
-                isObjectiveCompleted = false
+            if !isShowingCompletedObjectives {
+                if viewModel.currentObjective.progressValue == 1 {
+                    isObjectiveCompleted = true
+                } else {
+                    isObjectiveCompleted = false
+                }
             }
         })
         .background(Color("background"))
@@ -109,21 +115,21 @@ struct ObjectiveDetailView: View {
     func showKeyResultDetails() -> some View {
         switch viewModel.keyResultState {
         case .beforeStart:
-                ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .beforeStart }, id: \.self) { keyResult in
-                    KeyResultDetailView(keyResultID: keyResult.id)
-                        .padding(.bottom, 10)
-                }
+            ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .beforeStart }, id: \.self) { keyResult in
+                KeyResultDetailView(keyResultID: keyResult.id, isShowingCompletedObjective: isShowingCompletedObjectives)
+                    .padding(.bottom, 10)
+            }
         case .inProgress:
-                ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .inProgress }, id: \.self) { keyResult in
-                    KeyResultDetailView(keyResultID: keyResult.id)
-                        .padding(.bottom, 10)
-
-                }
+            ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .inProgress }, id: \.self) { keyResult in
+                KeyResultDetailView(keyResultID: keyResult.id, isShowingCompletedObjective: isShowingCompletedObjectives)
+                    .padding(.bottom, 10)
+                
+            }
         case .completed:
-                ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .completed }, id: \.self) { keyResult in
-                    KeyResultDetailView(keyResultID: keyResult.id)
-                        .padding(.bottom, 10)
-                }
+            ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .completed }, id: \.self) { keyResult in
+                KeyResultDetailView(keyResultID: keyResult.id, isShowingCompletedObjective: isShowingCompletedObjectives)
+                    .padding(.bottom, 10)
+            }
         }
     }
     
@@ -177,7 +183,7 @@ struct ObjectiveDetailView: View {
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 12)
                 .background(Color("primaryColor"))
-            .clipShape(RoundedRectangle(cornerRadius: 8))
+                .clipShape(RoundedRectangle(cornerRadius: 8))
         }
         .padding(.vertical, 10)
     }
@@ -188,7 +194,11 @@ struct ObjectiveDetailView: View {
             /*
              TODO : 값을 변경했을 때만 값을 저장하지 않고 나가겠냐는 팝업창 띄워주기
              */
-            isPresentingSaveAlert = true
+            if !isShowingCompletedObjectives {
+                isPresentingSaveAlert = true
+            } else {
+                self.presentationMode.wrappedValue.dismiss()
+            }
         } label : {
             HStack{
                 Image("chevron.left.black")

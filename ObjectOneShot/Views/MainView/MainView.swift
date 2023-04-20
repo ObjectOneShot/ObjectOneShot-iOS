@@ -20,6 +20,8 @@ struct MainView: View {
     
     var body: some View {
         ZStack {
+            Color("background")
+                .ignoresSafeArea()
             VStack(spacing: 0) {
                 // Header
                 mainTitle()
@@ -113,15 +115,12 @@ struct MainView: View {
                 if isShowingCompletedObjectives {
                     ForEach(viewModel.objectives.filter{ $0.isCompleted == true || $0.isOutdated == true }) { objective in
                         // 클릭하면 ObjectiveDetailView로 전환
-                        NavigationLink(destination: ObjectiveDetailView(objectiveID: objective.id, isObjectiveCompleted: $isObjectiveCompleted)
+                        NavigationLink(destination: ObjectiveDetailView(objectiveID: objective.id, isObjectiveCompleted: $isObjectiveCompleted, isShowingCompletedObjectives: true)
                             .environmentObject(self.viewModel)) {
-                                ObjectiveCardView(objectiveID: objective.id, isShowingObjectiveDeleteAlert: $isShowingObjectiveDeleteAlert)
+                                ObjectiveCardView(objectiveID: objective.id, isShowingObjectiveDeleteAlert: $isShowingObjectiveDeleteAlert, isShowingCompletedObjective: true)
                                     .padding(.bottom, 10)
                             }
                             .buttonStyle(PlainButtonStyle())
-                            // 보관된 objectives는 인터랙션 불가
-                            .allowsHitTesting(false)
-                            
                     }
                 } else {
                     // 완료하지 않았고 D-day가 지나지 않은 objectives 보여주기

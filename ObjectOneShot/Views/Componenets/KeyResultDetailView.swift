@@ -21,12 +21,15 @@ struct KeyResultDetailView: View {
     
     let keyResultID: String
     
+    var isShowingCompletedObjective: Bool = false
+    
     var body: some View {
         VStack(spacing: 0) {
             // KeyResult title
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
                     TextField("", text: $keyResultTitle, prompt: Text("Key Results를 입력해 주세요").font(.pretendard(.medium, size: 16)).foregroundColor(Color("grey_500")))
+                        .disabled(isShowingCompletedObjective)
                         .font(.pretendard(.semiBold, size: 16))
                         .foregroundColor(Color("grey_900"))
                         .onChange(of: keyResultTitle) { _ in
@@ -92,13 +95,13 @@ struct KeyResultDetailView: View {
             RoundedRectangle(cornerRadius: 10)
                 .stroke(Color("grey_300"))
         )
-        .if(!isExpanded, transform: { view in
+        .if(!isExpanded && !isShowingCompletedObjective){ view in
             view
                 .onDelete() {
                     viewModel.currentObjective.keyResults =  viewModel.currentObjective.keyResults.filter { $0.id != keyResultID }
                     viewModel.currentObjective.setProgress()
                 }
-        })
+        }
         .onAppear {
             if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResultID }) {
                 self.keyResultTitle = viewModel.currentObjective.keyResults[index].title
@@ -123,7 +126,7 @@ struct KeyResultDetailView: View {
         // currentKeyResult의 tasks 보여주기
         if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResultID }) {
             ForEach(viewModel.currentObjective.keyResults[index].tasks, id: \.id) { task in
-                TaskDetailView(isEditingNewTask: $isEditingNewTask, progressValue: $progressValue, progressPercentage: $progressPercentage, keyResultIndex: index, task: task, isLast: viewModel.currentObjective.keyResults[index].tasks.count - 1 == viewModel.currentObjective.keyResults[index].tasks.firstIndex(where: { $0.id == task.id }))
+                TaskDetailView(isEditingNewTask: $isEditingNewTask, progressValue: $progressValue, progressPercentage: $progressPercentage, keyResultIndex: index, task: task, isLast: viewModel.currentObjective.keyResults[index].tasks.count - 1 == viewModel.currentObjective.keyResults[index].tasks.firstIndex(where: { $0.id == task.id }), isShowingCompletedObjective: isShowingCompletedObjective)
             }
         }
     }
@@ -163,6 +166,7 @@ struct KeyResultDetailView: View {
                             }
                         }
                     })
+                    .disabled(isShowingCompletedObjective)
                     .font(.pretendard(.medium, size: 16))
                     .foregroundColor(Color("grey_900"))
                     .background {
@@ -205,6 +209,7 @@ struct KeyResultDetailView: View {
                             .foregroundColor(Color("grey_900"))
                     }
                 }
+                .disabled(isShowingCompletedObjective)
             }
             .padding(.leading, 19)
             .padding(.trailing, 13)

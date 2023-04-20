@@ -18,6 +18,7 @@ struct ObjectiveDetailCard: View {
     @State private var endDate: Date = Date()
     @State private var progressValue: Double = 0.0
     @State private var progressPercentage: Int = 0
+    var isShowingCompletedObjective: Bool = false
     
     var body: some View {
         VStack(spacing: 8){
@@ -34,6 +35,7 @@ struct ObjectiveDetailCard: View {
                     )
                 VStack(alignment: .center, spacing: 0) {
                     TextField("", text: $title, prompt: Text("목표를 입력해주세요").font(.pretendard(.regular, size: 14)).foregroundColor(Color("grey_500")))
+                        .disabled(isShowingCompletedObjective)
                         .font(.pretendard(.regular, size: 14))
                         .foregroundColor(Color("grey_900"))
                         .frame(height: 29)
@@ -68,6 +70,7 @@ struct ObjectiveDetailCard: View {
                     )
                 HStack {
                     DatePicker("", selection: $startDate, displayedComponents: .date)
+                        .disabled(isShowingCompletedObjective)
                         .labelsHidden()
                         .environment(\.locale, Locale(identifier: "ko-KR"))
                         .scaleEffect(0.9)
@@ -77,6 +80,7 @@ struct ObjectiveDetailCard: View {
                     Text("~")
                         .font(.pretendard(.regular, size: 14))
                     DatePicker("", selection: $endDate, displayedComponents: .date)
+                        .disabled(isShowingCompletedObjective)
                         .labelsHidden()
                         .environment(\.locale, Locale(identifier: "ko-KR"))
                         .scaleEffect(0.9)

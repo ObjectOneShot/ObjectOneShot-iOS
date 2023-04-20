@@ -22,6 +22,7 @@ struct ObjectiveCardView: View {
     @State var progressPercentage = 0
     @State var isCompleted = false
     @State var isOutdated = false
+    var isShowingCompletedObjective: Bool = false
     
     var body: some View {
         VStack(spacing: 0) {
@@ -42,15 +43,16 @@ struct ObjectiveCardView: View {
         .background(Color("grey_50"))
         .border(Color("grey_200"))
         .clipShape(RoundedRectangle(cornerRadius: 10))
-        .onDelete(){
-            isShowingObjectiveDeleteAlert = true
-            viewModel.deletingObjectiveID = objectiveID
+        .if(!isShowingCompletedObjective) { view in
+            view
+                .onDelete(){
+                    isShowingObjectiveDeleteAlert = true
+                    viewModel.deletingObjectiveID = objectiveID
+                }
         }
         .padding(.horizontal, 16)
         .shadow(radius: 1)
         .onAppear {
-            
-            
             if let currentObjective = viewModel.objectives.first(where: { $0.id == objectiveID }) {
                 
                 self.objectiveTitle = currentObjective.title
