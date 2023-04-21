@@ -88,7 +88,6 @@ struct TaskEditView: View {
     func checkBox() -> some View {
         Button {
             self.isCompleted.toggle()
-           
         } label: {
             if let index = viewModel.newEditingKeyResult.tasks.firstIndex(where: { $0.id == task.id }) {
                 if viewModel.newEditingKeyResult.tasks[index].isCompleted {
@@ -113,8 +112,22 @@ struct TaskEditView: View {
                 print("ERROR : no task matching taskID : TaskEditView")
             }
             viewModel.newEditingKeyResult.setProgress()
+            
+            
+            if viewModel.newEditingKeyResult.completionState == .beforeStart {
+                viewModel.keyResultState = .beforeStart
+            } else if viewModel.newEditingKeyResult.completionState == .inProgress {
+                viewModel.keyResultState = .inProgress
+            } else {
+                viewModel.keyResultState = .completed
+            }
+            viewModel.newEditingKeyResult.isExpanded = true
+            
+            //                    progressValue = viewModel.newEditingKeyResult.progressValue
+            //                    progressPercentage = viewModel.newEditingKeyResult.progressPercentage
         }
     }
+    
     
     @ViewBuilder
     func taskTitle() -> some View {
