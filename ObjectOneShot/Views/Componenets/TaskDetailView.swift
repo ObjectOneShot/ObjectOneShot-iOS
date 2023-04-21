@@ -152,6 +152,7 @@ struct TaskDetailView: View {
             })
             .disabled(isCompleted || isShowingCompletedObjective)
             .font(.pretendard(.medium, size: 16))
+            .strikethrough(isCompleted)
             .foregroundColor(Color("grey_900"))
             .background {
                 // 플레이스홀더
@@ -162,15 +163,6 @@ struct TaskDetailView: View {
                             .foregroundColor(Color("grey_500"))
                         Spacer()
                     }
-                }
-            }
-            if let index = viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id }) {
-                // task 완료 시 취소선 긋기
-                if viewModel.currentObjective.keyResults[keyResultIndex].tasks[index].isCompleted {
-                    Rectangle()
-                        .frame(height:1)
-                        .foregroundColor(Color("grey_900"))
-                        .padding(.trailing, 24)
                 }
             }
         }
