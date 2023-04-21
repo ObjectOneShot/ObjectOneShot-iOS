@@ -69,7 +69,7 @@ struct ObjectiveDetailCard: View {
                             .stroke(Color("grey_300"))
                     )
                 HStack {
-                    DatePicker("", selection: $startDate, displayedComponents: .date)
+                    DatePicker("", selection: $startDate, in: ...endDate, displayedComponents: .date)
                         .disabled(isShowingCompletedObjective)
                         .labelsHidden()
                         .environment(\.locale, Locale(identifier: "ko-KR"))
@@ -79,7 +79,7 @@ struct ObjectiveDetailCard: View {
                         }
                     Text("~")
                         .font(.pretendard(.regular, size: 14))
-                    DatePicker("", selection: $endDate, displayedComponents: .date)
+                    DatePicker("", selection: $endDate, in: startDate..., displayedComponents: .date)
                         .disabled(isShowingCompletedObjective)
                         .labelsHidden()
                         .environment(\.locale, Locale(identifier: "ko-KR"))

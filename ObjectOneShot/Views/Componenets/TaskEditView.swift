@@ -128,7 +128,6 @@ struct TaskEditView: View {
         }
     }
     
-    
     @ViewBuilder
     func taskTitle() -> some View {
         ZStack {
