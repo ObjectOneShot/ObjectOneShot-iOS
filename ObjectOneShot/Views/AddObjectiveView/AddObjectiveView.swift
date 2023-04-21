@@ -64,13 +64,13 @@ struct AddObjectiveView: View {
                         }
                     }
                     // keyResult를 추가 중이면 KeyResultEditView 보이기 및 버튼 종류 변경
-                    if self.isAddingKeyResult {
+                    if self.isAddingKeyResult  {
                         KeyResultEditView(isAddingKeyResult: $isAddingKeyResult)
                         Button {
                             // 작성된 key result를 newKeyResults에 저장
                             // 다만 텍스트필드가 모두 채워져 있어야 함
                             // task도 하나 이상 있어야 함
-                            if !viewModel.newEditingKeyResult.title.isEmpty {
+                            if !viewModel.newEditingKeyResult.title.isEmpty && !viewModel.newEditingKeyResult.tasks.isEmpty {
                                 self.isAddingKeyResult = false
                                 viewModel.currentObjective.keyResults.append(viewModel.newEditingKeyResult)
                                 viewModel.currentObjective.setProgress()
@@ -81,11 +81,11 @@ struct AddObjectiveView: View {
                                 .foregroundColor(Color("titleForeground"))
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 12)
-                                .if(viewModel.newEditingKeyResult.title.isEmpty) { view in
+                                .if(viewModel.newEditingKeyResult.title.isEmpty || viewModel.newEditingKeyResult.tasks.isEmpty) { view in
                                     view
                                         .background(Color("primaryColor_50"))
                                 }
-                                .if(!viewModel.newEditingKeyResult.title.isEmpty) { view in
+                                .if(!viewModel.newEditingKeyResult.title.isEmpty && !viewModel.newEditingKeyResult.tasks.isEmpty) { view in
                                     view
                                         .background(Color("primaryColor"))
                                 }
@@ -96,7 +96,7 @@ struct AddObjectiveView: View {
                         Button {
                             // editing 시작
                             self.isAddingKeyResult = true
-                            viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [Task(title: "")])
+                            viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [])
                         } label: {
                             Text("Key Result 추가")
                                 .font(.pretendard(.semiBold, size: 18))
