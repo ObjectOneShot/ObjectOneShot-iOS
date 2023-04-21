@@ -40,7 +40,7 @@ struct TaskEditView: View {
                                 .frame(width: 14, height: 14)
                                 .foregroundColor(Color("grey_900"))
                         }
-                        .padding(.trailing, 22)
+                        .padding(.trailing, 13)
                     }
                 }
                 
@@ -158,6 +158,11 @@ struct TaskEditView: View {
                             .foregroundColor(Color("grey_500"))
                         Spacer()
                     }
+                }
+            }
+            .onReceive(title.publisher.collect()) {
+                if $0.count > 10 {
+                    self.title = String($0.prefix(10))
                 }
             }
         }

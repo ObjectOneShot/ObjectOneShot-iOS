@@ -44,7 +44,7 @@ struct TaskDetailView: View {
                                 .frame(width: 14, height: 14)
                                 .foregroundColor(Color("grey_900"))
                         }
-                        .padding(.trailing, 22)
+                        .padding(.trailing, 13)
                     }
                 }
                 
@@ -63,7 +63,7 @@ struct TaskDetailView: View {
                             .foregroundColor(Color("grey_900"))
                     }
                     .disabled(isShowingCompletedObjective)
-                    .padding(.trailing, 22)
+                    .padding(.trailing, 13)
                 }
             }
             .padding(.leading, 19)
