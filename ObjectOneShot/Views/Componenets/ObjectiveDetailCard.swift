@@ -44,6 +44,11 @@ struct ObjectiveDetailCard: View {
                         .onChange(of: title) { _ in
                             viewModel.currentObjective.title = title
                         }
+                        .onReceive(title.publisher.collect()) {
+                            if $0.count > Constants.characterLengthLimit {
+                                self.title = String($0.prefix(Constants.characterLengthLimit))
+                            }
+                        }
                     Rectangle()
                         .frame(height: 1)
                         .foregroundColor(Color("grey_900"))

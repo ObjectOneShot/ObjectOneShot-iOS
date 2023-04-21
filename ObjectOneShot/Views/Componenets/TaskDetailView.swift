@@ -165,6 +165,11 @@ struct TaskDetailView: View {
                     }
                 }
             }
+            .onReceive(title.publisher.collect()) {
+                if $0.count > Constants.characterLengthLimit {
+                    self.title = String($0.prefix(Constants.characterLengthLimit))
+                }
+            }
         }
     }
 }

@@ -40,8 +40,10 @@ struct KeyResultEditView: View {
                     .onChange(of: keyResultTitle) { newValue in
                         viewModel.newEditingKeyResult.title = newValue
                     }
-                    .onChange(of: viewModel.newEditingKeyResult.title) { newValue in
-                        keyResultTitle = newValue
+                    .onReceive(keyResultTitle.publisher.collect()) {
+                        if $0.count > Constants.characterLengthLimit {
+                            self.keyResultTitle = String($0.prefix(Constants.characterLengthLimit))
+                        }
                     }
                 }
                 .padding(EdgeInsets(top: 14, leading: 8, bottom: 7, trailing: 14))
@@ -121,6 +123,11 @@ struct KeyResultEditView: View {
                                     .foregroundColor(Color("grey_500"))
                                 Spacer()
                             }
+                        }
+                    }
+                    .onReceive(taskTitle.publisher.collect()) {
+                        if $0.count > Constants.characterLengthLimit {
+                            self.taskTitle = String($0.prefix(Constants.characterLengthLimit))
                         }
                     }
                 }

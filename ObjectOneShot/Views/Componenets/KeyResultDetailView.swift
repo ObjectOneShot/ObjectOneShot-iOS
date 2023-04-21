@@ -39,6 +39,11 @@ struct KeyResultDetailView: View {
                                 print("ERROR : no keyResult matching id : KeyResultDetailView")
                             }
                         }
+                        .onReceive(keyResultTitle.publisher.collect()) {
+                            if $0.count > Constants.characterLengthLimit {
+                                self.keyResultTitle = String($0.prefix(Constants.characterLengthLimit))
+                            }
+                        }
                     Spacer()
                     Button {
                         isExpanded.toggle()
@@ -178,6 +183,11 @@ struct KeyResultDetailView: View {
                                     .foregroundColor(Color("grey_500"))
                                 Spacer()
                             }
+                        }
+                    }
+                    .onReceive(taskTitle.publisher.collect()) {
+                        if $0.count > Constants.characterLengthLimit {
+                            self.taskTitle = String($0.prefix(Constants.characterLengthLimit))
                         }
                     }
                 }

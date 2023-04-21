@@ -162,7 +162,7 @@ struct TaskEditView: View {
             }
             .onReceive(title.publisher.collect()) {
                 if $0.count > 10 {
-                    self.title = String($0.prefix(10))
+                    self.title = String($0.prefix(Constants.characterLengthLimit))
                 }
             }
         }
