@@ -32,6 +32,14 @@ struct TaskEditView: View {
                             // 버튼 터치하면 task 삭제
                             viewModel.newEditingKeyResult.tasks = viewModel.newEditingKeyResult.tasks.filter { $0.id != task.id }
                             viewModel.newEditingKeyResult.setProgress()
+                            
+                            if viewModel.newEditingKeyResult.completionState == .beforeStart {
+                                viewModel.keyResultState = .beforeStart
+                            } else if viewModel.newEditingKeyResult.completionState == .inProgress {
+                                viewModel.keyResultState = .inProgress
+                            } else {
+                                viewModel.keyResultState = .completed
+                            }
                         } label: {
                             Image("xMark")
                                 .renderingMode(.template)
@@ -53,6 +61,7 @@ struct TaskEditView: View {
                                     isAddingTask = true
                                 }
                             }
+                            title = ""
                         } else {
                             print("ERROR : no task matching taskID : TaskEditView")
                         }

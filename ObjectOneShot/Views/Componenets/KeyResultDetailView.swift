@@ -198,7 +198,16 @@ struct KeyResultDetailView: View {
                         if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResultID }) {
                             if viewModel.currentObjective.keyResults[index].tasks.count < 5 {
                                 viewModel.currentObjective.keyResults[index].tasks.append(Task(title: taskTitle))
+                                viewModel.currentObjective.keyResults[index].setProgress()
                                 taskTitle = ""
+                            }
+                            
+                            if viewModel.currentObjective.keyResults[index].completionState == .beforeStart {
+                                viewModel.keyResultState = .beforeStart
+                            } else if viewModel.currentObjective.keyResults[index].completionState == .inProgress {
+                                viewModel.keyResultState = .inProgress
+                            } else {
+                                viewModel.keyResultState = .completed
                             }
                         }
                     }

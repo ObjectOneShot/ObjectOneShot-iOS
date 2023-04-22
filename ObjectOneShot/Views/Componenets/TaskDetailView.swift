@@ -36,6 +36,14 @@ struct TaskDetailView: View {
                             // 버튼 터치하면 task 삭제
                             viewModel.currentObjective.keyResults[keyResultIndex].tasks = viewModel.currentObjective.keyResults[keyResultIndex].tasks.filter { $0.id != viewModel.currentObjective.keyResults[keyResultIndex].tasks[viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id })!].id }
                             viewModel.currentObjective.keyResults[keyResultIndex].setProgress()
+                            
+                            if viewModel.currentObjective.keyResults[keyResultIndex].completionState == .beforeStart {
+                                viewModel.keyResultState = .beforeStart
+                            } else if viewModel.currentObjective.keyResults[keyResultIndex].completionState == .inProgress {
+                                viewModel.keyResultState = .inProgress
+                            } else {
+                                viewModel.keyResultState = .completed
+                            }
                         } label: {
                             Image("xMark")
                                 .renderingMode(.template)
