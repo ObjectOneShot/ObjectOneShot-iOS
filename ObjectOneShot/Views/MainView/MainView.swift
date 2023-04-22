@@ -179,6 +179,7 @@ struct MainView: View {
                 .aspectRatio(contentMode: .fit)
         }
         .padding(.horizontal, 16)
+        .padding(.bottom, 16)
         .navigationDestination(for: String.self) { id in
             if id == String(describing: AddObjectiveView.self) {
                 AddObjectiveView()
