@@ -39,12 +39,12 @@ struct AddObjectiveView: View {
                 .foregroundColor(Color("grey_300"))
                 .padding(.horizontal, 16)
                 .padding(.bottom, 8)
+            ScrollView {
             // objective detail 뷰
             ObjectiveDetailCard(objectiveID: "")
             // KeyReulst 헤더 뷰
             KeyResultsHeaderView()
             // Key Result 추가 뷰
-            ScrollView {
                 VStack(spacing: 0) {
                     switch viewModel.keyResultState {
                     case .beforeStart:

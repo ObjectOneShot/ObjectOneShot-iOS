@@ -25,9 +25,9 @@ struct ObjectiveDetailView: View {
             VStack(spacing: 0) {
                 // objective Detail Header
                 objectiveDetailHeader()
+                ScrollView {
                 ObjectiveDetailCard(objectiveID: objectiveID, isShowingCompletedObjective: isShowingCompletedObjectives)
                 KeyResultsHeaderView()
-                ScrollView {
                     VStack(spacing: 0) {
                         showKeyResultDetails()
                         // 완료된 objective detail을 보이는 것이 아니고
