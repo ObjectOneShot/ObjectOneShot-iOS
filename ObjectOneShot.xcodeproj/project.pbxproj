@@ -78,7 +78,7 @@
 		60C88DC529E0FAC200EB1BA6 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		60D0CF1B29E86BB100EFE0A6 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		60D0CF1F29E8D8EA00EFE0A6 /* CustomProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProgressBar.swift; sourceTree = "<group>"; };
-		60EB189A29E7DF85000D4F31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		60EB189A29E7DF85000D4F31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		60F0C12E29E8EA1A00C37E4E /* Pretendard-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.ttf"; sourceTree = "<group>"; };
 		60F0C12F29E8EA1A00C37E4E /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.ttf"; sourceTree = "<group>"; };
 		60F0C13029E8EA1A00C37E4E /* Pretendard-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -171,7 +171,6 @@
 		60C88D8E29E041D300EB1BA6 /* ObjectOneShot */ = {
 			isa = PBXGroup;
 			children = (
-				60EB189A29E7DF85000D4F31 /* Info.plist */,
 				60EB187D29E7DEF6000D4F31 /* Resources */,
 				60C88DA629E05F9100EB1BA6 /* Apps */,
 				60C88DC429E0FAAD00EB1BA6 /* Extensions */,
@@ -238,6 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				60C88D8F29E041D300EB1BA6 /* ObjectOneShotApp.swift */,
+				60EB189A29E7DF85000D4F31 /* Info.plist */,
 				60F0C14029EAB6A900C37E4E /* Launch Screen.storyboard */,
 			);
 			path = Apps;
@@ -548,7 +548,7 @@
 				DEVELOPMENT_TEAM = MV89SHQKF4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ObjectOneShot/Info.plist;
+				INFOPLIST_FILE = ObjectOneShot/Apps/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "목표한방";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -585,7 +585,7 @@
 				DEVELOPMENT_TEAM = MV89SHQKF4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = ObjectOneShot/Info.plist;
+				INFOPLIST_FILE = ObjectOneShot/Apps/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "목표한방";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

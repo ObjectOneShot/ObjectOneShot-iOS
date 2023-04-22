@@ -62,7 +62,11 @@ struct ObjectiveDetailView: View {
             } else {
                 print("ERROR : no objective found matching id : \(objectiveID) in ObjectiveDetailCard")
             }
-            viewModel.keyResultState = .beforeStart
+            if isShowingCompletedObjectives {
+                viewModel.keyResultState = .completed
+            } else {
+                viewModel.keyResultState = .beforeStart
+            }
         }
         .onDisappear {
             viewModel.currentObjective = Objective(title: "", startDate: Date(), endDate: Date(), keyResults: [])
