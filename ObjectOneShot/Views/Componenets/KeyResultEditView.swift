@@ -74,7 +74,7 @@ struct KeyResultEditView: View {
         .background(Color("grey_50"))
         .overlay(
             RoundedRectangle(cornerRadius: 10)
-                .stroke(Color("grey_300"))
+                .stroke(Color("primaryColor"))
         )
         .onAppear {
             viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [])
