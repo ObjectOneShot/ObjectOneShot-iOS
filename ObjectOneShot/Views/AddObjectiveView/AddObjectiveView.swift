@@ -77,6 +77,7 @@ struct AddObjectiveView: View {
                     .padding(.top, 10)
                     .background(Color("primary_10"))
                 }
+                .padding(.bottom, 48)
             }
             VStack {
                 Spacer()
