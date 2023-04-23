@@ -28,7 +28,7 @@ struct KeyResultDetailView: View {
             // KeyResult title
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
-                    TextField("", text: $keyResultTitle, prompt: Text("Key Results를 입력해 주세요").font(.pretendard(.medium, size: 16)).foregroundColor(Color("grey_500")))
+                    TextField("", text: $keyResultTitle, prompt: Text("Key Results를 입력해주세요").font(.pretendard(.medium, size: 16)).foregroundColor(Color("grey_500")))
                         .disabled(isShowingCompletedObjective)
                         .font(.pretendard(.semiBold, size: 16))
                         .foregroundColor(Color("grey_900"))

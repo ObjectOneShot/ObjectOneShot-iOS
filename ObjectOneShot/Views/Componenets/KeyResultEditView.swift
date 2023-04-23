@@ -23,7 +23,7 @@ struct KeyResultEditView: View {
             // KeyResult 헤더
             VStack(spacing: 0) {
                 HStack {
-                    TextField("", text: $keyResultTitle, prompt: Text("Key Results를 입력해 주세요").font(.pretendard(.medium, size: 16)).foregroundColor(Color("grey_500")))
+                    TextField("", text: $keyResultTitle, prompt: Text("Key Results를 입력해주세요").font(.pretendard(.medium, size: 16)).foregroundColor(Color("grey_500")))
                         .font(.pretendard(.semiBold, size: 16))
                         .foregroundColor(Color("grey_900"))
                         
