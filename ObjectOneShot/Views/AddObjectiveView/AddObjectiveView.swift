@@ -15,107 +15,95 @@ struct AddObjectiveView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
-        VStack(spacing: 0) {
-            // Header
-            HStack(spacing: 0) {
-                backButton()
-                    .padding(.trailing, 16)
-                Text("Objective를 설정해 주세요")
-                    .font(.pretendard(.semiBold, size: 18))
-                    .foregroundColor(Color("title_black"))
-                    .padding(.vertical, 12)
-                Spacer()
-                Button {
-                    /* TODO : 사용법 화면 링크 */
-                    isPresentingTips = true
-                } label: {
-                    Image("questionMark.black")
-                }
-                .padding(.trailing, 26)
-            }
-            .padding(.leading, 24)
-            Rectangle()
-                .frame(height: 1)
-                .foregroundColor(Color("grey_300"))
-                .padding(.horizontal, 16)
-                .padding(.bottom, 8)
-            ScrollView {
-            // objective detail 뷰
-            ObjectiveDetailCard(objectiveID: "")
-            // KeyReulst 헤더 뷰
-            KeyResultsHeaderView()
-            // Key Result 추가 뷰
-                VStack(spacing: 0) {
-                    switch viewModel.keyResultState {
-                    case .beforeStart:
-                        ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .beforeStart }, id: \.self) { keyResult in
-                            KeyResultDetailView(keyResultID: keyResult.id)
-                                .padding(.bottom, 10)
-                        }
-                    case .inProgress:
-                        ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .inProgress }, id: \.self) { keyResult in
-                            KeyResultDetailView(keyResultID: keyResult.id)
-                                .padding(.bottom, 10)
-                        }
-                    case .completed:
-                        ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .completed }, id: \.self) { keyResult in
-                            KeyResultDetailView(keyResultID: keyResult.id)
-                                .padding(.bottom, 10)
-                        }
+        ZStack {
+            VStack(spacing: 0) {
+                // Header
+                HStack(spacing: 0) {
+                    backButton()
+                        .padding(.trailing, 16)
+                    Text("Objective를 설정해 주세요")
+                        .font(.pretendard(.semiBold, size: 18))
+                        .foregroundColor(Color("title_black"))
+                        .padding(.vertical, 12)
+                    Spacer()
+                    Button {
+                        /* TODO : 사용법 화면 링크 */
+                        isPresentingTips = true
+                    } label: {
+                        Image("questionMark.black")
                     }
-                    // keyResult를 추가 중이면 KeyResultEditView 보이기 및 버튼 종류 변경
-                    if self.isAddingKeyResult  {
-                        KeyResultEditView(isAddingKeyResult: $isAddingKeyResult)
-                        Button {
-                            // 작성된 key result를 newKeyResults에 저장
-                            // 다만 텍스트필드가 모두 채워져 있어야 함
-                            // task도 하나 이상 있어야 함
-                            if !viewModel.newEditingKeyResult.title.isEmpty && !viewModel.newEditingKeyResult.tasks.isEmpty {
-                                self.isAddingKeyResult = false
-                                viewModel.currentObjective.keyResults.append(viewModel.newEditingKeyResult)
-                                viewModel.currentObjective.setProgress()
+                    .padding(.trailing, 26)
+                }
+                .padding(.leading, 24)
+                Rectangle()
+                    .frame(height: 1)
+                    .foregroundColor(Color("grey_300"))
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 8)
+                ScrollView {
+                    // objective detail 뷰
+                    ObjectiveDetailCard(objectiveID: "")
+                    // KeyReulst 헤더 뷰
+                    KeyResultsHeaderView()
+                    // Key Result 추가 뷰
+                    VStack(spacing: 0) {
+                        showKeyResultDetails()
+                        // keyResult를 추가 중이면 KeyResultEditView 보이기 및 버튼 종류 변경
+                        if self.isAddingKeyResult  {
+                            KeyResultEditView(isAddingKeyResult: $isAddingKeyResult)
+                            Button {
+                                // 작성된 key result를 newKeyResults에 저장
+                                // 다만 텍스트필드가 모두 채워져 있어야 함
+                                // task도 하나 이상 있어야 함
+                                if !viewModel.newEditingKeyResult.title.isEmpty && !viewModel.newEditingKeyResult.tasks.isEmpty {
+                                    self.isAddingKeyResult = false
+                                    viewModel.currentObjective.keyResults.append(viewModel.newEditingKeyResult)
+                                    viewModel.currentObjective.setProgress()
+                                }
+                            } label: {
+                                Text("Key Result 저장")
+                                    .font(.pretendard(.semiBold, size: 18))
+                                    .foregroundColor(Color("titleForeground"))
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 12)
+                                    .if(viewModel.newEditingKeyResult.title.isEmpty || viewModel.newEditingKeyResult.tasks.isEmpty) { view in
+                                        view
+                                            .background(Color("primaryColor_50"))
+                                    }
+                                    .if(!viewModel.newEditingKeyResult.title.isEmpty && !viewModel.newEditingKeyResult.tasks.isEmpty) { view in
+                                        view
+                                            .background(Color("primaryColor"))
+                                    }
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
                             }
-                        } label: {
-                            Text("Key Result 저장")
-                                .font(.pretendard(.semiBold, size: 18))
-                                .foregroundColor(Color("titleForeground"))
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 12)
-                                .if(viewModel.newEditingKeyResult.title.isEmpty || viewModel.newEditingKeyResult.tasks.isEmpty) { view in
-                                    view
-                                        .background(Color("primaryColor_50"))
-                                }
-                                .if(!viewModel.newEditingKeyResult.title.isEmpty && !viewModel.newEditingKeyResult.tasks.isEmpty) { view in
-                                    view
-                                        .background(Color("primaryColor"))
-                                }
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                            .padding(.vertical, 10)
+                        } else {
+                            Button {
+                                // editing 시작
+                                self.isAddingKeyResult = true
+                                viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [])
+                            } label: {
+                                Text("Key Result 추가")
+                                    .font(.pretendard(.semiBold, size: 18))
+                                    .foregroundColor(Color("titleForeground"))
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 12)
+                                    .background(Color("primaryColor"))
+                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                            }
+                            .padding(.vertical, 10)
                         }
-                        .padding(.vertical, 10)
-                    } else {
-                        Button {
-                            // editing 시작
-                            self.isAddingKeyResult = true
-                            viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [])
-                        } label: {
-                            Text("Key Result 추가")
-                                .font(.pretendard(.semiBold, size: 18))
-                                .foregroundColor(Color("titleForeground"))
-                                .frame(maxWidth: .infinity)
-                                .padding(.vertical, 12)
-                                .background(Color("primaryColor"))
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                        }
-                        .padding(.vertical, 10)
                     }
+                    .padding(.horizontal, 16)
+                    .padding(.top, 10)
+                    .background(Color("primary_10"))
                 }
-                .padding(.horizontal, 16)
-                .padding(.top, 10)
-                .background(Color("primary_10"))
             }
-            
-            Spacer()
-            addObjectButton()   /* TODO : 키보드랑 같이 위로 올라오지 않도록 수정 */
+            VStack {
+                Spacer()
+                addObjectButton()
+            }
+            .ignoresSafeArea(.keyboard)
         }
         .background(Color("background"))
         .onAppear {
@@ -176,7 +164,27 @@ struct AddObjectiveView: View {
                 .background(Color("titleBackground"))
         }
         .padding(.bottom, 1)
-        .ignoresSafeArea(.keyboard, edges: .bottom)
+    }
+    
+    @ViewBuilder
+    func showKeyResultDetails() -> some View {
+        switch viewModel.keyResultState {
+        case .beforeStart:
+            ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .beforeStart }, id: \.self) { keyResult in
+                KeyResultDetailView(keyResultID: keyResult.id)
+                    .padding(.bottom, 10)
+            }
+        case .inProgress:
+            ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .inProgress }, id: \.self) { keyResult in
+                KeyResultDetailView(keyResultID: keyResult.id)
+                    .padding(.bottom, 10)
+            }
+        case .completed:
+            ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .completed }, id: \.self) { keyResult in
+                KeyResultDetailView(keyResultID: keyResult.id)
+                    .padding(.bottom, 10)
+            }
+        }
     }
 }
 
