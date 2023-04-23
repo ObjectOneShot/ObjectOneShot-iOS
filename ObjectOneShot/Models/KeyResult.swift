@@ -19,6 +19,9 @@ struct KeyResult: Identifiable, Hashable, Codable {
             if lhs.title != rhs.title {
                 return false
             }
+            if lhs.tasks.count != rhs.tasks.count {
+                return false
+            }
             for i in 0..<lhs.tasks.count {
                 if lhs.tasks[i] != rhs.tasks[i] {
                     return false

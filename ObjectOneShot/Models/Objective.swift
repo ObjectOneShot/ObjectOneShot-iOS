@@ -19,6 +19,9 @@ struct Objective: Identifiable, Hashable, Codable {
             if lhs.endDate != rhs.endDate {
                 return false
             }
+            if lhs.keyResults.count != rhs.keyResults.count {
+               return false
+            }
             for i in 0..<lhs.keyResults.count {
                 if lhs.keyResults[i] != rhs.keyResults[i] {
                     return false

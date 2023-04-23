@@ -119,9 +119,13 @@ struct ObjectiveDetailView: View {
     func showKeyResultDetails() -> some View {
         switch viewModel.keyResultState {
         case .beforeStart:
-            ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .beforeStart }, id: \.self) { keyResult in
-                KeyResultDetailView(keyResultID: keyResult.id, isShowingCompletedObjective: isShowingCompletedObjectives)
-                    .padding(.bottom, 10)
+            if !viewModel.currentObjective.keyResults.filter({ $0.completionState == .beforeStart}).isEmpty {
+                ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .beforeStart }, id: \.self) { keyResult in
+                    KeyResultDetailView(keyResultID: keyResult.id, isShowingCompletedObjective: isShowingCompletedObjectives)
+                        .padding(.bottom, 10)
+                }
+            } else {
+                Color("primary_10")
             }
         case .inProgress:
             ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .inProgress }, id: \.self) { keyResult in
@@ -209,6 +213,8 @@ struct ObjectiveDetailView: View {
                 } else {
                     self.presentationMode.wrappedValue.dismiss()
                 }
+            } else {
+                self.presentationMode.wrappedValue.dismiss()
             }
         } label : {
             HStack{
