@@ -18,28 +18,7 @@ struct AddObjectiveView: View {
         ZStack {
             VStack(spacing: 0) {
                 // Header
-                HStack(spacing: 0) {
-                    backButton()
-                        .padding(.trailing, 16)
-                    Text("Objective를 설정해 주세요")
-                        .font(.pretendard(.semiBold, size: 18))
-                        .foregroundColor(Color("title_black"))
-                        .padding(.vertical, 12)
-                    Spacer()
-                    Button {
-                        /* TODO : 사용법 화면 링크 */
-                        isPresentingTips = true
-                    } label: {
-                        Image("questionMark.black")
-                    }
-                    .padding(.trailing, 26)
-                }
-                .padding(.leading, 24)
-                Rectangle()
-                    .frame(height: 1)
-                    .foregroundColor(Color("grey_300"))
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 8)
+                addObjectiveHeader()
                 ScrollView {
                     // objective detail 뷰
                     ObjectiveDetailCard(objectiveID: "")
@@ -155,15 +134,41 @@ struct AddObjectiveView: View {
         }
         .padding(.vertical, 10)
         .frame(maxWidth: .infinity)
-        .if(viewModel.currentObjective.title.isEmpty) { view in
+        .if(viewModel.currentObjective.title.isEmpty || isAddingKeyResult) { view in
             view
                 .background(Color("titleBackground_40"))
         }
-        .if(!viewModel.currentObjective.title.isEmpty) { view in
+        .if(!viewModel.currentObjective.title.isEmpty && !isAddingKeyResult) { view in
             view
                 .background(Color("titleBackground"))
         }
         .padding(.bottom, 1)
+    }
+    
+    @ViewBuilder
+    func addObjectiveHeader() -> some View {
+        HStack(spacing: 0) {
+            backButton()
+                .padding(.trailing, 16)
+            Text("Objective를 설정해 주세요")
+                .font(.pretendard(.semiBold, size: 18))
+                .foregroundColor(Color("title_black"))
+                .padding(.vertical, 12)
+            Spacer()
+            Button {
+                /* TODO : 사용법 화면 링크 */
+                isPresentingTips = true
+            } label: {
+                Image("questionMark.black")
+            }
+            .padding(.trailing, 26)
+        }
+        .padding(.leading, 24)
+        Rectangle()
+            .frame(height: 1)
+            .foregroundColor(Color("grey_300"))
+            .padding(.horizontal, 16)
+            .padding(.bottom, 8)
     }
     
     @ViewBuilder
