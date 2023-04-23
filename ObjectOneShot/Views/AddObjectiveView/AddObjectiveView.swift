@@ -134,6 +134,7 @@ struct AddObjectiveView: View {
         }
         .padding(.vertical, 10)
         .frame(maxWidth: .infinity)
+        .frame(height: 48)
         .if(viewModel.currentObjective.title.isEmpty || isAddingKeyResult) { view in
             view
                 .background(Color("titleBackground_40"))
