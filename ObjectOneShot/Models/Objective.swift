@@ -9,7 +9,25 @@ import Foundation
 
 struct Objective: Identifiable, Hashable, Codable {
     static func == (lhs: Objective, rhs: Objective) -> Bool {
-        return lhs.id == rhs.id
+        if lhs.id == rhs.id {
+            if lhs.title != rhs.title {
+                return false
+            }
+            if lhs.startDate != rhs.startDate {
+                return false
+            }
+            if lhs.endDate != rhs.endDate {
+                return false
+            }
+            for i in 0..<lhs.keyResults.count {
+                if lhs.keyResults[i] != rhs.keyResults[i] {
+                    return false
+                }
+            }
+            return true
+        } else {
+            return false
+        }
     }
     
     static var dummy = Objective(title: "감사 일기 쓰기", startDate: Date(), endDate: Date(), keyResults: [KeyResult(title: "하이요", completionState: .beforeStart, tasks: []), KeyResult(title: "하이요", completionState: .beforeStart, tasks: [])])

@@ -15,7 +15,19 @@ enum KeyResultState: String, Codable {
 
 struct KeyResult: Identifiable, Hashable, Codable {
     static func == (lhs: KeyResult, rhs: KeyResult) -> Bool {
-        return lhs.id == rhs.id
+        if lhs.id == rhs.id {
+            if lhs.title != rhs.title {
+                return false
+            }
+            for i in 0..<lhs.tasks.count {
+                if lhs.tasks[i] != rhs.tasks[i] {
+                    return false
+                }
+            }
+            return true
+        } else {
+            return false
+        }
     }
     
     func hash(into hasher: inout Hasher) {

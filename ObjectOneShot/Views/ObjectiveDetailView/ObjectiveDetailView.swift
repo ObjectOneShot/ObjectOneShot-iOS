@@ -26,8 +26,8 @@ struct ObjectiveDetailView: View {
                 // objective Detail Header
                 objectiveDetailHeader()
                 ScrollView {
-                ObjectiveDetailCard(objectiveID: objectiveID, isShowingCompletedObjective: isShowingCompletedObjectives)
-                KeyResultsHeaderView()
+                    ObjectiveDetailCard(objectiveID: objectiveID, isShowingCompletedObjective: isShowingCompletedObjectives)
+                    KeyResultsHeaderView()
                     VStack(spacing: 0) {
                         showKeyResultDetails()
                         // 완료된 objective detail을 보이는 것이 아니고
@@ -199,9 +199,16 @@ struct ObjectiveDetailView: View {
              TODO : 값을 변경했을 때만 값을 저장하지 않고 나가겠냐는 팝업창 띄워주기
              */
             if !isShowingCompletedObjectives {
-                isPresentingSaveAlert = true
-            } else {
-                self.presentationMode.wrappedValue.dismiss()
+                if let currentObjective = viewModel.objectives.first(where: { $0.id == objectiveID }) {
+                    // 데이터 변경 없음
+                    if currentObjective == viewModel.currentObjective {
+                        self.presentationMode.wrappedValue.dismiss()
+                    } else {
+                        isPresentingSaveAlert = true
+                    }
+                } else {
+                    self.presentationMode.wrappedValue.dismiss()
+                }
             }
         } label : {
             HStack{
