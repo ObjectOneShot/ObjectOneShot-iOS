@@ -122,7 +122,7 @@ struct AddObjectiveView: View {
     func addObjectButton() -> some View {
         Button {
             // 모든 텍스트필드가 작성되어 있다면 뷰모델에게 목표 등록 일시키기
-            if !viewModel.currentObjective.title.isEmpty {
+            if !viewModel.currentObjective.title.isEmpty && !isAddingKeyResult {
                 viewModel.addNewObjective(viewModel.currentObjective)
                 self.presentationMode.wrappedValue.dismiss()
                 viewModel.saveObjectivesToUserDefaults()
