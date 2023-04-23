@@ -121,7 +121,7 @@ struct AddObjectiveView: View {
     @ViewBuilder
     func addObjectButton() -> some View {
         Button {
-            // 모든 텍스트필드가 작성되어 있다면 뷰모델에게 목표 등록 일시키기
+            // 모든 텍스트필드가 작성되어 있고 현재 keyResult 수정 중이 아니라면 뷰모델에게 목표 등록 일시키기
             if !viewModel.currentObjective.title.isEmpty && !isAddingKeyResult {
                 viewModel.addNewObjective(viewModel.currentObjective)
                 self.presentationMode.wrappedValue.dismiss()
