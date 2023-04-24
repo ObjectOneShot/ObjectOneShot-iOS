@@ -50,7 +50,6 @@ struct MainView: View {
             }
         }
         .onAppear {
-            isShowingCompletedObjectives = false
             viewModel.keyResultState = .beforeStart
             if viewModel.objectives.filter({ $0.isCompleted == false && $0.isOutdated == false }).isEmpty {
                 isProgressingObjectivesEmpty = true
