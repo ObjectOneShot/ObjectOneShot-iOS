@@ -78,6 +78,8 @@ struct KeyResultEditView: View {
         )
         .onAppear {
             viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [])
+            self.keyResultTitle = ""
+            self.taskTitle = ""
         }
     }
     
