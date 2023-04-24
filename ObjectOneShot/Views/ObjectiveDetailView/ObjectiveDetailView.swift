@@ -123,24 +123,31 @@ struct ObjectiveDetailView: View {
     func showKeyResultDetails() -> some View {
         switch viewModel.keyResultState {
         case .beforeStart:
-            if !viewModel.currentObjective.keyResults.filter({ $0.completionState == .beforeStart}).isEmpty {
+            if !viewModel.currentObjective.keyResults.filter({ $0.completionState == .beforeStart }).isEmpty {
                 ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .beforeStart }, id: \.self) { keyResult in
                     KeyResultDetailView(keyResultID: keyResult.id, isShowingCompletedObjective: isShowingCompletedObjectives)
                         .padding(.bottom, 10)
                 }
-            } else {
+            } else if isShowingCompletedObjectives {
                 Color("primary_10")
             }
         case .inProgress:
-            ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .inProgress }, id: \.self) { keyResult in
-                KeyResultDetailView(keyResultID: keyResult.id, isShowingCompletedObjective: isShowingCompletedObjectives)
-                    .padding(.bottom, 10)
-                
+            if !viewModel.currentObjective.keyResults.filter({ $0.completionState == .inProgress }).isEmpty {
+                ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .inProgress }, id: \.self) { keyResult in
+                    KeyResultDetailView(keyResultID: keyResult.id, isShowingCompletedObjective: isShowingCompletedObjectives)
+                        .padding(.bottom, 10)
+                }
+            } else if isShowingCompletedObjectives {
+                Color("primary_10")
             }
         case .completed:
-            ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .completed }, id: \.self) { keyResult in
-                KeyResultDetailView(keyResultID: keyResult.id, isShowingCompletedObjective: isShowingCompletedObjectives)
-                    .padding(.bottom, 10)
+            if !viewModel.currentObjective.keyResults.filter({ $0.completionState == .completed }).isEmpty {
+                ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .completed }, id: \.self) { keyResult in
+                    KeyResultDetailView(keyResultID: keyResult.id, isShowingCompletedObjective: isShowingCompletedObjectives)
+                        .padding(.bottom, 10)
+                }
+            } else if isShowingCompletedObjectives {
+                Color("primary_10")
             }
         }
     }
@@ -181,7 +188,7 @@ struct ObjectiveDetailView: View {
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 8))
         }
-        .padding(.vertical, 10)
+        .padding(.top, 10)
     }
     
     @ViewBuilder
@@ -202,7 +209,7 @@ struct ObjectiveDetailView: View {
                 .background(Color("primaryColor"))
                 .clipShape(RoundedRectangle(cornerRadius: 8))
         }
-        .padding(.vertical, 10)
+        //.padding(.vertical, 10)
     }
     
     @ViewBuilder

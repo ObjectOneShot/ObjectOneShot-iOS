@@ -204,7 +204,7 @@ struct AddObjectiveView: View {
                 .background(Color("primaryColor"))
                 .clipShape(RoundedRectangle(cornerRadius: 8))
         }
-        .padding(.vertical, 10)
+        .padding(.bottom, 10)
     }
 }
 
