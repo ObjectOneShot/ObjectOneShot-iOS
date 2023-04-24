@@ -10,6 +10,7 @@ import SwiftUI
 // using viewmodel's currentObjective to handle objective data
 struct ObjectiveDetailView: View {
     @EnvironmentObject var viewModel: OKRViewModel
+    @Namespace var bottomID
     
     let objectiveID: String
     @Binding var isObjectiveCompleted: Bool
@@ -25,26 +26,29 @@ struct ObjectiveDetailView: View {
             VStack(spacing: 0) {
                 // objective Detail Header
                 objectiveDetailHeader()
-                ScrollView {
-                    ObjectiveDetailCard(objectiveID: objectiveID, isShowingCompletedObjective: isShowingCompletedObjectives)
-                    KeyResultsHeaderView()
-                    VStack(spacing: 0) {
-                        showKeyResultDetails()
-                        // 완료된 objective detail을 보이는 것이 아니고
-                        // keyResult를 추가 중이면 KeyResultEditView 보이기 및 버튼 종류 변경
-                        if !isShowingCompletedObjectives {
-                            if self.isAddingKeyResult {
-                                KeyResultEditView(isAddingKeyResult: $isAddingKeyResult)
-                                keyResultSaveButton()
-                            } else {
-                                keyResultAddButton()
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        ObjectiveDetailCard(objectiveID: objectiveID, isShowingCompletedObjective: isShowingCompletedObjectives)
+                        KeyResultsHeaderView()
+                        VStack(spacing: 0) {
+                            showKeyResultDetails()
+                            // 완료된 objective detail을 보이는 것이 아니고
+                            // keyResult를 추가 중이면 KeyResultEditView 보이기 및 버튼 종류 변경
+                            if !isShowingCompletedObjectives {
+                                if self.isAddingKeyResult {
+                                    KeyResultEditView(isAddingKeyResult: $isAddingKeyResult)
+                                    keyResultSaveButton()
+                                } else {
+                                    keyResultAddButton(proxy: proxy)
+                                }
                             }
+                            Spacer()
                         }
-                        Spacer()
+                        .padding(.horizontal, 16)
+                        .padding(.top, 10)
+                        .background(Color("primary_10"))
+                        .id(bottomID)
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.top, 10)
-                    .background(Color("primary_10"))
                 }
             }
             
@@ -158,6 +162,8 @@ struct ObjectiveDetailView: View {
                 } else {
                     viewModel.keyResultState = .completed
                 }
+                
+                viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [])
             }
         } label: {
             Text("Key Result 저장")
@@ -179,11 +185,14 @@ struct ObjectiveDetailView: View {
     }
     
     @ViewBuilder
-    func keyResultAddButton() -> some View {
+    func keyResultAddButton(proxy : ScrollViewProxy) -> some View {
         Button {
             // editing 시작
             self.isAddingKeyResult = true
             viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [Task(title: "")])
+            withAnimation {
+                proxy.scrollTo(bottomID)
+            }
         } label: {
             Text("Key Result 추가")
                 .font(.pretendard(.semiBold, size: 18))

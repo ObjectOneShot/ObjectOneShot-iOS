@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AddObjectiveView: View {
     @EnvironmentObject var viewModel: OKRViewModel
+    @Namespace var bottomID
     
     @State private var isAddingKeyResult = true
     @State private var isPresentingTips: Bool = false
@@ -19,65 +20,29 @@ struct AddObjectiveView: View {
             VStack(spacing: 0) {
                 // Header
                 addObjectiveHeader()
-                ScrollView {
-                    // objective detail 뷰
-                    ObjectiveDetailCard(objectiveID: "")
-                    // KeyReulst 헤더 뷰
-                    KeyResultsHeaderView()
-                    // Key Result 추가 뷰
-                    VStack(spacing: 0) {
-                        showKeyResultDetails()
-                        // keyResult를 추가 중이면 KeyResultEditView 보이기 및 버튼 종류 변경
-                        if self.isAddingKeyResult  {
-                            KeyResultEditView(isAddingKeyResult: $isAddingKeyResult)
-                            Button {
-                                // 작성된 key result를 newKeyResults에 저장
-                                // 다만 텍스트필드가 모두 채워져 있어야 함
-                                // task도 하나 이상 있어야 함
-                                if !viewModel.newEditingKeyResult.title.isEmpty && !viewModel.newEditingKeyResult.tasks.isEmpty {
-                                    self.isAddingKeyResult = false
-                                    viewModel.currentObjective.keyResults.append(viewModel.newEditingKeyResult)
-                                    viewModel.currentObjective.setProgress()
-                                }
-                            } label: {
-                                Text("Key Result 저장")
-                                    .font(.pretendard(.semiBold, size: 18))
-                                    .foregroundColor(Color("titleForeground"))
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.vertical, 12)
-                                    .if(viewModel.newEditingKeyResult.title.isEmpty || viewModel.newEditingKeyResult.tasks.isEmpty) { view in
-                                        view
-                                            .background(Color("primaryColor_50"))
-                                    }
-                                    .if(!viewModel.newEditingKeyResult.title.isEmpty && !viewModel.newEditingKeyResult.tasks.isEmpty) { view in
-                                        view
-                                            .background(Color("primaryColor"))
-                                    }
-                                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        // objective detail 뷰
+                        ObjectiveDetailCard(objectiveID: "")
+                        // KeyReulst 헤더 뷰
+                        KeyResultsHeaderView()
+                        // Key Result 추가 뷰
+                        VStack(spacing: 0) {
+                            showKeyResultDetails()
+                            // keyResult를 추가 중이면 KeyResultEditView 보이기 및 버튼 종류 변경
+                            if self.isAddingKeyResult  {
+                                KeyResultEditView(isAddingKeyResult: $isAddingKeyResult)
+                                keyResultSaveButton()
+                            } else {
+                                keyResultAddButton(proxy: proxy)
                             }
-                            .padding(.vertical, 10)
-                        } else {
-                            Button {
-                                // editing 시작
-                                self.isAddingKeyResult = true
-                                viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [])
-                            } label: {
-                                Text("Key Result 추가")
-                                    .font(.pretendard(.semiBold, size: 18))
-                                    .foregroundColor(Color("titleForeground"))
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.vertical, 12)
-                                    .background(Color("primaryColor"))
-                                    .clipShape(RoundedRectangle(cornerRadius: 8))
-                            }
-                            .padding(.vertical, 10)
                         }
+                        .padding(.horizontal, 16)
+                        .padding(.top, 10)
+                        .background(Color("primary_10"))
+                        .id(bottomID)
                     }
-                    .padding(.horizontal, 16)
-                    .padding(.top, 10)
-                    .background(Color("primary_10"))
                 }
-                .padding(.bottom, 48)
             }
             VStack {
                 Spacer()
@@ -135,7 +100,6 @@ struct AddObjectiveView: View {
         }
         .padding(.vertical, 10)
         .frame(maxWidth: .infinity)
-        .frame(height: 48)
         .if(viewModel.currentObjective.title.isEmpty || isAddingKeyResult) { view in
             view
                 .background(Color("titleBackground_40"))
@@ -192,6 +156,55 @@ struct AddObjectiveView: View {
                     .padding(.bottom, 10)
             }
         }
+    }
+    
+    @ViewBuilder
+    func keyResultSaveButton() -> some View {
+        Button {
+            // 작성된 key result를 newKeyResults에 저장
+            // 다만 텍스트필드가 모두 채워져 있어야 함
+            // task도 하나 이상 있어야 함
+            if !viewModel.newEditingKeyResult.title.isEmpty && !viewModel.newEditingKeyResult.tasks.isEmpty {
+                self.isAddingKeyResult = false
+                viewModel.currentObjective.keyResults.append(viewModel.newEditingKeyResult)
+                viewModel.currentObjective.setProgress()
+            }
+        } label: {
+            Text("Key Result 저장")
+                .font(.pretendard(.semiBold, size: 18))
+                .foregroundColor(Color("titleForeground"))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .if(viewModel.newEditingKeyResult.title.isEmpty || viewModel.newEditingKeyResult.tasks.isEmpty) { view in
+                    view
+                        .background(Color("primaryColor_50"))
+                }
+                .if(!viewModel.newEditingKeyResult.title.isEmpty && !viewModel.newEditingKeyResult.tasks.isEmpty) { view in
+                    view
+                        .background(Color("primaryColor"))
+                }
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+        }
+        .padding(.vertical, 10)
+    }
+    
+    @ViewBuilder
+    func keyResultAddButton(proxy: ScrollViewProxy) -> some View {
+        Button {
+            // editing 시작
+            self.isAddingKeyResult = true
+            viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [])
+            proxy.scrollTo(bottomID)
+        } label: {
+            Text("Key Result 추가")
+                .font(.pretendard(.semiBold, size: 18))
+                .foregroundColor(Color("titleForeground"))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+                .background(Color("primaryColor"))
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+        }
+        .padding(.vertical, 10)
     }
 }
 
