@@ -74,7 +74,7 @@ struct ObjectiveDetailCard: View {
                             .stroke(Color("grey_300"))
                     )
                 HStack {
-                    DatePicker("", selection: $startDate, in: ...endDate, displayedComponents: .date)
+                    DatePicker("", selection: $startDate, displayedComponents: .date)
                         .disabled(isShowingCompletedObjective)
                         .labelsHidden()
                         .environment(\.locale, Locale(identifier: "ko-KR"))
