@@ -8,7 +8,7 @@
 import Foundation
 
 enum KeyResultState: String, Codable {
-    case beforeStart
+    case all
     case inProgress
     case completed
 }
@@ -37,7 +37,7 @@ struct KeyResult: Identifiable, Hashable, Codable {
         hasher.combine(id)
     }
     
-    static var dummy = KeyResult(title: "", completionState: .beforeStart, tasks: [])
+    static var dummy = KeyResult(title: "", completionState: .inProgress, tasks: [])
     
     let id = UUID().uuidString
     var isExpanded = false
@@ -95,9 +95,7 @@ struct KeyResult: Identifiable, Hashable, Codable {
             self.progressValue = Double(Double(tasks.filter { $0.isCompleted == true }.count) / Double(tasks.count))
         }
         
-        if self.progressValue == 0 {
-            self.completionState = .beforeStart
-        } else if self.progressValue == 1 {
+        if self.progressValue == 1 {
             self.completionState = .completed
         } else {
             self.completionState = .inProgress

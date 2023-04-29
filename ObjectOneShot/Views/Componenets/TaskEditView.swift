@@ -33,10 +33,8 @@ struct TaskEditView: View {
                             viewModel.newEditingKeyResult.tasks = viewModel.newEditingKeyResult.tasks.filter { $0.id != task.id }
                             viewModel.newEditingKeyResult.setProgress()
                             
-                            if viewModel.newEditingKeyResult.completionState == .beforeStart {
-                                viewModel.keyResultState = .beforeStart
-                            } else if viewModel.newEditingKeyResult.completionState == .inProgress {
-                                viewModel.keyResultState = .inProgress
+                            if viewModel.newEditingKeyResult.completionState == .inProgress {
+                                viewModel.keyResultState = .all
                             } else {
                                 viewModel.keyResultState = .completed
                             }
@@ -123,10 +121,8 @@ struct TaskEditView: View {
             viewModel.newEditingKeyResult.setProgress()
             
             
-            if viewModel.newEditingKeyResult.completionState == .beforeStart {
-                viewModel.keyResultState = .beforeStart
-            } else if viewModel.newEditingKeyResult.completionState == .inProgress {
-                viewModel.keyResultState = .inProgress
+            if viewModel.newEditingKeyResult.completionState == .inProgress {
+                viewModel.keyResultState = .all
             } else {
                 viewModel.keyResultState = .completed
             }

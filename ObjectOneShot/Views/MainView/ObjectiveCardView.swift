@@ -62,27 +62,16 @@ struct ObjectiveCardView: View {
                 self.isCompleted = currentObjective.isCompleted
                 self.isOutdated = currentObjective.isOutdated
                 
+                // 카드뷰에 최대 두개까지 표시할 key results 선택하기
                 if currentObjective.keyResults.filter({ $0.completionState == .inProgress }).count > 1 {
                     self.firstKeyReulstTitle = currentObjective.keyResults.filter({ $0.completionState == .inProgress })[0].title
                     self.secondKeyReusltTitle = currentObjective.keyResults.filter({ $0.completionState == .inProgress })[1].title
                 } else if currentObjective.keyResults.filter({ $0.completionState == .inProgress }).count > 0 {
                     self.firstKeyReulstTitle = currentObjective.keyResults.filter({ $0.completionState == .inProgress })[0].title
-                    if currentObjective.keyResults.filter({ $0.completionState == .beforeStart}).count > 0 {
-                        self.secondKeyReusltTitle = currentObjective.keyResults.filter({ $0.completionState == .beforeStart })[0].title
-                    } else {
-                        self.secondKeyReusltTitle = ""
-                    }
+                    self.secondKeyReusltTitle = ""
                 } else {
-                    if currentObjective.keyResults.filter({ $0.completionState == .beforeStart }).count > 1 {
-                        self.firstKeyReulstTitle = currentObjective.keyResults.filter({ $0.completionState == .beforeStart })[0].title
-                        self.secondKeyReusltTitle = currentObjective.keyResults.filter({ $0.completionState == .beforeStart })[1].title
-                    } else if currentObjective.keyResults.filter({ $0.completionState == .beforeStart }).count > 0 {
-                        self.firstKeyReulstTitle = currentObjective.keyResults.filter({ $0.completionState == .beforeStart })[0].title
-                        self.secondKeyReusltTitle = ""
-                    } else {
-                        self.firstKeyReulstTitle = ""
-                        self.secondKeyReusltTitle = ""
-                    }
+                    self.firstKeyReulstTitle = ""
+                    self.secondKeyReusltTitle = ""
                 }
             } else {
                 print("ERROR : no objective found matching id : \(objectiveID) in ObjectiveDetailCard")

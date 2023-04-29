@@ -29,7 +29,7 @@ struct KeyResultEditView: View {
                         
                     Button {
                         // keyResultEditing 종료
-                        viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [])
+                        viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .inProgress, tasks: [])
                         self.isAddingKeyResult = false
                     } label: {
                         Image("xMark")
@@ -77,7 +77,7 @@ struct KeyResultEditView: View {
                 .stroke(Color("primaryColor"))
         )
         .onAppear {
-            viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [])
+            viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .inProgress, tasks: [])
             self.keyResultTitle = ""
             self.taskTitle = ""
         }

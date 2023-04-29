@@ -37,10 +37,8 @@ struct TaskDetailView: View {
                             viewModel.currentObjective.keyResults[keyResultIndex].tasks = viewModel.currentObjective.keyResults[keyResultIndex].tasks.filter { $0.id != viewModel.currentObjective.keyResults[keyResultIndex].tasks[viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id })!].id }
                             viewModel.currentObjective.keyResults[keyResultIndex].setProgress()
                             
-                            if viewModel.currentObjective.keyResults[keyResultIndex].completionState == .beforeStart {
-                                viewModel.keyResultState = .beforeStart
-                            } else if viewModel.currentObjective.keyResults[keyResultIndex].completionState == .inProgress {
-                                viewModel.keyResultState = .inProgress
+                            if viewModel.currentObjective.keyResults[keyResultIndex].completionState == .inProgress {
+                                viewModel.keyResultState = .all
                             } else {
                                 viewModel.keyResultState = .completed
                             }
@@ -127,10 +125,8 @@ struct TaskDetailView: View {
             }
             
             viewModel.currentObjective.keyResults[keyResultIndex].setProgress()
-            if viewModel.currentObjective.keyResults[keyResultIndex].completionState == .beforeStart {
-                viewModel.keyResultState = .beforeStart
-            } else if viewModel.currentObjective.keyResults[keyResultIndex].completionState == .inProgress {
-                viewModel.keyResultState = .inProgress
+            if viewModel.currentObjective.keyResults[keyResultIndex].completionState == .inProgress {
+                viewModel.keyResultState = .all
             } else {
                 viewModel.keyResultState = .completed
             }

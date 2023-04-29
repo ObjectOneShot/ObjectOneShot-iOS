@@ -9,9 +9,9 @@ import Foundation
 
 final class OKRViewModel: ObservableObject {
     
-    @Published var keyResultState: KeyResultState = .beforeStart
+    @Published var keyResultState: KeyResultState = .all
     @Published var currentObjective: Objective = Objective(title: "", startDate: Date(), endDate: Date(), keyResults: [])
-    @Published var newEditingKeyResult: KeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [Task(title: "")])
+    @Published var newEditingKeyResult: KeyResult = KeyResult(title: "", completionState: .inProgress, tasks: [Task(title: "")])
     @Published var newEditingTask: Task = Task(title: "")
     @Published var objectives: [Objective] = []
     @Published var deletingObjectiveID: String = ""

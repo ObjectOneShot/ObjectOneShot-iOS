@@ -69,7 +69,7 @@ struct ObjectiveDetailView: View {
             if isShowingCompletedObjectives {
                 viewModel.keyResultState = .completed
             } else {
-                viewModel.keyResultState = .beforeStart
+                viewModel.keyResultState = .all
             }
         }
         .onDisappear {
@@ -122,9 +122,9 @@ struct ObjectiveDetailView: View {
     @ViewBuilder
     func showKeyResultDetails() -> some View {
         switch viewModel.keyResultState {
-        case .beforeStart:
-            if !viewModel.currentObjective.keyResults.filter({ $0.completionState == .beforeStart }).isEmpty {
-                ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .beforeStart }, id: \.self) { keyResult in
+        case .all:
+            if !viewModel.currentObjective.keyResults.isEmpty {
+                ForEach(viewModel.currentObjective.keyResults, id: \.self) { keyResult in
                     KeyResultDetailView(keyResultID: keyResult.id, isShowingCompletedObjective: isShowingCompletedObjectives)
                         .padding(.bottom, 10)
                 }
@@ -161,16 +161,16 @@ struct ObjectiveDetailView: View {
             if !viewModel.newEditingKeyResult.title.isEmpty && !viewModel.newEditingKeyResult.tasks.isEmpty {
                 self.isAddingKeyResult = false
                 
+                // 저장하며 keyResult 상태에 따라 keyResultState 변경
+                // 완료 시에만 완료로 이동
                 viewModel.currentObjective.keyResults.append(viewModel.newEditingKeyResult)
-                if viewModel.newEditingKeyResult.completionState == .beforeStart {
-                    viewModel.keyResultState = .beforeStart
-                } else if viewModel.newEditingKeyResult.completionState == .inProgress {
-                    viewModel.keyResultState = .inProgress
+                if viewModel.newEditingKeyResult.completionState == .inProgress {
+                    viewModel.keyResultState = .all
                 } else {
                     viewModel.keyResultState = .completed
                 }
                 
-                viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [])
+                viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .inProgress, tasks: [])
             }
         } label: {
             Text("Key Result 저장")
@@ -196,7 +196,7 @@ struct ObjectiveDetailView: View {
         Button {
             // editing 시작
             self.isAddingKeyResult = true
-            viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [Task(title: "")])
+            viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .inProgress, tasks: [Task(title: "")])
             withAnimation {
                 proxy.scrollTo(bottomID)
             }

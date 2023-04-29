@@ -202,10 +202,8 @@ struct KeyResultDetailView: View {
                                 taskTitle = ""
                             }
                             
-                            if viewModel.currentObjective.keyResults[index].completionState == .beforeStart {
-                                viewModel.keyResultState = .beforeStart
-                            } else if viewModel.currentObjective.keyResults[index].completionState == .inProgress {
-                                viewModel.keyResultState = .inProgress
+                            if viewModel.currentObjective.keyResults[index].completionState == .inProgress {
+                                viewModel.keyResultState = .all
                             } else {
                                 viewModel.keyResultState = .completed
                             }

@@ -27,21 +27,21 @@ struct KeyResultsHeaderView: View {
             HStack {
                 Spacer()
                 Button {
-                    viewModel.keyResultState = .beforeStart
+                    viewModel.keyResultState = .all
                     setIsExpandedToFalse()
                 } label : {
                     HStack(spacing: 6) {
                         Circle()
                             .frame(width: 8, height: 8)
-                            .if(viewModel.keyResultState == .beforeStart) { view in
+                            .if(viewModel.keyResultState == .all) { view in
                                 view
                                     .foregroundColor(Color("point_1"))
                             }
-                            .if(viewModel.keyResultState != .beforeStart) { view in
+                            .if(viewModel.keyResultState != .all) { view in
                                 view
                                     .foregroundColor(.white)
                             }
-                        Text("예정")
+                        Text("전체")
                             .font(.pretendard(.semiBold, size: 14))
                             .foregroundColor(Color("grey_900"))
                     }

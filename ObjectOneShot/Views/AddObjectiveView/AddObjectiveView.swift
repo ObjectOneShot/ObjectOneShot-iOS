@@ -58,7 +58,7 @@ struct AddObjectiveView: View {
         }
         .onDisappear {
             viewModel.currentObjective = Objective(title: "", startDate: Date(), endDate: Date(), keyResults: [])
-            viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [])
+            viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .inProgress, tasks: [])
         }
         .onTapGesture {
             self.endTextEditing()
@@ -140,8 +140,8 @@ struct AddObjectiveView: View {
     @ViewBuilder
     func showKeyResultDetails() -> some View {
         switch viewModel.keyResultState {
-        case .beforeStart:
-            ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .beforeStart }, id: \.self) { keyResult in
+        case .all:
+            ForEach(viewModel.currentObjective.keyResults, id: \.self) { keyResult in
                 KeyResultDetailView(keyResultID: keyResult.id)
                     .padding(.bottom, 10)
             }
@@ -193,7 +193,7 @@ struct AddObjectiveView: View {
         Button {
             // editing 시작
             self.isAddingKeyResult = true
-            viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .beforeStart, tasks: [])
+            viewModel.newEditingKeyResult = KeyResult(title: "", completionState: .inProgress, tasks: [])
             proxy.scrollTo(bottomID)
         } label: {
             Text("Key Result 추가")

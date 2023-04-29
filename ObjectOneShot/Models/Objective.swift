@@ -33,7 +33,7 @@ struct Objective: Identifiable, Hashable, Codable {
         }
     }
     
-    static var dummy = Objective(title: "감사 일기 쓰기", startDate: Date(), endDate: Date(), keyResults: [KeyResult(title: "하이요", completionState: .beforeStart, tasks: []), KeyResult(title: "하이요", completionState: .beforeStart, tasks: [])])
+    static var dummy = Objective(title: "감사 일기 쓰기", startDate: Date(), endDate: Date(), keyResults: [KeyResult(title: "하이요", completionState: .inProgress, tasks: []), KeyResult(title: "하이요", completionState: .inProgress, tasks: [])])
     
     let id = UUID().uuidString
     var title: String
