@@ -89,7 +89,7 @@ struct ObjectiveDetailView: View {
         })
         .background(Color("background"))
         .fullScreenCover(isPresented: $isPresentingTips) {
-            UseTipsView(isPresenting: $isPresentingTips)
+            UsageTipsView(isPresenting: $isPresentingTips)
         }
         .navigationBarHidden(true)
     }

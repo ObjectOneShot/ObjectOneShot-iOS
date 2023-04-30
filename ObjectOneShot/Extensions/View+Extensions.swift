@@ -28,6 +28,26 @@ extension View {
             }
     }
     
+    func sync(_ published: Binding<Int>, with binding: Binding<Int>) -> some View {
+        self
+            .onChange(of: published.wrappedValue) { published in
+                binding.wrappedValue = published
+            }
+            .onChange(of: binding.wrappedValue) { binding in
+                published.wrappedValue = binding
+            }
+    }
+    
+    func sync(_ published: Binding<Double>, with binding: Binding<Double>) -> some View {
+        self
+            .onChange(of: published.wrappedValue) { published in
+                binding.wrappedValue = published
+            }
+            .onChange(of: binding.wrappedValue) { binding in
+                published.wrappedValue = binding
+            }
+    }
+    
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
         clipShape( RoundedCorner(radius: radius, corners: corners) )
     }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct UseTipsView: View {
+struct UsageTipsView: View {
     @State private var currentIndex = 0
     @Binding var isPresenting: Bool
     
@@ -200,6 +200,6 @@ struct UseTipsView: View {
 
 struct UseTipsView_Previews: PreviewProvider {
     static var previews: some View {
-        UseTipsView(isPresenting: .constant(true))
+        UsageTipsView(isPresenting: .constant(true))
     }
 }

@@ -108,6 +108,7 @@ struct KeyResultDetailView: View {
                 }
         }
         .onAppear {
+            print("redrawed")
             if let index = viewModel.currentObjective.keyResults.firstIndex(where: { $0.id == keyResultID }) {
                 self.keyResultTitle = viewModel.currentObjective.keyResults[index].title
                 self.progressValue = viewModel.currentObjective.keyResults[index].progressValue

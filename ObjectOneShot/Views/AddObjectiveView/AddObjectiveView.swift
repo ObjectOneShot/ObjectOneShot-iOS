@@ -64,7 +64,7 @@ struct AddObjectiveView: View {
             self.endTextEditing()
         }
         .fullScreenCover(isPresented: $isPresentingTips) {
-            UseTipsView(isPresenting: $isPresentingTips)
+            UsageTipsView(isPresenting: $isPresentingTips)
         }
         .navigationBarHidden(true)
     }

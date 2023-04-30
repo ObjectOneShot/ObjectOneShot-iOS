@@ -190,7 +190,7 @@ struct MainView: View {
             OnboardingView(isFirstLaunching: $isFirstLaunching)
         }
         .fullScreenCover(isPresented: $isPresentingTips) {
-            UseTipsView(isPresenting: $isPresentingTips)
+            UsageTipsView(isPresenting: $isPresentingTips)
         }
     }
 }
