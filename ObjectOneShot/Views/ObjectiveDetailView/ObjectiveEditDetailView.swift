@@ -14,6 +14,7 @@ struct ObjectiveEditDetailView: View {
     @State private var isPresentingTips = false
     @State private var isPresentingSaveAlert = false
     @State private var isSaveButtonTapped = false
+    @Binding var isObjectiveCompleted: Bool
     
     @State private var title: String = ""
     @State private var startDate: Date = Date()
@@ -25,24 +26,59 @@ struct ObjectiveEditDetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
     var body: some View {
-        VStack(spacing: 0) {
-            objectiveDetailHeader()
-            ScrollView {
-                objectiveDetailCard()
-                    .padding(.top, 8)
-                keyResultHeader()
-                
-                keyResultDetails()
-                // 완료된 objective detail을 보는 것이 아니라면
-                if !isShowingCompletedObjective {
-                    // key result 추가 버튼 보이기
-                    keyResultAddButton()
+        ZStack {
+            VStack(spacing: 0) {
+                objectiveDetailHeader()
+                ScrollView {
+                    objectiveDetailCard()
+                        .padding(.top, 8)
+                    keyResultHeader()
+                    VStack(spacing: 0) {
+                        keyResultDetails()
+                        // 완료된 objective detail을 보는 것이 아니라면
+                        if !isShowingCompletedObjective {
+                            // key result 추가 버튼 보이기
+                            keyResultAddButton()
+                                .padding(.top, 10)
+                        }
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 10)
+                    .background(Color("primary_10"))
                 }
             }
+            
+            if isPresentingSaveAlert {
+                CustomAlert(alertState: .savingChanges, objectiveID: objectiveID, isShowingAlert: $isPresentingSaveAlert, isSaveButtonTapped: $isSaveButtonTapped, isObjectiveCompleted: $isObjectiveCompleted)
+            }
         }
+        .onAppear {
+            if let currentObjective = viewModel.objectives.first(where: { $0.id == objectiveID }) {
+                viewModel.currentObjective = currentObjective
+                for index in viewModel.currentObjective.keyResults.indices {
+                    viewModel.currentObjective.keyResults[index].isExpanded = false
+                }
+            } else {
+                print("ERROR : no objective found matching id : \(objectiveID) in ObjectiveDetailCard")
+            }
+            if isShowingCompletedObjective {
+                if isObjectiveCompleted {
+                    viewModel.keyResultState = .completed
+                } else {
+                    viewModel.keyResultState = .all
+                }
+            } else {
+                viewModel.keyResultState = .all
+            }
+        }
+        .onTapGesture {
+            self.endTextEditing()
+        }
+        .background(Color("background"))
         .fullScreenCover(isPresented: $isPresentingTips) {
             UsageTipsView(isPresenting: $isPresentingTips)
         }
+        .navigationBarHidden(true)
     }
     
     // objective 헤더
@@ -57,13 +93,14 @@ struct ObjectiveEditDetailView: View {
                 .padding(.vertical, 12)
             Spacer()
             Button {
+                endTextEditing()
                 isPresentingTips = true
             } label: {
                 Image("questionMark.black")
             }
             .padding(.trailing, 26)
         }
-        .padding(.leading, 24)
+        .padding(.leading, 18)
         Rectangle()
             .frame(height: 1)
             .foregroundColor(Color("grey_300"))
@@ -74,9 +111,7 @@ struct ObjectiveEditDetailView: View {
     @ViewBuilder
     func backButton() -> some View {
         Button {
-            /*
-             TODO : 값을 변경했을 때만 값을 저장하지 않고 나가겠냐는 팝업창 띄워주기
-             */
+            endTextEditing()
             if !isShowingCompletedObjective {
                 if let currentObjective = viewModel.objectives.first(where: { $0.id == objectiveID }) {
                     // 데이터 변경 없음
@@ -94,9 +129,7 @@ struct ObjectiveEditDetailView: View {
         } label : {
             HStack{
                 Image("chevron.left.black")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 8, height: 14)
+                    .frame(width: 20, height: 20)
             }
         }
         .onChange(of: isSaveButtonTapped) { newValue in
@@ -164,6 +197,7 @@ struct ObjectiveEditDetailView: View {
                 HStack {
                     DatePicker("", selection: $startDate, displayedComponents: .date)
                         .disabled(isShowingCompletedObjective)
+                        .foregroundColor(Color("gray_900"))
                         .labelsHidden()
                         .environment(\.locale, Locale(identifier: "ko-KR"))
                         .scaleEffect(0.9)
@@ -174,6 +208,7 @@ struct ObjectiveEditDetailView: View {
                         .font(.pretendard(.regular, size: 14))
                     DatePicker("", selection: $endDate, in: startDate..., displayedComponents: .date)
                         .disabled(isShowingCompletedObjective)
+                        .foregroundColor(Color("grey_900"))
                         .labelsHidden()
                         .environment(\.locale, Locale(identifier: "ko-KR"))
                         .scaleEffect(0.9)
@@ -260,6 +295,7 @@ struct ObjectiveEditDetailView: View {
             HStack {
                 Spacer()
                 Button {
+                    endTextEditing()
                     viewModel.keyResultState = .all
                     for i in 0..<viewModel.currentObjective.keyResults.count {
                         viewModel.currentObjective.keyResults[i].isExpanded = false
@@ -287,6 +323,7 @@ struct ObjectiveEditDetailView: View {
                 }
                 Spacer()
                 Button {
+                    endTextEditing()
                     viewModel.keyResultState = .inProgress
                     for i in 0..<viewModel.currentObjective.keyResults.count {
                         viewModel.currentObjective.keyResults[i].isExpanded = false
@@ -314,6 +351,7 @@ struct ObjectiveEditDetailView: View {
                 }
                 Spacer()
                 Button {
+                    endTextEditing()
                     viewModel.keyResultState = .completed
                     for i in 0..<viewModel.currentObjective.keyResults.count {
                         viewModel.currentObjective.keyResults[i].isExpanded = false
@@ -353,7 +391,7 @@ struct ObjectiveEditDetailView: View {
             if !viewModel.currentObjective.keyResults.isEmpty {
                 ForEach(viewModel.currentObjective.keyResults, id: \.self) { keyResult in
                     KeyResultEditDetailView(keyResultID: keyResult.id, isShowingCompletedObjective: isShowingCompletedObjective)
-                        .padding(.bottom, 10)
+                        .padding(.top, 10)
                 }
             } else if isShowingCompletedObjective {
                 Color("primary_10")
@@ -362,7 +400,7 @@ struct ObjectiveEditDetailView: View {
             if !viewModel.currentObjective.keyResults.filter({ $0.completionState == .inProgress }).isEmpty {
                 ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .inProgress }, id: \.self) { keyResult in
                     KeyResultEditDetailView(keyResultID: keyResult.id, isShowingCompletedObjective: isShowingCompletedObjective)
-                        .padding(.bottom, 10)
+                        .padding(.top, 10)
                 }
             } else if isShowingCompletedObjective {
                 Color("primary_10")
@@ -371,7 +409,7 @@ struct ObjectiveEditDetailView: View {
             if !viewModel.currentObjective.keyResults.filter({ $0.completionState == .completed }).isEmpty {
                 ForEach(viewModel.currentObjective.keyResults.filter { $0.completionState == .completed }, id: \.self) { keyResult in
                     KeyResultEditDetailView(keyResultID: keyResult.id, isShowingCompletedObjective: isShowingCompletedObjective)
-                        .padding(.bottom, 10)
+                        .padding(.top, 10)
                 }
             } else if isShowingCompletedObjective {
                 Color("primary_10")
@@ -382,7 +420,8 @@ struct ObjectiveEditDetailView: View {
     @ViewBuilder
     func keyResultAddButton() -> some View {
         Button {
-            viewModel.currentObjective.keyResults.append(KeyResult(title: "", completionState: .inProgress, tasks: [Task(title: "")]))
+            endTextEditing()
+            viewModel.currentObjective.keyResults.append(KeyResult(isExpanded: true, title: "", completionState: .inProgress, tasks: [Task(title: "")]))
         } label: {
             Text("Key Result 추가")
                 .font(.pretendard(.semiBold, size: 18))
@@ -397,7 +436,7 @@ struct ObjectiveEditDetailView: View {
 
 struct ObjectiveEditDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        ObjectiveEditDetailView(objectiveID: "")
+        ObjectiveEditDetailView(objectiveID: "", isObjectiveCompleted: .constant(false))
             .environmentObject(OKRViewModel())
     }
 }

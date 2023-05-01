@@ -7,18 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6003B3E429FF98A2008C87E0 /* AddObjectiveEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6003B3E329FF98A2008C87E0 /* AddObjectiveEditView.swift */; };
 		6021300529F16620008A4567 /* EmptyButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6021300429F16620008A4567 /* EmptyButtonStyle.swift */; };
 		6031783729FE168200DEDAD5 /* ObjectiveEditDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6031783629FE168200DEDAD5 /* ObjectiveEditDetailView.swift */; };
 		6031783929FE1A1800DEDAD5 /* KeyResultEditDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6031783829FE1A1800DEDAD5 /* KeyResultEditDetailView.swift */; };
 		6031783B29FE35F200DEDAD5 /* TaskEditDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6031783A29FE35F200DEDAD5 /* TaskEditDetailView.swift */; };
-		606BC78929E25B5A00192666 /* KeyResultDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606BC78829E25B5A00192666 /* KeyResultDetailView.swift */; };
 		606D897E29E29E6E00FA4BFA /* ObjectiveDetailCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D897D29E29E6E00FA4BFA /* ObjectiveDetailCard.swift */; };
-		606D898229E40BEE00FA4BFA /* WideAddButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D898129E40BEE00FA4BFA /* WideAddButtonView.swift */; };
-		606D898429E4688300FA4BFA /* TaskDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D898329E4688300FA4BFA /* TaskDetailView.swift */; };
-		606D898929E4AAC800FA4BFA /* AddObjectiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D898829E4AAC800FA4BFA /* AddObjectiveView.swift */; };
-		606D898B29E4BFE700FA4BFA /* TaskEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D898A29E4BFE700FA4BFA /* TaskEditView.swift */; };
 		606D898D29E4DEEB00FA4BFA /* Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D898C29E4DEEB00FA4BFA /* Delete.swift */; };
-		606D899029E53B9500FA4BFA /* KeyResultEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 606D898F29E53B9500FA4BFA /* KeyResultEditView.swift */; };
 		60739F6F29EB547100F82C8A /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60739F6E29EB547100F82C8A /* RoundedCorner.swift */; };
 		60739F7729ECF14A00F82C8A /* CustomAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60739F7629ECF14A00F82C8A /* CustomAlert.swift */; };
 		607E1AC229EAC57C005D36D1 /* UsageTipsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607E1AC129EAC57C005D36D1 /* UsageTipsView.swift */; };
@@ -31,10 +26,8 @@
 		60C88DAC29E060B400EB1BA6 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C88DAB29E060B400EB1BA6 /* Task.swift */; };
 		60C88DAE29E0699400EB1BA6 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C88DAD29E0699400EB1BA6 /* MainView.swift */; };
 		60C88DB129E06A5200EB1BA6 /* ObjectiveCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C88DB029E06A5200EB1BA6 /* ObjectiveCardView.swift */; };
-		60C88DBB29E0B3DB00EB1BA6 /* KeyResultsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C88DBA29E0B3DB00EB1BA6 /* KeyResultsHeaderView.swift */; };
 		60C88DBF29E0C42800EB1BA6 /* OKRViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C88DBE29E0C42700EB1BA6 /* OKRViewModel.swift */; };
 		60C88DC129E0C7AC00EB1BA6 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C88DC029E0C7AC00EB1BA6 /* Coordinator.swift */; };
-		60C88DC329E0EC8200EB1BA6 /* ObjectiveDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C88DC229E0EC8200EB1BA6 /* ObjectiveDetailView.swift */; };
 		60C88DC629E0FAC200EB1BA6 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C88DC529E0FAC200EB1BA6 /* View+Extensions.swift */; };
 		60D0CF1C29E86BB100EFE0A6 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D0CF1B29E86BB100EFE0A6 /* FontManager.swift */; };
 		60D0CF2029E8D8EA00EFE0A6 /* CustomProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D0CF1F29E8D8EA00EFE0A6 /* CustomProgressBar.swift */; };
@@ -52,18 +45,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6003B3E329FF98A2008C87E0 /* AddObjectiveEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddObjectiveEditView.swift; sourceTree = "<group>"; };
 		6021300429F16620008A4567 /* EmptyButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyButtonStyle.swift; sourceTree = "<group>"; };
 		6031783629FE168200DEDAD5 /* ObjectiveEditDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectiveEditDetailView.swift; sourceTree = "<group>"; };
 		6031783829FE1A1800DEDAD5 /* KeyResultEditDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyResultEditDetailView.swift; sourceTree = "<group>"; };
 		6031783A29FE35F200DEDAD5 /* TaskEditDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskEditDetailView.swift; sourceTree = "<group>"; };
-		606BC78829E25B5A00192666 /* KeyResultDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyResultDetailView.swift; sourceTree = "<group>"; };
 		606D897D29E29E6E00FA4BFA /* ObjectiveDetailCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectiveDetailCard.swift; sourceTree = "<group>"; };
-		606D898129E40BEE00FA4BFA /* WideAddButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WideAddButtonView.swift; sourceTree = "<group>"; };
-		606D898329E4688300FA4BFA /* TaskDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailView.swift; sourceTree = "<group>"; };
-		606D898829E4AAC800FA4BFA /* AddObjectiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddObjectiveView.swift; sourceTree = "<group>"; };
-		606D898A29E4BFE700FA4BFA /* TaskEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskEditView.swift; sourceTree = "<group>"; };
 		606D898C29E4DEEB00FA4BFA /* Delete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delete.swift; sourceTree = "<group>"; };
-		606D898F29E53B9500FA4BFA /* KeyResultEditView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyResultEditView.swift; sourceTree = "<group>"; };
 		60739F6E29EB547100F82C8A /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		60739F7629ECF14A00F82C8A /* CustomAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlert.swift; sourceTree = "<group>"; };
 		607E1AC129EAC57C005D36D1 /* UsageTipsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsageTipsView.swift; sourceTree = "<group>"; };
@@ -77,10 +65,8 @@
 		60C88DAB29E060B400EB1BA6 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		60C88DAD29E0699400EB1BA6 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		60C88DB029E06A5200EB1BA6 /* ObjectiveCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectiveCardView.swift; sourceTree = "<group>"; };
-		60C88DBA29E0B3DB00EB1BA6 /* KeyResultsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyResultsHeaderView.swift; sourceTree = "<group>"; };
 		60C88DBE29E0C42700EB1BA6 /* OKRViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OKRViewModel.swift; sourceTree = "<group>"; };
 		60C88DC029E0C7AC00EB1BA6 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
-		60C88DC229E0EC8200EB1BA6 /* ObjectiveDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectiveDetailView.swift; sourceTree = "<group>"; };
 		60C88DC529E0FAC200EB1BA6 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		60D0CF1B29E86BB100EFE0A6 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		60D0CF1F29E8D8EA00EFE0A6 /* CustomProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProgressBar.swift; sourceTree = "<group>"; };
@@ -109,11 +95,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6003B3E629FFB825008C87E0 /* CardViews */ = {
+			isa = PBXGroup;
+			children = (
+				6031783829FE1A1800DEDAD5 /* KeyResultEditDetailView.swift */,
+				6031783A29FE35F200DEDAD5 /* TaskEditDetailView.swift */,
+				60C88DB029E06A5200EB1BA6 /* ObjectiveCardView.swift */,
+				606D897D29E29E6E00FA4BFA /* ObjectiveDetailCard.swift */,
+			);
+			path = CardViews;
+			sourceTree = "<group>";
+		};
+		6003B3E729FFB82F008C87E0 /* CustomProgressbar */ = {
+			isa = PBXGroup;
+			children = (
+				60D0CF1F29E8D8EA00EFE0A6 /* CustomProgressBar.swift */,
+			);
+			path = CustomProgressbar;
+			sourceTree = "<group>";
+		};
 		606D898529E468FA00FA4BFA /* MainView */ = {
 			isa = PBXGroup;
 			children = (
 				60C88DAD29E0699400EB1BA6 /* MainView.swift */,
-				60C88DB029E06A5200EB1BA6 /* ObjectiveCardView.swift */,
 			);
 			path = MainView;
 			sourceTree = "<group>";
@@ -121,7 +125,7 @@
 		606D898629E4690B00FA4BFA /* ObjectiveDetailView */ = {
 			isa = PBXGroup;
 			children = (
-				60C88DC229E0EC8200EB1BA6 /* ObjectiveDetailView.swift */,
+				6031783629FE168200DEDAD5 /* ObjectiveEditDetailView.swift */,
 			);
 			path = ObjectiveDetailView;
 			sourceTree = "<group>";
@@ -129,7 +133,7 @@
 		606D898729E4694900FA4BFA /* AddObjectiveView */ = {
 			isa = PBXGroup;
 			children = (
-				606D898829E4AAC800FA4BFA /* AddObjectiveView.swift */,
+				6003B3E329FF98A2008C87E0 /* AddObjectiveEditView.swift */,
 			);
 			path = AddObjectiveView;
 			sourceTree = "<group>";
@@ -206,9 +210,6 @@
 				606D898729E4694900FA4BFA /* AddObjectiveView */,
 				606D898629E4690B00FA4BFA /* ObjectiveDetailView */,
 				60C88DAF29E06A4300EB1BA6 /* Componenets */,
-				6031783629FE168200DEDAD5 /* ObjectiveEditDetailView.swift */,
-				6031783829FE1A1800DEDAD5 /* KeyResultEditDetailView.swift */,
-				6031783A29FE35F200DEDAD5 /* TaskEditDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -255,15 +256,9 @@
 		60C88DAF29E06A4300EB1BA6 /* Componenets */ = {
 			isa = PBXGroup;
 			children = (
+				6003B3E729FFB82F008C87E0 /* CustomProgressbar */,
+				6003B3E629FFB825008C87E0 /* CardViews */,
 				60739F7529ECF13D00F82C8A /* CustomAlert */,
-				606D897D29E29E6E00FA4BFA /* ObjectiveDetailCard.swift */,
-				60C88DBA29E0B3DB00EB1BA6 /* KeyResultsHeaderView.swift */,
-				606BC78829E25B5A00192666 /* KeyResultDetailView.swift */,
-				606D898329E4688300FA4BFA /* TaskDetailView.swift */,
-				606D898F29E53B9500FA4BFA /* KeyResultEditView.swift */,
-				606D898A29E4BFE700FA4BFA /* TaskEditView.swift */,
-				606D898129E40BEE00FA4BFA /* WideAddButtonView.swift */,
-				60D0CF1F29E8D8EA00EFE0A6 /* CustomProgressBar.swift */,
 			);
 			path = Componenets;
 			sourceTree = "<group>";
@@ -400,30 +395,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				60739F6F29EB547100F82C8A /* RoundedCorner.swift in Sources */,
-				60C88DBB29E0B3DB00EB1BA6 /* KeyResultsHeaderView.swift in Sources */,
-				60C88DC329E0EC8200EB1BA6 /* ObjectiveDetailView.swift in Sources */,
 				60C88DA829E0605D00EB1BA6 /* Objective.swift in Sources */,
 				6031783B29FE35F200DEDAD5 /* TaskEditDetailView.swift in Sources */,
 				60C88DAE29E0699400EB1BA6 /* MainView.swift in Sources */,
 				60C88DB129E06A5200EB1BA6 /* ObjectiveCardView.swift in Sources */,
 				60D0CF2029E8D8EA00EFE0A6 /* CustomProgressBar.swift in Sources */,
 				60C88DBF29E0C42800EB1BA6 /* OKRViewModel.swift in Sources */,
-				606D898229E40BEE00FA4BFA /* WideAddButtonView.swift in Sources */,
 				60739F7729ECF14A00F82C8A /* CustomAlert.swift in Sources */,
 				606D898D29E4DEEB00FA4BFA /* Delete.swift in Sources */,
-				606D899029E53B9500FA4BFA /* KeyResultEditView.swift in Sources */,
 				6031783929FE1A1800DEDAD5 /* KeyResultEditDetailView.swift in Sources */,
-				606D898929E4AAC800FA4BFA /* AddObjectiveView.swift in Sources */,
 				60D0CF1C29E86BB100EFE0A6 /* FontManager.swift in Sources */,
 				60C88DAA29E0607700EB1BA6 /* KeyResult.swift in Sources */,
 				60C88DC629E0FAC200EB1BA6 /* View+Extensions.swift in Sources */,
 				60C88DC129E0C7AC00EB1BA6 /* Coordinator.swift in Sources */,
 				6021300529F16620008A4567 /* EmptyButtonStyle.swift in Sources */,
-				606D898429E4688300FA4BFA /* TaskDetailView.swift in Sources */,
-				606D898B29E4BFE700FA4BFA /* TaskEditView.swift in Sources */,
 				60C88DAC29E060B400EB1BA6 /* Task.swift in Sources */,
 				606D897E29E29E6E00FA4BFA /* ObjectiveDetailCard.swift in Sources */,
-				606BC78929E25B5A00192666 /* KeyResultDetailView.swift in Sources */,
+				6003B3E429FF98A2008C87E0 /* AddObjectiveEditView.swift in Sources */,
 				6031783729FE168200DEDAD5 /* ObjectiveEditDetailView.swift in Sources */,
 				607E1AC229EAC57C005D36D1 /* UsageTipsView.swift in Sources */,
 				60C88D9029E041D300EB1BA6 /* ObjectOneShotApp.swift in Sources */,
