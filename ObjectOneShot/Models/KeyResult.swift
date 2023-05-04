@@ -54,6 +54,14 @@ struct KeyResult: Identifiable, Hashable, Codable {
         setProgress()
     }
     
+    init(isExpanded: Bool, title: String, completionState: KeyResultState, tasks: [Task]) {
+        self.isExpanded = isExpanded
+        self.title = title
+        self.completionState = completionState
+        self.tasks = tasks
+        setProgress()
+    }
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         isExpanded = try container.decode(Bool.self, forKey: .isExpanded)

@@ -29,6 +29,10 @@ final class OKRViewModel: ObservableObject {
         objectives = objectives.filter { $0.id != id }
     }
     
+    func deleteTaskWhenTappedXmark(keyResultIndex: Int, taskID: String) {
+        self.currentObjective.keyResults[keyResultIndex].tasks = self.currentObjective.keyResults[keyResultIndex].tasks.filter { $0.id != taskID }
+    }
+    
     // MARK: - others
     // yy-mm-dd 형식으로 Date 변경
     func getStringDate(of date: Date) -> String {

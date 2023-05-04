@@ -50,7 +50,6 @@ struct CustomAlert: View {
                                         .frame(width: 102, height: 36)
                                         .opacity(0)
                                 }
-                                
                                 Button {
                                     // 삭제하기
                                     viewModel.deleteObjectiveByID(of: objectiveID)
@@ -87,7 +86,6 @@ struct CustomAlert: View {
                                         .frame(width: 102, height: 36)
                                         .opacity(0)
                                 }
-                                
                                 Button {
                                     // 저장하기
                                     isSaveButtonTapped = true

@@ -94,9 +94,13 @@ struct Objective: Identifiable, Hashable, Codable {
     
     mutating func setProgressValue() {
         if keyResults.count == 0  {
-            self.progressPercentage = 0
+            self.progressValue = 0
         } else {
-            self.progressValue = Double(keyResults.filter { $0.completionState == .completed }.count) / Double(keyResults.count)
+            var sum: Double = 0
+            for keyResult in keyResults {
+                sum += keyResult.progressValue
+            }
+            self.progressValue = sum / Double(keyResults.count)
         }
     }
     
@@ -104,7 +108,11 @@ struct Objective: Identifiable, Hashable, Codable {
         if keyResults.count == 0  {
             self.progressPercentage = 0
         } else {
-            self.progressPercentage = Int((Double(keyResults.filter { $0.completionState == .completed }.count) / Double(keyResults.count)) * 100)
+            var sum: Double = 0
+            for keyResult in keyResults {
+                sum += keyResult.progressValue
+            }
+            self.progressPercentage = Int((sum / Double(keyResults.count)) * 100)
         }
     }
 }
