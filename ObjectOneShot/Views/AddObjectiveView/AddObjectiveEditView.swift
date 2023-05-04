@@ -424,7 +424,6 @@ struct AddObjectiveEditView: View {
             view
                 .background(Color("titleBackground"))
         }
-        .padding(.bottom, 1)
     }
 }
 
