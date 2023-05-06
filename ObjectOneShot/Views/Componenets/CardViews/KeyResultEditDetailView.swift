@@ -95,11 +95,11 @@ struct KeyResultEditDetailView: View {
                 } label: {
                     if isExpanded {
                         Image("chevron.down")
-                            .frame(width: 20, height: 20)
+                            .frame(width: 24, height: 24)
                             .rotationEffect(Angle(degrees: 180))
                     } else {
                         Image("chevron.down")
-                            .frame(width: 20, height: 20)
+                            .frame(width: 24, height: 24)
                     }
                 }
             }

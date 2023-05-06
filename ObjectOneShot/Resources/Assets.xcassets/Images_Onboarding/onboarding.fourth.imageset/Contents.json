@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Mobile_4.png",
+      "filename" : "Frame 48100146.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Mobile_4 1.png",
+      "filename" : "Frame 48100146@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Mobile_4 2.png",
+      "filename" : "Frame 48100146@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

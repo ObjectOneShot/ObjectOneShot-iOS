@@ -97,6 +97,7 @@ struct ObjectiveEditDetailView: View {
                 isPresentingTips = true
             } label: {
                 Image("questionMark.black")
+                    .frame(width: 24, height: 24)
             }
             .padding(.trailing, 26)
         }
@@ -129,7 +130,7 @@ struct ObjectiveEditDetailView: View {
         } label : {
             HStack{
                 Image("chevron.left.black")
-                    .frame(width: 20, height: 20)
+                    .frame(width: 24, height: 24)
             }
         }
         .onChange(of: isSaveButtonTapped) { newValue in

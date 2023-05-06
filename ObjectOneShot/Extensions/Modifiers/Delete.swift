@@ -31,6 +31,9 @@ struct Delete: ViewModifier {
                             VStack {
                                 Spacer()
                                 Image("deleteButton")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 29, height: 29)
                                 Spacer()
                             }
                         }

@@ -160,12 +160,12 @@
 			path = CustomAlert;
 			sourceTree = "<group>";
 		};
-		607E1AC029EAC55F005D36D1 /* UseTipsView */ = {
+		607E1AC029EAC55F005D36D1 /* UsageTipsView */ = {
 			isa = PBXGroup;
 			children = (
 				607E1AC129EAC57C005D36D1 /* UsageTipsView.swift */,
 			);
-			path = UseTipsView;
+			path = UsageTipsView;
 			sourceTree = "<group>";
 		};
 		60C88D8329E041D300EB1BA6 = {
@@ -212,7 +212,7 @@
 		60C88DA229E05F5D00EB1BA6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				607E1AC029EAC55F005D36D1 /* UseTipsView */,
+				607E1AC029EAC55F005D36D1 /* UsageTipsView */,
 				60F0C14229EAB81D00C37E4E /* Onboarding */,
 				606D898529E468FA00FA4BFA /* MainView */,
 				606D898729E4694900FA4BFA /* AddObjectiveView */,
@@ -408,7 +408,8 @@
 /* Begin PBXShellScriptBuildPhase section */
 		60F5A9B52A0392A400227CF3 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			alwaysOutOfDate = 1;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (

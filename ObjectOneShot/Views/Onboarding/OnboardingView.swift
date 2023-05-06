@@ -92,7 +92,6 @@ struct OnboardingView: View {
                     .padding(.vertical, 10)
                     .frame(maxWidth: .infinity)
                     .background(Color("titleBackground"))
-                    .padding(.bottom, 1)
                 }
             }
         }
@@ -102,24 +101,20 @@ struct OnboardingView: View {
     @ViewBuilder
     func firstOnboarding() -> some View {
         VStack(spacing: 0) {
-            Image("onboarding.first.description")
-                .padding(.top, 85)
             Image("onboarding.first")
                 .resizable()
                 .scaledToFit()
-                .padding(.top, 41)
+                .padding(.top, 85)
         }
     }
     
     @ViewBuilder
     func secondOnboarding() -> some View {
         VStack(spacing: 0) {
-            Image("onboarding.second.description")
-                .padding(.top, 85)
             Image("onboarding.second")
                 .resizable()
                 .scaledToFit()
-                .padding(.top, 41)
+                .padding(.top, 85)
                 .shadow(radius: 1)
         }
     }
@@ -127,36 +122,30 @@ struct OnboardingView: View {
     @ViewBuilder
     func thirdOnboarding() -> some View {
         VStack(spacing: 0) {
-            Image("onboarding.third.description")
-                .padding(.top, 85)
             Image("onboarding.third")
                 .resizable()
                 .scaledToFit()
-                .padding(.top, 41)
+                .padding(.top, 85)
         }
     }
     
     @ViewBuilder
     func fourthOnboarding() -> some View {
         VStack(spacing: 0) {
-            Image("onboarding.fourth.description")
-                .padding(.top, 85)
             Image("onboarding.fourth")
                 .resizable()
                 .scaledToFit()
-                .padding(.top, 41)
+                .padding(.top, 85)
         }
     }
     
     @ViewBuilder
     func fifthOnboarding() -> some View {
         VStack(spacing: 0) {
-            Image("onboarding.fifth.description")
-                .padding(.top, 85)
             Image("onboarding.fifth")
                 .resizable()
                 .scaledToFit()
-                .padding(.top, 41)
+                .padding(.top, 85)
         }
     }
 }

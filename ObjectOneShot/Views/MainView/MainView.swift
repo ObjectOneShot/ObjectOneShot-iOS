@@ -75,9 +75,6 @@ struct MainView: View {
                       isShowingCompletedObjectives = false
                     } label: {
                         Image("chevron.left.white")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 12)
                     }
                     .padding(.leading, 25)
                 }
@@ -87,7 +84,7 @@ struct MainView: View {
                 } label: {
                     Image("questionMark_white")
                 }
-                .padding(.trailing, 25)
+                .padding(.trailing, 23)
             }
         }
     }
@@ -114,8 +111,10 @@ struct MainView: View {
                     Button {
                         isShowingCompletedObjectives = true
                     } label: {
-                        Image("cloud_download")
-                            .frame(width: 24, height: 16)
+                        Image("icon.archive")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24, height: 24)
                             .padding(.horizontal, 24)
                     }
                 }
@@ -123,7 +122,6 @@ struct MainView: View {
             Divider()
                 .foregroundColor(Color("grey_300"))
                 .padding(.horizontal, 24)
-                .padding(.bottom, 8)
             
             // Objectives 카드 뷰
             ScrollView {
@@ -176,6 +174,7 @@ struct MainView: View {
                         }
                     }
                 }
+                .padding(.top, 10)
             }
             Spacer()
             // Objective 추가 버튼

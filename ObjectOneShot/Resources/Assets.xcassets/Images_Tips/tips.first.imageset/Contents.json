@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "tips_1.png",
+      "filename" : "Frame 48100148.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "Frame 48100148@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "Frame 48100148@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

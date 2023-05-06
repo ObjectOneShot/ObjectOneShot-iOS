@@ -32,20 +32,20 @@ struct TaskEditDetailView: View {
                 if isFocused {
                     if viewModel.currentObjective.keyResults[keyResultIndex].tasks.count > 1 {
                         showXMarkButton()
-                            .padding(.bottom, 6)
+                            .padding(.bottom, 7)
                     }
                 } else {
                 // task가 5개 미만이고 제목 수정중이지 않고 마지막 task이면 + 표시하기
                     if viewModel.currentObjective.keyResults[keyResultIndex].tasks.count < 5 {
                         if viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id }) == viewModel.currentObjective.keyResults[keyResultIndex].tasks.count - 1 {
                             showPlusButton()
-                                .padding(.bottom, 6)
+                                .padding(.bottom, 7)
                         }
                     }
                 }
             }
-            .padding(.leading, 19)
-            .padding(.trailing, 6)
+            .padding(.leading, 16)
+            .padding(.trailing, 8)
             underLine()
                 .padding(.horizontal, 8)
         }
@@ -75,13 +75,13 @@ struct TaskEditDetailView: View {
                     Image("checkMark.square")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 18, height: 18)
+                        .frame(width: 24, height: 24)
                         .foregroundColor(.black)
                 } else {
                     Image("square")
                         .resizable()
                         .scaledToFit()
-                        .frame(width: 18, height: 18)
+                        .frame(width: 24, height: 24)
                         .foregroundColor(.black)
                 }
             }
@@ -149,7 +149,7 @@ struct TaskEditDetailView: View {
         } label: {
             Image("xMark")
                 .renderingMode(.template)
-                .frame(width: 28, height: 28)
+                .frame(width: 24, height: 24)
                 .foregroundColor(Color("grey_900"))
         }
     }
@@ -166,7 +166,7 @@ struct TaskEditDetailView: View {
         } label: {
             Image("plus")
                 .renderingMode(.template)
-                .frame(width: 28, height: 28)
+                .frame(width: 24, height: 24)
                 .foregroundColor(Color("grey_900"))
         }
         .disabled(isShowingCompletedObjective)

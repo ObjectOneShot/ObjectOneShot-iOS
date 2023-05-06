@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "tips_2.png",
+      "filename" : "Group 4077.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "Group 4077@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "Group 4077@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
