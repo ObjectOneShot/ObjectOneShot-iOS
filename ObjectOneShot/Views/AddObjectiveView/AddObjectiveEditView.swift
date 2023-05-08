@@ -14,6 +14,8 @@ struct AddObjectiveEditView: View {
     @State private var isPresentingSaveAlert = false
     @State private var isSaveButtonTapped = false
     
+    @Binding var isObjectiveCompleted: Bool
+    
     @State private var title: String = ""
     @State private var startDate: Date = Date()
     @State private var endDate: Date = Date()
@@ -409,6 +411,9 @@ struct AddObjectiveEditView: View {
                 viewModel.addNewObjective(viewModel.currentObjective)
                 self.presentationMode.wrappedValue.dismiss()
                 viewModel.saveObjectivesToUserDefaults()
+                if viewModel.currentObjective.progressValue == 1 {
+                    isObjectiveCompleted = true
+                }
             }
         } label: {
             Text("목표 등록하기")
@@ -430,7 +435,7 @@ struct AddObjectiveEditView: View {
 
 struct AddObjectiveEditView_Previews: PreviewProvider {
     static var previews: some View {
-        AddObjectiveEditView()
+        AddObjectiveEditView(isObjectiveCompleted: .constant(false))
             .environmentObject(OKRViewModel())
     }
 }

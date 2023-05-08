@@ -193,7 +193,7 @@ struct MainView: View {
         }
         .navigationDestination(for: String.self) { id in
             if id == String(describing: AddObjectiveEditView.self) {
-                AddObjectiveEditView()
+                AddObjectiveEditView(isObjectiveCompleted: $isObjectiveCompleted)
                     .environmentObject(self.viewModel)
             }
         }

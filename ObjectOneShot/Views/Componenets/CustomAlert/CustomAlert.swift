@@ -92,6 +92,9 @@ struct CustomAlert: View {
                                     viewModel.objectives[viewModel.objectives.firstIndex(where: { $0.id == objectiveID })!] = viewModel.currentObjective
                                     viewModel.saveObjectivesToUserDefaults()
                                     isShowingAlert = false
+                                    if viewModel.currentObjective.progressValue == 1 {
+                                        isObjectiveCompleted = true
+                                    }
                                 } label: {
                                     RoundedRectangle(cornerRadius: 10)
                                         .frame(width: 102, height: 36)
