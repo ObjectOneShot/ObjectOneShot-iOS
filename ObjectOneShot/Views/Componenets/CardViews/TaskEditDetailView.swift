@@ -114,7 +114,7 @@ struct TaskEditDetailView: View {
                     }
                 }
             })
-            .disabled(isCompleted || isShowingCompletedObjective)
+            .disabled(isCompleted || isShowingCompletedObjective || viewModel.currentObjective.keyResults[keyResultIndex].title.isEmpty)
             .font(.pretendard(.medium, size: 16))
             .strikethrough(isCompleted)
             .foregroundColor(Color("grey_900"))
