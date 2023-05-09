@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 final class OKRViewModel: ObservableObject {
     
@@ -15,6 +16,7 @@ final class OKRViewModel: ObservableObject {
     @Published var newEditingTask: Task = Task(title: "")
     @Published var objectives: [Objective] = []
     @Published var deletingObjectiveID: String = ""
+    var doShake = PassthroughSubject<Void, Never>()
     
     init() {
         loadObjectivesFromUserDefaults()
@@ -64,6 +66,10 @@ final class OKRViewModel: ObservableObject {
     // 새로 작성중인 Key Result에 Task 추가하기
     func addNewTaskToNewKeyResult() {
         self.newEditingKeyResult.tasks.append(self.newEditingTask)
+    }
+    
+    func shakeKeyResultTextField() {
+        doShake.send()
     }
     
     // MARK: - UserDefault 설정

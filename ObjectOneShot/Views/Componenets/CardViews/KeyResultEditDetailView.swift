@@ -15,6 +15,7 @@ struct KeyResultEditDetailView: View {
     @State private var keyResultTitle = ""
     @State private var progressValue: Double = 0.0
     @State private var progressPercentage = 0
+    @State var doShake = false
     
     let keyResultID: String
     var isShowingCompletedObjective: Bool
