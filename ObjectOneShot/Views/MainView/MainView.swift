@@ -72,7 +72,7 @@ struct MainView: View {
             HStack {
                 if isShowingCompletedObjectives {
                     Button {
-                      isShowingCompletedObjectives = false
+                        isShowingCompletedObjectives = false
                     } label: {
                         Image("chevron.left.white")
                     }
@@ -147,32 +147,30 @@ struct MainView: View {
                             }
                         }
                     } else {
-                        List {
-                            // 완료하지 않았고 D-day가 지나지 않은 objectives 보여주기
-                            ForEach(viewModel.objectives.filter{ $0.isCompleted == false && $0.isOutdated == false }) { objective in
-                                // 클릭하면 ObjectiveDetailView로 전환
-                                NavigationLink(destination: ObjectiveEditDetailView(objectiveID: objective.id, isObjectiveCompleted: $isObjectiveCompleted)
-                                    .environmentObject(self.viewModel)) {
-                                        ObjectiveCardView(objectiveID: objective.id, isShowingObjectiveDeleteAlert: $isShowingObjectiveDeleteAlert)
-                                            .padding(.bottom, 10)
-                                            .onDisappear {
-                                                if viewModel.objectives.filter({ $0.isCompleted == false && $0.isOutdated == false }).isEmpty {
-                                                    isProgressingObjectivesEmpty = true
-                                                }
+                        // 완료하지 않았고 D-day가 지나지 않은 objectives 보여주기
+                        ForEach(viewModel.objectives.filter{ $0.isCompleted == false && $0.isOutdated == false }) { objective in
+                            // 클릭하면 ObjectiveDetailView로 전환
+                            NavigationLink(destination: ObjectiveEditDetailView(objectiveID: objective.id, isObjectiveCompleted: $isObjectiveCompleted)
+                                .environmentObject(self.viewModel)) {
+                                    ObjectiveCardView(objectiveID: objective.id, isShowingObjectiveDeleteAlert: $isShowingObjectiveDeleteAlert)
+                                        .padding(.bottom, 10)
+                                        .onDisappear {
+                                            if viewModel.objectives.filter({ $0.isCompleted == false && $0.isOutdated == false }).isEmpty {
+                                                isProgressingObjectivesEmpty = true
                                             }
-                                    }
-                                    .buttonStyle(EmptyButtonStyle())
-                                    .onAppear {
-                                        if viewModel.isOutDated(endDate: objective.endDate) {
-                                            // 카드 보여질 때 마다 outdated 검사
-                                            if let objectiveIndex = viewModel.objectives.firstIndex(where: { $0.id == objective.id }) {
-                                                viewModel.objectives[objectiveIndex].isOutdated = true
-                                                viewModel.saveObjectivesToUserDefaults()
-                                            }
-                                            isObjectiveOutdated = true
                                         }
+                                }
+                                .buttonStyle(EmptyButtonStyle())
+                                .onAppear {
+                                    if viewModel.isOutDated(endDate: objective.endDate) {
+                                        // 카드 보여질 때 마다 outdated 검사
+                                        if let objectiveIndex = viewModel.objectives.firstIndex(where: { $0.id == objective.id }) {
+                                            viewModel.objectives[objectiveIndex].isOutdated = true
+                                            viewModel.saveObjectivesToUserDefaults()
+                                        }
+                                        isObjectiveOutdated = true
                                     }
-                            }
+                                }
                         }
                     }
                 }

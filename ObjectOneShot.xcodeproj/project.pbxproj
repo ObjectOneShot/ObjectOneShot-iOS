@@ -32,6 +32,7 @@
 		60C88DC629E0FAC200EB1BA6 /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C88DC529E0FAC200EB1BA6 /* View+Extensions.swift */; };
 		60D0CF1C29E86BB100EFE0A6 /* FontManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D0CF1B29E86BB100EFE0A6 /* FontManager.swift */; };
 		60D0CF2029E8D8EA00EFE0A6 /* CustomProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D0CF1F29E8D8EA00EFE0A6 /* CustomProgressBar.swift */; };
+		60E0DC432A2B36A200B223BA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 60E0DC422A2B36A200B223BA /* GoogleService-Info.plist */; };
 		60F0C13729E8EA1B00C37E4E /* Pretendard-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 60F0C12E29E8EA1A00C37E4E /* Pretendard-Light.ttf */; };
 		60F0C13829E8EA1B00C37E4E /* Pretendard-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 60F0C12F29E8EA1A00C37E4E /* Pretendard-Regular.ttf */; };
 		60F0C13929E8EA1B00C37E4E /* Pretendard-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 60F0C13029E8EA1A00C37E4E /* Pretendard-SemiBold.ttf */; };
@@ -43,7 +44,6 @@
 		60F0C13F29E8EA1B00C37E4E /* Pretendard-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 60F0C13629E8EA1B00C37E4E /* Pretendard-ExtraLight.ttf */; };
 		60F0C14129EAB6A900C37E4E /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 60F0C14029EAB6A900C37E4E /* Launch Screen.storyboard */; };
 		60F0C14429EAB82F00C37E4E /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60F0C14329EAB82F00C37E4E /* OnboardingView.swift */; };
-		60F5A9AC2A0390EB00227CF3 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 60F5A9AB2A0390EA00227CF3 /* GoogleService-Info.plist */; };
 		60F5A9B22A03926500227CF3 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 60F5A9B12A03926500227CF3 /* FirebaseAnalytics */; };
 		60F5A9B42A03926500227CF3 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 60F5A9B32A03926500227CF3 /* FirebaseCrashlytics */; };
 /* End PBXBuildFile section */
@@ -75,6 +75,7 @@
 		60C88DC529E0FAC200EB1BA6 /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
 		60D0CF1B29E86BB100EFE0A6 /* FontManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontManager.swift; sourceTree = "<group>"; };
 		60D0CF1F29E8D8EA00EFE0A6 /* CustomProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProgressBar.swift; sourceTree = "<group>"; };
+		60E0DC422A2B36A200B223BA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		60EB189A29E7DF85000D4F31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		60F0C12E29E8EA1A00C37E4E /* Pretendard-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.ttf"; sourceTree = "<group>"; };
 		60F0C12F29E8EA1A00C37E4E /* Pretendard-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.ttf"; sourceTree = "<group>"; };
@@ -87,7 +88,6 @@
 		60F0C13629E8EA1B00C37E4E /* Pretendard-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-ExtraLight.ttf"; sourceTree = "<group>"; };
 		60F0C14029EAB6A900C37E4E /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		60F0C14329EAB82F00C37E4E /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		60F5A9AB2A0390EA00227CF3 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,7 +190,7 @@
 		60C88D8E29E041D300EB1BA6 /* ObjectOneShot */ = {
 			isa = PBXGroup;
 			children = (
-				60F5A9AB2A0390EA00227CF3 /* GoogleService-Info.plist */,
+				60E0DC422A2B36A200B223BA /* GoogleService-Info.plist */,
 				60EB189A29E7DF85000D4F31 /* Info.plist */,
 				60C88DA629E05F9100EB1BA6 /* Apps */,
 				60EB187D29E7DEF6000D4F31 /* Resources */,
@@ -390,7 +390,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				60F5A9AC2A0390EB00227CF3 /* GoogleService-Info.plist in Resources */,
+				60E0DC432A2B36A200B223BA /* GoogleService-Info.plist in Resources */,
 				60F0C13D29E8EA1B00C37E4E /* Pretendard-ExtraBold.ttf in Resources */,
 				60F0C13729E8EA1B00C37E4E /* Pretendard-Light.ttf in Resources */,
 				60C88D9729E041D500EB1BA6 /* Preview Assets.xcassets in Resources */,
