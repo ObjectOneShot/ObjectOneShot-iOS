@@ -73,7 +73,7 @@ struct KeyResultEditDetailView: View {
                     .background {
                         if keyResultTitle.isEmpty {
                             HStack {
-                                Text("Key Result를 입력해주세요")
+                                Text("단계별 계획을 입력해주세요")
                                     .font(.pretendard(.medium, size: 16))
                                     .foregroundColor(Color("grey_500"))
                                 Spacer()

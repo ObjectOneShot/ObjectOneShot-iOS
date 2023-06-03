@@ -35,8 +35,8 @@ struct TaskEditDetailView: View {
                             .padding(.bottom, 7)
                     }
                 } else {
-                // task가 5개 미만이고 제목 수정중이지 않고 마지막 task이면 + 표시하기
-                    if viewModel.currentObjective.keyResults[keyResultIndex].tasks.count < 5 {
+                    // task가 30개 미만이고 제목 수정중이지 않고 마지막 task이면 + 표시하기
+                    if viewModel.currentObjective.keyResults[keyResultIndex].tasks.count < 30 {
                         if viewModel.currentObjective.keyResults[keyResultIndex].tasks.firstIndex(where: { $0.id == task.id }) == viewModel.currentObjective.keyResults[keyResultIndex].tasks.count - 1 {
                             showPlusButton()
                                 .padding(.bottom, 7)
@@ -114,7 +114,7 @@ struct TaskEditDetailView: View {
                     }
                 }
             })
-            .disabled(isCompleted || isShowingCompletedObjective || viewModel.currentObjective.keyResults[keyResultIndex].title.isEmpty)
+            .disabled(isCompleted || isShowingCompletedObjective)
             .font(.pretendard(.medium, size: 16))
             .strikethrough(isCompleted)
             .foregroundColor(Color("grey_900"))
@@ -122,7 +122,7 @@ struct TaskEditDetailView: View {
                 // 플레이스홀더
                 if title.isEmpty {
                     HStack {
-                        Text("내용을 입력해주세요")
+                        Text("할 일을 입력해주세요")
                             .font(.pretendard(.medium, size: 16))
                             .foregroundColor(Color("grey_500"))
                         Spacer()
@@ -133,6 +133,10 @@ struct TaskEditDetailView: View {
                 if $0.count > Constants.characterLengthLimit {
                     self.title = String($0.prefix(Constants.characterLengthLimit))
                 }
+            }
+            .onSubmit {
+                endTextEditing()
+                viewModel.currentObjective.keyResults[keyResultIndex].tasks.append(Task(title: ""))
             }
         }
     }
@@ -162,7 +166,6 @@ struct TaskEditDetailView: View {
             // 여기서 로직 잘 짜야겠다....
             endTextEditing()
             viewModel.currentObjective.keyResults[keyResultIndex].tasks.append(Task(title: ""))
-            dump(viewModel.currentObjective.keyResults[keyResultIndex])
         } label: {
             Image("plus")
                 .renderingMode(.template)

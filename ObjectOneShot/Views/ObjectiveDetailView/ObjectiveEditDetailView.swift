@@ -87,7 +87,7 @@ struct ObjectiveEditDetailView: View {
         HStack(spacing: 0) {
             backButton()
                 .padding(.trailing, 16)
-            Text("Objective를 설정해 주세요")
+            Text("장기 목표 등록하기")
                 .font(.pretendard(.semiBold, size: 18))
                 .foregroundColor(Color("title_black"))
                 .padding(.vertical, 12)
@@ -283,7 +283,7 @@ struct ObjectiveEditDetailView: View {
     func keyResultHeader() -> some View {
         VStack(spacing: 0) {
             HStack {
-                Text("Key Results 설정해 주세요")
+                Text("단계별 계획 등록하기")
                     .font(.pretendard(.semiBold, size: 18))
                     .foregroundColor(Color("title_black"))
                     .padding(EdgeInsets(top: 8, leading: 24, bottom: 9, trailing: 0))
@@ -424,7 +424,7 @@ struct ObjectiveEditDetailView: View {
             endTextEditing()
             viewModel.currentObjective.keyResults.append(KeyResult(isExpanded: true, title: "", completionState: .inProgress, tasks: [Task(title: "")]))
         } label: {
-            Text("Key Result 추가")
+            Text("단계별 계획 추가하기")
                 .font(.pretendard(.semiBold, size: 18))
                 .foregroundColor(Color("titleForeground"))
                 .frame(maxWidth: .infinity)

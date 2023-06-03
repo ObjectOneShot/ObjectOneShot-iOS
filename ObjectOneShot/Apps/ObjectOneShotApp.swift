@@ -18,6 +18,8 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct ObjectOneShotApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+    
     @StateObject private var coordinator = Coordinator()
     private var viewModel = OKRViewModel()
     
