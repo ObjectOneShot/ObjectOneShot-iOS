@@ -33,7 +33,7 @@ struct AddObjectiveEditView: View {
                     objectiveDetailCard()
                         .padding(.top, 8)
                     keyResultHeader()
-                    VStack(spacing: 0) {
+                    LazyVStack(spacing: 0) {
                         keyResultDetails()
                         // 완료된 objective detail을 보는 것이 아니라면
                         if !isShowingCompletedObjective {

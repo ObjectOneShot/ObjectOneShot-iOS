@@ -125,7 +125,7 @@ struct MainView: View {
             
             // Objectives 카드 뷰
             ScrollView {
-                VStack(spacing: 0) {
+                LazyVStack(spacing: 0) {
                     // 완료되었거나 기한이 지난 objectives 보여주기
                     if isShowingCompletedObjectives {
                         ForEach(viewModel.objectives.filter{ $0.isCompleted == true || $0.isOutdated == true }) { objective in
