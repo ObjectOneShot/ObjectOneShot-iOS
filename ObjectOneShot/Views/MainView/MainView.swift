@@ -100,7 +100,7 @@ struct MainView: View {
                         .padding(.horizontal, 24)
                         .padding(.vertical, 12)
                 } else {
-                    Text("Objective를 설정해 주세요")
+                    Text("장기 목표 등록하기")
                         .font(.pretendard(.semiBold, size: 18))
                         .foregroundColor(Color("grey_900"))
                         .padding(.horizontal, 24)
