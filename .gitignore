@@ -9,6 +9,17 @@
 #           - AS PER https://guides.cocoapods.org/using/using-cocoapods.html NEVER IGNORE THE LOCK FILE
 Pods/
 
+### Firebase ###
+.idea
+GoogleService-Info.plist
+
+**/node_modules/*
+**/.firebaserc
+
+### Firebase Patch ###
+.runtimeconfig.json
+.firebase/
+
 ### Swift ###
 # Xcode
 #
