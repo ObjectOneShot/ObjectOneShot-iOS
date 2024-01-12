@@ -6,14 +6,9 @@
 
 ## 주요 기능
 
-* 온보딩
-<img src="https://github.com/ObjectOneShot/iOS-ObjectOneShot/assets/22342277/7a191f75-0272-49e7-a4df-9736dbe44271" width="300">
-
-* 목표 등록
-<img src="https://github.com/ObjectOneShot/iOS-ObjectOneShot/assets/22342277/6b619967-e623-4b50-af3d-d2b6f5fc7d3d" width="300">
-
-* 목표 삭제
-<img src="https://github.com/ObjectOneShot/iOS-ObjectOneShot/assets/22342277/997a06b4-cbd6-4732-bf16-badfc8234663" width="300">
+| 온보딩 | 목표 등록 | 목표 삭제 |
+| - | - | - |
+| <img src="https://github.com/ObjectOneShot/iOS-ObjectOneShot/assets/22342277/7a191f75-0272-49e7-a4df-9736dbe44271" width="300"> | <img src="https://github.com/ObjectOneShot/iOS-ObjectOneShot/assets/22342277/6b619967-e623-4b50-af3d-d2b6f5fc7d3d" width="300"> | <img src="https://github.com/ObjectOneShot/iOS-ObjectOneShot/assets/22342277/997a06b4-cbd6-4732-bf16-badfc8234663" width="300"> |
 
 </br>
 
